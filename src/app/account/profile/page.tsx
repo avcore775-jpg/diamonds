@@ -27,7 +27,7 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react'
-import { FaEdit, FaCheck, FaTimes, FaUser, FaEnvelope, FaPhone, FaCalendar, FaShield } from 'react-icons/fa'
+import { FaEdit, FaCheck, FaTimes, FaUser, FaEnvelope, FaPhone, FaCalendar, FaShieldAlt } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/layout/Header'
@@ -216,7 +216,7 @@ export default function ProfilePage() {
                       {profile?.emailVerified && (
                         <Badge colorScheme="green" variant="subtle">
                           <HStack spacing={1}>
-                            <FaShield size="10" />
+                            <FaShieldAlt size="10" />
                             <Text>Verified</Text>
                           </HStack>
                         </Badge>
