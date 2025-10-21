@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import {
   Box,
   Container,
@@ -33,7 +33,7 @@ import FiltersPanel, { FilterState } from '@/components/FiltersPanel'
 import { apiClient, Product } from '@/lib/api/client'
 import useSWR from 'swr'
 
-export default function CatalogPage() {
+function CatalogContent() {
   const searchParams = useSearchParams()
   const { isOpen, onOpen, onClose } = useDisclosure()
   
@@ -247,5 +247,20 @@ export default function CatalogPage() {
         </DrawerContent>
       </Drawer>
     </Box>
+  )
+}
+
+export default function CatalogPage() {
+  return (
+    <Suspense fallback={
+      <Box minH="100vh" bg="gray.50">
+        <Header />
+        <Container maxW="7xl" py={8}>
+          <Text textAlign="center">Loading...</Text>
+        </Container>
+      </Box>
+    }>
+      <CatalogContent />
+    </Suspense>
   )
 }
