@@ -1,103 +1,230 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import React from 'react'
+import NextLink from 'next/link'
+import {
+  Box,
+  Container,
+  Heading,
+  Text,
+  Button,
+  SimpleGrid,
+  VStack,
+  HStack,
+  Icon,
+  Flex,
+} from '@chakra-ui/react'
+import { FaGem, FaTruck, FaShieldAlt, FaCertificate } from 'react-icons/fa'
+import Header from '@/components/layout/Header'
+import ProductGrid from '@/components/ProductGrid'
+import { apiClient } from '@/lib/api/client'
+import useSWR from 'swr'
+
+export default function HomePage() {
+  const { data: featuredProducts, isLoading } = useSWR(
+    '/api/products/featured',
+    async () => {
+      const products = await apiClient.getProducts({ limit: 4 })
+      return products.filter((p: any) => p.isFeatured || p.price > 50000).slice(0, 4)
+    }
+  )
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <Box minH="100vh" bg="gray.50">
+      <Header />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      {/* Hero Section */}
+      <Box
+        bgImage="url('/images/95d9fc6a0c18d048022fb963094bf931a9b0be9a-2632x1197.avif')"
+        bgPosition="center"
+        bgRepeat="no-repeat"
+        bgSize="cover"
+        color="white"
+        py={20}
+        position="relative"
+      >
+        {/* Dark overlay for better text readability */}
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          bg="blackAlpha.600"
+          zIndex={0}
+        />
+        
+        <Container maxW="7xl" position="relative" zIndex={1}>
+          <VStack spacing={8} textAlign="center">
+            <Heading as="h1" size="3xl" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.5)">
+              Luxe Diamonds
+            </Heading>
+            <Text fontSize="2xl" maxW="600px" textShadow="1px 1px 2px rgba(0,0,0,0.5)">
+              Discover our great collection of handcrafted jewelry and certified diamonds
+            </Text>
+            <HStack spacing={4}>
+              <Button
+                as={NextLink}
+                href="/catalog"
+                size="lg"
+                bg="white"
+                color="brand.500"
+                _hover={{
+                  transform: 'translateY(-2px)',
+                  boxShadow: 'lg',
+                }}
+              >
+                Shop Collection
+              </Button>
+              <Button
+                as={NextLink}
+                href="/about"
+                size="lg"
+                variant="outline"
+                borderColor="white"
+                color="white"
+                _hover={{
+                  bg: 'whiteAlpha.200',
+                }}
+              >
+                Learn More
+              </Button>
+            </HStack>
+          </VStack>
+        </Container>
+      </Box>
+
+      {/* Features */}
+      <Box py={16}>
+        <Container maxW="7xl">
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+            <VStack spacing={4}>
+              <Icon as={FaGem} boxSize={10} color="brand.500" />
+              <Heading size="md">Premium Quality</Heading>
+              <Text textAlign="center" color="gray.600">
+                Ethically sourced diamonds with GIA certification
+              </Text>
+            </VStack>
+            <VStack spacing={4}>
+              <Icon as={FaTruck} boxSize={10} color="brand.500" />
+              <Heading size="md">Free Shipping</Heading>
+              <Text textAlign="center" color="gray.600">
+                Complimentary shipping on all orders over $1000
+              </Text>
+            </VStack>
+            <VStack spacing={4}>
+              <Icon as={FaShieldAlt} boxSize={10} color="brand.500" />
+              <Heading size="md">Secure Payment</Heading>
+              <Text textAlign="center" color="gray.600">
+                256-bit SSL encryption for all transactions
+              </Text>
+            </VStack>
+            <VStack spacing={4}>
+              <Icon as={FaCertificate} boxSize={10} color="brand.500" />
+              <Heading size="md">Lifetime Warranty</Heading>
+              <Text textAlign="center" color="gray.600">
+                Comprehensive warranty on all our jewelry
+              </Text>
+            </VStack>
+          </SimpleGrid>
+        </Container>
+      </Box>
+
+      {/* Featured Products */}
+      <Box py={16} bg="white">
+        <Container maxW="7xl">
+          <VStack spacing={12}>
+            <VStack spacing={4} textAlign="center">
+              <Heading size="xl">Featured Collection</Heading>
+              <Text fontSize="lg" color="gray.600">
+                Handpicked pieces from our master craftsmen
+              </Text>
+            </VStack>
+            
+            <ProductGrid 
+              products={featuredProducts || []}
+              isLoading={isLoading}
+              columns={{ base: 1, sm: 2, lg: 4 }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            
+            <Button
+              as={NextLink}
+              href="/catalog"
+              size="lg"
+              colorScheme="brand"
+            >
+              View All Products
+            </Button>
+          </VStack>
+        </Container>
+      </Box>
+
+      {/* CTA Section */}
+      <Box py={16} bg="gray.100">
+        <Container maxW="7xl">
+          <Flex
+            direction={{ base: 'column', md: 'row' }}
+            align="center"
+            justify="space-between"
+            gap={8}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+            <VStack align={{ base: 'center', md: 'start' }} spacing={4}>
+              <Heading size="lg">Subscribe to Our Newsletter</Heading>
+              <Text color="gray.600">
+                Get exclusive offers and be the first to know about new collections
+              </Text>
+            </VStack>
+            <Button size="lg" colorScheme="brand">
+              Subscribe Now
+            </Button>
+          </Flex>
+        </Container>
+      </Box>
+
+      {/* Footer */}
+      <Box bg="gray.800" color="white" py={12}>
+        <Container maxW="7xl">
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
+            <VStack align="start" spacing={4}>
+              <Heading size="md">About Us</Heading>
+              <Text fontSize="sm" color="gray.400">
+                Luxe Diamonds has been crafting exceptional jewelry for over 50 years,
+                combining traditional craftsmanship with modern design.
+              </Text>
+            </VStack>
+            <VStack align="start" spacing={4}>
+              <Heading size="md">Quick Links</Heading>
+              <VStack align="start" spacing={2}>
+                <Text as={NextLink} href="/catalog" fontSize="sm" color="gray.400" _hover={{ color: 'white' }}>
+                  Shop
+                </Text>
+                <Text as={NextLink} href="/about" fontSize="sm" color="gray.400" _hover={{ color: 'white' }}>
+                  About
+                </Text>
+                <Text as={NextLink} href="/contact" fontSize="sm" color="gray.400" _hover={{ color: 'white' }}>
+                  Contact
+                </Text>
+              </VStack>
+            </VStack>
+            <VStack align="start" spacing={4}>
+              <Heading size="md">Contact</Heading>
+              <VStack align="start" spacing={2}>
+                <Text fontSize="sm" color="gray.400">
+                  Email: hello@luxediamonds.com
+                </Text>
+                <Text fontSize="sm" color="gray.400">
+                  Phone: 1-800-DIAMONDS
+                </Text>
+              </VStack>
+            </VStack>
+          </SimpleGrid>
+          <Box borderTopWidth={1} borderColor="gray.700" mt={8} pt={8} textAlign="center">
+            <Text fontSize="sm" color="gray.400">
+              © 2024 Luxe Diamonds. All rights reserved.
+            </Text>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
+  )
 }
