@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import {
   Box,
   Container,
@@ -18,13 +18,15 @@ import {
   Link,
   Divider,
   HStack,
+  Spinner,
+  Center,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { FaGoogle, FaEnvelope } from 'react-icons/fa'
 
-export default function SignInPage() {
+function SignInContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const toast = useToast()
@@ -164,5 +166,24 @@ export default function SignInPage() {
         </VStack>
       </Container>
     </Box>
+  )
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={
+      <Box minH="100vh" bg="gray.50" py={20}>
+        <Container maxW="md">
+          <Center h="50vh">
+            <VStack spacing={4}>
+              <Spinner size="xl" color="brand.500" thickness="4px" />
+              <Text fontSize="lg" color="gray.600">Loading...</Text>
+            </VStack>
+          </Center>
+        </Container>
+      </Box>
+    }>
+      <SignInContent />
+    </Suspense>
   )
 }

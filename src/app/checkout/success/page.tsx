@@ -1,12 +1,12 @@
 'use client'
 
-import React from 'react'
-import { 
-  Box, 
-  Container, 
-  VStack, 
-  Heading, 
-  Text, 
+import React, { Suspense } from 'react'
+import {
+  Box,
+  Container,
+  VStack,
+  Heading,
+  Text,
   Button,
   Icon,
   HStack,
@@ -20,7 +20,7 @@ import Header from '@/components/layout/Header'
 import { useSession } from 'next-auth/react'
 import NextLink from 'next/link'
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { data: session } = useSession()
@@ -145,5 +145,25 @@ export default function CheckoutSuccessPage() {
         </VStack>
       </Container>
     </Box>
+  )
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <Box minH="100vh" bg="gray.50">
+        <Header />
+        <Container maxW="4xl" py={20}>
+          <Center>
+            <VStack spacing={4}>
+              <Spinner size="xl" color="brand.500" thickness="4px" />
+              <Text fontSize="lg" color="gray.600">Loading...</Text>
+            </VStack>
+          </Center>
+        </Container>
+      </Box>
+    }>
+      <CheckoutSuccessContent />
+    </Suspense>
   )
 }
