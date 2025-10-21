@@ -40,7 +40,7 @@ export default function CatalogPage() {
   const [sortBy, setSortBy] = React.useState('featured')
   const [filters, setFilters] = React.useState<FilterState>({
     categories: [],
-    priceRange: [0, 100000],
+    priceRange: [0, 10000000], // $100,000 max - high enough for luxury diamonds
     caratRange: [0, 10],
     inStock: false,
   })
@@ -72,9 +72,9 @@ export default function CatalogPage() {
       }
       
       // Apply price filter
-      allProducts = allProducts.filter((p: Product) => 
-        p.price >= filters.priceRange[0] * 100 && 
-        p.price <= filters.priceRange[1] * 100
+      allProducts = allProducts.filter((p: Product) =>
+        p.price >= filters.priceRange[0] &&
+        p.price <= filters.priceRange[1]
       )
       
       // Apply carat filter
@@ -128,15 +128,15 @@ export default function CatalogPage() {
   const clearAllFilters = () => {
     setFilters({
       categories: [],
-      priceRange: [0, 100000],
+      priceRange: [0, 10000000],
       caratRange: [0, 10],
       inStock: false,
     })
   }
 
-  const activeFiltersCount = 
+  const activeFiltersCount =
     filters.categories.length +
-    (filters.priceRange[0] > 0 || filters.priceRange[1] < 100000 ? 1 : 0) +
+    (filters.priceRange[0] > 0 || filters.priceRange[1] < 10000000 ? 1 : 0) +
     (filters.caratRange[0] > 0 || filters.caratRange[1] < 10 ? 1 : 0) +
     (filters.inStock ? 1 : 0)
 
@@ -214,7 +214,7 @@ export default function CatalogPage() {
             <FiltersPanel
               categories={categories}
               onFiltersChange={handleFiltersChange}
-              maxPrice={100000}
+              maxPrice={10000000}
               minPrice={0}
             />
           </Box>
@@ -240,7 +240,7 @@ export default function CatalogPage() {
             <FiltersPanel
               categories={categories}
               onFiltersChange={handleFiltersChange}
-              maxPrice={100000}
+              maxPrice={10000000}
               minPrice={0}
             />
           </DrawerBody>

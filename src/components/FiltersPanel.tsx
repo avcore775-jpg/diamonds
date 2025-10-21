@@ -41,21 +41,22 @@ export interface FilterState {
 export default function FiltersPanel({
   categories = [],
   onFiltersChange,
-  maxPrice = 100000,
+  maxPrice = 10000000,
   minPrice = 0,
 }: FiltersPanelProps) {
   const [filters, setFilters] = React.useState<FilterState>({
     categories: [],
-    priceRange: [minPrice / 100, maxPrice / 100],
+    priceRange: [minPrice, maxPrice],
     caratRange: [0, 10],
     inStock: false,
   })
 
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>([])
 
-  const handleCategoryChange = (categories: string[]) => {
-    setSelectedCategories(categories)
-    const newFilters = { ...filters, categories }
+  const handleCategoryChange = (categories: string | string[]) => {
+    const categoryArray = Array.isArray(categories) ? categories : [categories]
+    setSelectedCategories(categoryArray)
+    const newFilters = { ...filters, categories: categoryArray }
     setFilters(newFilters)
     onFiltersChange?.(newFilters)
   }
@@ -91,7 +92,7 @@ export default function FiltersPanel({
   const clearFilters = () => {
     const newFilters: FilterState = {
       categories: [],
-      priceRange: [minPrice / 100, maxPrice / 100],
+      priceRange: [minPrice, maxPrice],
       caratRange: [0, 10],
       inStock: false,
     }
@@ -102,8 +103,8 @@ export default function FiltersPanel({
 
   const hasActiveFilters =
     filters.categories.length > 0 ||
-    filters.priceRange[0] !== minPrice / 100 ||
-    filters.priceRange[1] !== maxPrice / 100 ||
+    filters.priceRange[0] !== minPrice ||
+    filters.priceRange[1] !== maxPrice ||
     filters.caratRange[0] !== 0 ||
     filters.caratRange[1] !== 10 ||
     filters.inStock
@@ -155,12 +156,12 @@ export default function FiltersPanel({
             <AccordionPanel px={0} pb={4}>
               <VStack spacing={4} align="stretch">
                 <HStack justify="space-between">
-                  <Badge>${filters.priceRange[0]}</Badge>
-                  <Badge>${filters.priceRange[1]}</Badge>
+                  <Badge>${(filters.priceRange[0] / 100).toFixed(0)}</Badge>
+                  <Badge>${(filters.priceRange[1] / 100).toFixed(0)}</Badge>
                 </HStack>
                 <RangeSlider
-                  min={minPrice / 100}
-                  max={maxPrice / 100}
+                  min={minPrice}
+                  max={maxPrice}
                   step={100}
                   value={filters.priceRange}
                   onChange={handlePriceChange}

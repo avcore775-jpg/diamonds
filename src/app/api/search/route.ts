@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { handleError, AppError } from '@/lib/middleware/errorHandler'
 import { rateLimit } from '@/lib/middleware/rateLimiter'
 import { validateRequest, searchSchema } from '@/lib/validations'
