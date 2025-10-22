@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { ChakraProvider } from "@/components/providers/ChakraProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const urbanist = Urbanist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Luxe Diamonds - Premium Jewelry Store",
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={urbanist.className}>
         <ChakraProvider>
           <AuthProvider>
             {children}
