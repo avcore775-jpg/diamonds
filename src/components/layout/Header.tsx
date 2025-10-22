@@ -69,14 +69,15 @@ export default function Header() {
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
+        bg="rgba(0, 0, 0, 0.8)"
+        backdropFilter="blur(10px)"
+        color="white"
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor="rgba(212, 175, 55, 0.3)"
         align={'center'}
       >
         <Flex
@@ -103,7 +104,7 @@ export default function Header() {
                 fontFamily={'heading'}
                 fontWeight="bold"
                 fontSize="xl"
-                color={useColorModeValue('gray.800', 'white')}
+                color="white"
               >
                 Luxe Diamonds
               </Text>
@@ -120,7 +121,7 @@ export default function Header() {
           <form onSubmit={handleSearch}>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
-                <SearchIcon color="gray.300" />
+                <SearchIcon color="gold.500" />
               </InputLeftElement>
               <Input
                 type="text"
@@ -267,9 +268,9 @@ export default function Header() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200')
-  const linkHoverColor = useColorModeValue('gray.800', 'white')
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800')
+  const linkColor = 'white'
+  const linkHoverColor = 'gold.500'
+  const popoverContentBgColor = 'rgba(0, 0, 0, 0.95)'
 
   return (
     <Stack direction={'row'} spacing={4}>
@@ -287,6 +288,7 @@ const DesktopNav = () => {
                 _hover={{
                   textDecoration: 'none',
                   color: linkHoverColor,
+                  textShadow: '0 0 10px rgba(212, 175, 55, 0.5)',
                 }}
               >
                 {navItem.label}
@@ -295,9 +297,11 @@ const DesktopNav = () => {
 
             {navItem.children && (
               <PopoverContent
-                border={0}
-                boxShadow={'xl'}
+                border="1px solid"
+                borderColor="rgba(212, 175, 55, 0.3)"
+                boxShadow="0 0 30px rgba(212, 175, 55, 0.2)"
                 bg={popoverContentBgColor}
+                backdropFilter="blur(10px)"
                 p={4}
                 rounded={'xl'}
                 minW={'sm'}
@@ -325,18 +329,22 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       display={'block'}
       p={2}
       rounded={'md'}
-      _hover={{ bg: useColorModeValue('brand.50', 'gray.900') }}
+      _hover={{
+        bg: 'rgba(212, 175, 55, 0.1)',
+        borderColor: 'rgba(212, 175, 55, 0.3)',
+      }}
     >
       <Stack direction={'row'} align={'center'}>
         <Box>
           <Text
             transition={'all .3s ease'}
-            _groupHover={{ color: 'brand.500' }}
+            _groupHover={{ color: 'gold.500' }}
             fontWeight={500}
+            color="white"
           >
             {label}
           </Text>
-          <Text fontSize={'sm'}>{subLabel}</Text>
+          <Text fontSize={'sm'} color="gray.300">{subLabel}</Text>
         </Box>
         <Flex
           transition={'all .3s ease'}
@@ -347,7 +355,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           align={'center'}
           flex={1}
         >
-          <Icon color={'brand.500'} w={5} h={5} as={ChevronDownIcon} />
+          <Icon color={'gold.500'} w={5} h={5} as={ChevronDownIcon} />
         </Flex>
       </Stack>
     </Link>
@@ -357,9 +365,12 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 const MobileNav = () => {
   return (
     <Stack
-      bg={useColorModeValue('white', 'gray.800')}
+      bg="rgba(0, 0, 0, 0.95)"
+      backdropFilter="blur(10px)"
       p={4}
       display={{ md: 'none' }}
+      borderBottom="1px solid"
+      borderColor="rgba(212, 175, 55, 0.3)"
     >
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
@@ -381,11 +392,12 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         align={'center'}
         _hover={{
           textDecoration: 'none',
+          color: 'gold.500',
         }}
       >
         <Text
           fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}
+          color="white"
         >
           {label}
         </Text>
@@ -396,6 +408,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
             transform={isOpen ? 'rotate(180deg)' : ''}
             w={6}
             h={6}
+            color="gold.500"
           />
         )}
       </Flex>
@@ -406,12 +419,19 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           pl={4}
           borderLeft={1}
           borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          borderColor="rgba(212, 175, 55, 0.3)"
           align={'start'}
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} as={NextLink} py={2} href={child.href}>
+              <Link
+                key={child.label}
+                as={NextLink}
+                py={2}
+                href={child.href}
+                color="white"
+                _hover={{ color: 'gold.500' }}
+              >
                 {child.label}
               </Link>
             ))}

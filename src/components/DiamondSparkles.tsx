@@ -29,14 +29,14 @@ export function DiamondSparkles() {
 
     // Generate sparkles - elegant diamond reflections
     const sparkles: Sparkle[] = []
-    const sparkleCount = 80 // Subtle amount of sparkles
+    const sparkleCount = 55 // Subtle amount of sparkles
 
     for (let i = 0; i < sparkleCount; i++) {
       sparkles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        delay: Math.random() * 10000, // Random start time
-        duration: 2000 + Math.random() * 3000, // 2-5 seconds fade
+        delay: Math.random() * 14000, // Random start time (0-14 seconds)
+        duration: 7000, // 7 seconds fade in/out cycle
       })
     }
 
