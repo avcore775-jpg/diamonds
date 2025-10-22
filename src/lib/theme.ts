@@ -16,8 +16,8 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: 'Inter, system-ui, sans-serif',
-    body: 'Inter, system-ui, sans-serif',
+    heading: 'Urbanist, system-ui, sans-serif',
+    body: 'Urbanist, system-ui, sans-serif',
   },
   styles: {
     global: {
