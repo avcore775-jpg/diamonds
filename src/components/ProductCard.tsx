@@ -21,6 +21,7 @@ import { apiClient } from '@/lib/api/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { mutate } from 'swr'
+import { ScrollAnimation } from './ScrollAnimation'
 
 interface ProductCardProps {
   product: Product
@@ -114,17 +115,17 @@ export default function ProductCard({
     : 0
 
   return (
-    <Card
-      as={NextLink}
-      href={`/product/${product.slug || product.id}`}
-      maxW="sm"
-      cursor="pointer"
-      transition="all 0.2s"
-      _hover={{
-        transform: 'translateY(-4px)',
-        boxShadow: 'lg',
-      }}
-    >
+    <ScrollAnimation animation="slide-up" duration={0.6}>
+      <Card
+        as={NextLink}
+        href={`/product/${product.slug || product.id}`}
+        maxW="sm"
+        cursor="pointer"
+        bg="#FFFFFF"
+        border="2px solid"
+        borderColor="green.500"
+        color="#000000"
+      >
       <Box position="relative" height="300px" width="100%" overflow="hidden">
         <NextImage
           src={product.image || '/placeholder.jpg'}
@@ -175,8 +176,14 @@ export default function ProductCard({
           size="sm"
           variant="solid"
           bg="white"
+          color="green.500"
           opacity={0.9}
-          _hover={{ opacity: 1 }}
+          _hover={{
+            opacity: 1,
+            transform: "scale(1.15)",
+            color: "green.600",
+            boxShadow: "0 0 15px rgba(16, 185, 129, 0.4)",
+          }}
           onClick={handleAddToWishlist}
           isLoading={isAddingToWishlist}
         />
@@ -184,32 +191,32 @@ export default function ProductCard({
 
       <CardBody>
         <VStack spacing={3} align="stretch">
-          <Text fontSize="lg" fontWeight="semibold" noOfLines={2}>
+          <Text fontSize="lg" fontWeight="semibold" noOfLines={2} color="#000000">
             {product.name}
           </Text>
 
           {product.category && (
-            <Badge colorScheme="brand" width="fit-content">
+            <Badge colorScheme="green" width="fit-content">
               {product.category.name}
             </Badge>
           )}
 
-          <Text fontSize="sm" color="gray.600" noOfLines={2}>
+          <Text fontSize="sm" color="gray.700" noOfLines={2}>
             {product.description}
           </Text>
 
           {product.carat && (
-            <Text fontSize="xs" color="gray.500">
+            <Text fontSize="xs" color="gray.600">
               {product.carat} carats
             </Text>
           )}
 
           <HStack spacing={2}>
-            <Text fontSize="xl" fontWeight="bold" color="brand.600">
+            <Text fontSize="xl" fontWeight="bold" color="#000000">
               {formatPrice(product.price)}
             </Text>
             {product.comparePrice && (
-              <Text fontSize="sm" color="gray.400" textDecoration="line-through">
+              <Text fontSize="sm" color="gray.500" textDecoration="line-through">
                 {formatPrice(product.comparePrice)}
               </Text>
             )}
@@ -217,17 +224,25 @@ export default function ProductCard({
 
           <Button
             leftIcon={<FaShoppingCart />}
-            colorScheme="brand"
+            colorScheme="green"
             size="md"
             width="full"
             onClick={handleAddToCart}
             isLoading={isAddingToCart}
             isDisabled={product.stock === 0}
+            bg="green.500"
+            color="white"
+            _hover={{
+              bg: "green.600",
+              transform: "translateY(-3px) scale(1.02)",
+              boxShadow: "0 0 20px rgba(16, 185, 129, 0.5)",
+            }}
           >
             {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
           </Button>
         </VStack>
       </CardBody>
     </Card>
+    </ScrollAnimation>
   )
 }

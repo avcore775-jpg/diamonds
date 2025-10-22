@@ -26,6 +26,18 @@ const theme = extendTheme({
       800: '#80600C',
       900: '#644604',
     },
+    green: {
+      50: '#E6F9F0',
+      100: '#B3EDDA',
+      200: '#80E1C3',
+      300: '#4DD5AD',
+      400: '#2DC997',
+      500: '#10B981', // Main green for product cards
+      600: '#0D9668',
+      700: '#0A7350',
+      800: '#075037',
+      900: '#042D1F',
+    },
   },
   fonts: {
     heading: 'Urbanist, system-ui, sans-serif',
@@ -50,7 +62,7 @@ const theme = extendTheme({
       baseStyle: {
         fontWeight: '500',
         borderRadius: 'md',
-        transition: 'all 0.3s ease',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       },
       variants: {
         solid: {
@@ -61,11 +73,11 @@ const theme = extendTheme({
           _hover: {
             bg: 'gold.500',
             color: 'black',
-            boxShadow: '0 0 20px rgba(212, 175, 55, 0.6), 0 0 40px rgba(212, 175, 55, 0.3)',
-            transform: 'translateY(-2px)',
+            boxShadow: '0 0 25px rgba(212, 175, 55, 0.7), 0 0 50px rgba(212, 175, 55, 0.4), 0 10px 30px rgba(0, 0, 0, 0.3)',
+            transform: 'translateY(-4px) scale(1.02)',
           },
           _active: {
-            transform: 'translateY(0)',
+            transform: 'translateY(-1px) scale(1)',
           },
         },
         outline: {
@@ -73,14 +85,22 @@ const theme = extendTheme({
           borderColor: 'gold.500',
           border: '2px solid',
           _hover: {
-            bg: 'rgba(212, 175, 55, 0.1)',
-            boxShadow: '0 0 15px rgba(212, 175, 55, 0.4)',
+            bg: 'rgba(212, 175, 55, 0.15)',
+            boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+            transform: 'translateY(-3px)',
+          },
+          _active: {
+            transform: 'translateY(-1px)',
           },
         },
         ghost: {
           color: 'gold.500',
           _hover: {
             bg: 'rgba(212, 175, 55, 0.1)',
+            transform: 'translateY(-2px)',
+          },
+          _active: {
+            transform: 'translateY(0)',
           },
         },
       },
@@ -91,16 +111,32 @@ const theme = extendTheme({
     Card: {
       baseStyle: {
         container: {
-          bg: 'rgba(0, 0, 0, 0.6)',
+          bg: '#FFFFFF', // White background for product cards
           backdropFilter: 'blur(10px)',
-          border: '1px solid',
-          borderColor: 'rgba(212, 175, 55, 0.2)',
+          border: '2px solid',
+          borderColor: 'green.500', // Green border
           borderRadius: 'lg',
           overflow: 'hidden',
-          transition: 'all 0.3s ease',
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           _hover: {
-            borderColor: 'rgba(212, 175, 55, 0.4)',
-            boxShadow: '0 0 30px rgba(212, 175, 55, 0.2)',
+            borderColor: 'green.400',
+            boxShadow: '0 0 35px rgba(16, 185, 129, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)',
+            transform: 'translateY(-8px) scale(1.02)',
+          },
+        },
+      },
+      variants: {
+        productCard: {
+          container: {
+            bg: '#FFFFFF',
+            border: '2px solid',
+            borderColor: 'green.500',
+            color: '#000000',
+            _hover: {
+              borderColor: 'green.400',
+              boxShadow: '0 0 35px rgba(16, 185, 129, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)',
+              transform: 'translateY(-8px) scale(1.02)',
+            },
           },
         },
       },
@@ -135,13 +171,33 @@ const theme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        color: 'white',
         fontWeight: '600',
       },
     },
     Text: {
       baseStyle: {
-        color: 'white',
+        // No default color, inherit from parent
+      },
+    },
+    IconButton: {
+      baseStyle: {
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+      variants: {
+        ghost: {
+          _hover: {
+            transform: 'translateY(-2px) scale(1.05)',
+            boxShadow: '0 0 15px rgba(212, 175, 55, 0.3)',
+          },
+        },
+      },
+    },
+    Link: {
+      baseStyle: {
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        _hover: {
+          transform: 'translateY(-1px)',
+        },
       },
     },
   },

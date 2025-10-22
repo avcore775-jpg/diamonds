@@ -7,6 +7,15 @@ interface Sparkle {
   y: number
   delay: number
   duration: number
+  size: number
+}
+
+interface Star {
+  x: number
+  y: number
+  size: number
+  opacity: number
+  twinkleSpeed: number
 }
 
 export function DiamondSparkles() {
@@ -27,6 +36,20 @@ export function DiamondSparkles() {
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
+    // Generate background stars for galaxy effect (subtle shimmer)
+    const stars: Star[] = []
+    const starCount = 150 // More stars for galaxy effect
+
+    for (let i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.5 + 0.5,
+        opacity: Math.random() * 0.3 + 0.1,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+      })
+    }
+
     // Generate sparkles - elegant diamond reflections
     const sparkles: Sparkle[] = []
     const sparkleCount = 55 // Subtle amount of sparkles
@@ -37,6 +60,7 @@ export function DiamondSparkles() {
         y: Math.random() * canvas.height,
         delay: Math.random() * 14000, // Random start time (0-14 seconds)
         duration: 7000, // 7 seconds fade in/out cycle
+        size: Math.random() * 2 + 2, // Varied sizes
       })
     }
 
@@ -46,10 +70,34 @@ export function DiamondSparkles() {
       const currentTime = Date.now()
       const elapsed = currentTime - startTime
 
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      // Create deep galaxy black gradient background
+      const gradient = ctx.createRadialGradient(
+        canvas.width / 2,
+        canvas.height / 2,
+        0,
+        canvas.width / 2,
+        canvas.height / 2,
+        Math.max(canvas.width, canvas.height)
+      )
+      gradient.addColorStop(0, '#0a0a0a') // Slightly lighter center
+      gradient.addColorStop(0.5, '#050505') // Very dark
+      gradient.addColorStop(1, '#000000') // Pure black edges
 
-      // Draw sparkles
+      ctx.fillStyle = gradient
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      // Draw twinkling stars for shimmer effect
+      stars.forEach((star, index) => {
+        const twinkle = Math.sin(elapsed * star.twinkleSpeed + index) * 0.5 + 0.5
+        const opacity = star.opacity * twinkle
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`
+        ctx.beginPath()
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2)
+        ctx.fill()
+      })
+
+      // Draw golden sparkles
       sparkles.forEach((sparkle) => {
         const cycleTime = (elapsed + sparkle.delay) % (sparkle.duration * 2)
         let opacity = 0
@@ -72,7 +120,7 @@ export function DiamondSparkles() {
           0,
           sparkle.x,
           sparkle.y,
-          3
+          sparkle.size
         )
         gradient.addColorStop(0, `rgba(212, 175, 55, ${opacity})`) // Gold center
         gradient.addColorStop(0.5, `rgba(212, 175, 55, ${opacity * 0.5})`)
@@ -80,7 +128,7 @@ export function DiamondSparkles() {
 
         ctx.fillStyle = gradient
         ctx.beginPath()
-        ctx.arc(sparkle.x, sparkle.y, 3, 0, Math.PI * 2)
+        ctx.arc(sparkle.x, sparkle.y, sparkle.size, 0, Math.PI * 2)
         ctx.fill()
       })
 
@@ -98,7 +146,6 @@ export function DiamondSparkles() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ background: '#000000' }}
     />
   )
 }
