@@ -17,6 +17,7 @@ import {
 import { FaGem, FaTruck, FaShieldAlt, FaCertificate } from 'react-icons/fa'
 import Header from '@/components/layout/Header'
 import ProductGrid from '@/components/ProductGrid'
+import { ScrollAnimation } from '@/components/ScrollAnimation'
 import { apiClient } from '@/lib/api/client'
 import useSWR from 'swr'
 
@@ -30,7 +31,7 @@ export default function HomePage() {
   )
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
 
       {/* Hero Section */}
@@ -97,46 +98,48 @@ export default function HomePage() {
       {/* Features */}
       <Box py={16}>
         <Container maxW="7xl">
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+          <ScrollAnimation animation="fade-in">
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
             <VStack spacing={4}>
-              <Icon as={FaGem} boxSize={10} color="brand.500" />
-              <Heading size="md">Premium Quality</Heading>
-              <Text textAlign="center" color="gray.600">
+              <Icon as={FaGem} boxSize={10} color="gold.500" />
+              <Heading size="md" color="white">Premium Quality</Heading>
+              <Text textAlign="center" color="gray.300">
                 Ethically sourced diamonds with GIA certification
               </Text>
             </VStack>
             <VStack spacing={4}>
-              <Icon as={FaTruck} boxSize={10} color="brand.500" />
-              <Heading size="md">Free Shipping</Heading>
-              <Text textAlign="center" color="gray.600">
+              <Icon as={FaTruck} boxSize={10} color="gold.500" />
+              <Heading size="md" color="white">Free Shipping</Heading>
+              <Text textAlign="center" color="gray.300">
                 Complimentary shipping on all orders over $1000
               </Text>
             </VStack>
             <VStack spacing={4}>
-              <Icon as={FaShieldAlt} boxSize={10} color="brand.500" />
-              <Heading size="md">Secure Payment</Heading>
-              <Text textAlign="center" color="gray.600">
+              <Icon as={FaShieldAlt} boxSize={10} color="gold.500" />
+              <Heading size="md" color="white">Secure Payment</Heading>
+              <Text textAlign="center" color="gray.300">
                 256-bit SSL encryption for all transactions
               </Text>
             </VStack>
             <VStack spacing={4}>
-              <Icon as={FaCertificate} boxSize={10} color="brand.500" />
-              <Heading size="md">Lifetime Warranty</Heading>
-              <Text textAlign="center" color="gray.600">
+              <Icon as={FaCertificate} boxSize={10} color="gold.500" />
+              <Heading size="md" color="white">Lifetime Warranty</Heading>
+              <Text textAlign="center" color="gray.300">
                 Comprehensive warranty on all our jewelry
               </Text>
             </VStack>
           </SimpleGrid>
+          </ScrollAnimation>
         </Container>
       </Box>
 
       {/* Featured Products */}
-      <Box py={16} bg="white">
+      <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={12}>
             <VStack spacing={4} textAlign="center">
-              <Heading size="xl">Featured Collection</Heading>
-              <Text fontSize="lg" color="gray.600">
+              <Heading size="xl" color="white">Featured Collection</Heading>
+              <Text fontSize="lg" color="gray.300">
                 Handpicked pieces from our master craftsmen
               </Text>
             </VStack>
@@ -160,7 +163,7 @@ export default function HomePage() {
       </Box>
 
       {/* CTA Section */}
-      <Box py={16} bg="gray.100">
+      <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <Flex
             direction={{ base: 'column', md: 'row' }}
@@ -169,12 +172,12 @@ export default function HomePage() {
             gap={8}
           >
             <VStack align={{ base: 'center', md: 'start' }} spacing={4}>
-              <Heading size="lg">Subscribe to Our Newsletter</Heading>
-              <Text color="gray.600">
+              <Heading size="lg" color="white">Subscribe to Our Newsletter</Heading>
+              <Text color="gray.300">
                 Get exclusive offers and be the first to know about new collections
               </Text>
             </VStack>
-            <Button size="lg" colorScheme="brand">
+            <Button size="lg" colorScheme="gold" variant="solid">
               Subscribe Now
             </Button>
           </Flex>
