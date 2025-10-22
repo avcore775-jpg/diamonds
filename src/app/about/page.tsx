@@ -88,9 +88,7 @@ export default function AboutPage() {
                 A Legacy of Excellence
               </Heading>
               <Text fontSize="lg" color="gray.700" lineHeight="tall">
-                Our journey began with a simple vision: to make the world's finest diamonds
-                accessible to those who appreciate true beauty and craftsmanship. What started
-                as a small boutique has grown into a trusted name in luxury jewelry.
+               Remy Sales opened our doors in Toronto in 1960 with the ambition of offering our customers the best quality wholesale jewelry at the lowest possible prices. During the half century that has gone by since then, we have become one of Toronto’s largest and most trusted wholesale jewelry suppliers.
               </Text>
               <Text fontSize="lg" color="gray.700" lineHeight="tall">
                 Every piece in our collection tells a story of dedication, artistry, and passion.
