@@ -143,7 +143,7 @@ export default function FiltersPanel({
             </AccordionPanel>
           </AccordionItem>
 
-          <Divider />
+          <Divider borderColor="gold.500" opacity={0.3} />
 
           {/* Price Filter */}
           <AccordionItem border="none">
@@ -177,7 +177,7 @@ export default function FiltersPanel({
             </AccordionPanel>
           </AccordionItem>
 
-          <Divider />
+          <Divider borderColor="gold.500" opacity={0.3} />
 
           {/* Carat Filter */}
           <AccordionItem border="none">
@@ -211,7 +211,7 @@ export default function FiltersPanel({
             </AccordionPanel>
           </AccordionItem>
 
-          <Divider />
+          <Divider borderColor="gold.500" opacity={0.3} />
 
           {/* Stock Filter */}
           <AccordionItem border="none">
