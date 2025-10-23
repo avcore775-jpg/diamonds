@@ -208,7 +208,7 @@ export default function CheckoutPage() {
 
   if (!session || cartLoading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={8}>
           <Skeleton height="600px" />
@@ -219,7 +219,7 @@ export default function CheckoutPage() {
 
   if (!cart?.items || cart.items.length === 0) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={20}>
           <VStack spacing={4}>
@@ -238,7 +238,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="7xl" py={8}>

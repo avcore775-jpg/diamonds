@@ -95,7 +95,7 @@ export default function CartPage() {
 
   if (!session) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={20}>
           <Center>
@@ -118,7 +118,7 @@ export default function CartPage() {
 
   if (isLoading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={8}>
           <Heading mb={8}>Shopping Cart</Heading>
@@ -141,7 +141,7 @@ export default function CartPage() {
   const total = subtotal + shipping + tax
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="7xl" py={8}>

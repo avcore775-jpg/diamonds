@@ -178,7 +178,7 @@ export default function OrdersPage() {
 
   if (status === 'loading' || loading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="6xl" py={8}>
           <VStack spacing={4}>
@@ -195,7 +195,7 @@ export default function OrdersPage() {
   }
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="6xl" py={8}>
@@ -401,7 +401,7 @@ export default function OrdersPage() {
                 {/* Shipping Address */}
                 <Box>
                   <Heading size="sm" mb={4}>Shipping Address</Heading>
-                  <Box p={4} bg="gray.50" rounded="md">
+                  <Box p={4} bg="transparent" rounded="md">
                     <VStack align="start" spacing={1}>
                       <Text fontWeight="medium">{selectedOrder.shippingAddress.name}</Text>
                       <Text>{selectedOrder.shippingAddress.street}</Text>

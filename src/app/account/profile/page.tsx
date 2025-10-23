@@ -172,7 +172,7 @@ export default function ProfilePage() {
 
   if (status === 'loading' || loading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="4xl" py={8}>
           <VStack spacing={4}>
@@ -189,7 +189,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="4xl" py={8}>
@@ -275,7 +275,7 @@ export default function ProfilePage() {
                           placeholder="Enter your full name"
                         />
                       ) : (
-                        <Text py={2} px={3} bg="gray.50" rounded="md">
+                        <Text py={2} px={3} bg="transparent" rounded="md">
                           {profile?.name || 'Not set'}
                         </Text>
                       )}
@@ -289,7 +289,7 @@ export default function ProfilePage() {
                           <Text>Email Address</Text>
                         </HStack>
                       </FormLabel>
-                      <Text py={2} px={3} bg="gray.50" rounded="md">
+                      <Text py={2} px={3} bg="transparent" rounded="md">
                         {profile?.email}
                       </Text>
                       <Text fontSize="sm" color="gray.500" mt={1}>
@@ -312,7 +312,7 @@ export default function ProfilePage() {
                           type="tel"
                         />
                       ) : (
-                        <Text py={2} px={3} bg="gray.50" rounded="md">
+                        <Text py={2} px={3} bg="transparent" rounded="md">
                           {profile?.phone || 'Not set'}
                         </Text>
                       )}

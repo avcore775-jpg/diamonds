@@ -180,7 +180,7 @@ export default function AdminDashboard() {
 
   if (status === 'loading' || loading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={8}>
           <VStack spacing={4}>
@@ -197,7 +197,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="7xl" py={8}>

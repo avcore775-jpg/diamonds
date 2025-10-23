@@ -141,11 +141,11 @@ function CatalogContent() {
     (filters.inStock ? 1 : 0)
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
 
       {/* Breadcrumb */}
-      <Box bg="white" py={4} borderBottom="1px" borderColor="gray.200">
+      <Box bg="transparent" py={4} borderBottom="1px" borderColor="gray.200">
         <Container maxW="7xl">
           <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
             <BreadcrumbItem>
@@ -193,7 +193,7 @@ function CatalogContent() {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               maxW="200px"
-              bg="white"
+              bg="transparent"
             >
               <option value="featured">Featured</option>
               <option value="newest">Newest</option>
@@ -253,7 +253,7 @@ function CatalogContent() {
 export default function CatalogPage() {
   return (
     <Suspense fallback={
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={8}>
           <Text textAlign="center">Loading...</Text>

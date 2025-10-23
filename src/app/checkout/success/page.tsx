@@ -53,7 +53,7 @@ function CheckoutSuccessContent() {
   
   if (isLoading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="4xl" py={20}>
           <Center>
@@ -68,7 +68,7 @@ function CheckoutSuccessContent() {
   }
   
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="4xl" py={20}>
@@ -91,7 +91,7 @@ function CheckoutSuccessContent() {
           <Box 
             w="full" 
             p={8} 
-            bg="white" 
+            bg="transparent" 
             borderRadius="lg" 
             boxShadow="md"
             borderTop="4px solid"
@@ -151,7 +151,7 @@ function CheckoutSuccessContent() {
 export default function CheckoutSuccessPage() {
   return (
     <Suspense fallback={
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="4xl" py={20}>
           <Center>

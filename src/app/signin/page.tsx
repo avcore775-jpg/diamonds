@@ -84,7 +84,7 @@ function SignInContent() {
   }
 
   return (
-    <Box minH="100vh" bg="gray.50" py={20}>
+    <Box minH="100vh" bg="transparent" py={20}>
       <Container maxW="md">
         <VStack spacing={8}>
           <VStack spacing={2} textAlign="center">
@@ -172,7 +172,7 @@ function SignInContent() {
 export default function SignInPage() {
   return (
     <Suspense fallback={
-      <Box minH="100vh" bg="gray.50" py={20}>
+      <Box minH="100vh" bg="transparent" py={20}>
         <Container maxW="md">
           <Center h="50vh">
             <VStack spacing={4}>

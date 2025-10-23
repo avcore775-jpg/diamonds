@@ -23,10 +23,10 @@ import useSWR from 'swr'
 
 export default function HomePage() {
   const { data: featuredProducts, isLoading } = useSWR(
-    '/api/products/featured',
+    '/api/products?limit=4',
     async () => {
       const products = await apiClient.getProducts({ limit: 4 })
-      return products.filter((p: any) => p.isFeatured || p.price > 50000).slice(0, 4)
+      return products
     }
   )
 
@@ -68,7 +68,7 @@ export default function HomePage() {
                 as={NextLink}
                 href="/catalog"
                 size="lg"
-                bg="white"
+                bg="transparent"
                 color="brand.500"
                 _hover={{
                   transform: 'translateY(-2px)',
@@ -185,7 +185,7 @@ export default function HomePage() {
       </Box>
 
       {/* Footer */}
-      <Box bg="gray.800" color="white" py={12}>
+      <Box bg="transparent" color="white" py={12}>
         <Container maxW="7xl">
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
             <VStack align="start" spacing={4}>

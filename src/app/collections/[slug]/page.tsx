@@ -123,7 +123,7 @@ export default function CollectionPage({ params }: { params: Promise<{ slug: str
 
   if (isLoading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={12}>
           <Skeleton height="40px" width="300px" mb={4} />
@@ -150,7 +150,7 @@ export default function CollectionPage({ params }: { params: Promise<{ slug: str
   }
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="7xl" py={12}>

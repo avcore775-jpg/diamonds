@@ -137,7 +137,7 @@ export default function ProductDetailPage() {
 
   if (isLoading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={8}>
           <Grid templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }} gap={8}>
@@ -156,7 +156,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="7xl" py={8}>
           <VStack spacing={4} py={20}>
@@ -177,11 +177,11 @@ export default function ProductDetailPage() {
   const images = product.images?.length > 0 ? product.images : [product.image || '/placeholder.jpg']
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
 
       {/* Breadcrumb */}
-      <Box bg="white" py={4} borderBottom="1px" borderColor="gray.200">
+      <Box bg="transparent" py={4} borderBottom="1px" borderColor="gray.200">
         <Container maxW="7xl">
           <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
             <BreadcrumbItem>
@@ -358,7 +358,7 @@ export default function ProductDetailPage() {
               </VStack>
 
               {/* Shipping Info */}
-              <VStack spacing={3} align="stretch" p={4} bg="gray.50" borderRadius="md">
+              <VStack spacing={3} align="stretch" p={4} bg="transparent" borderRadius="md">
                 <HStack>
                   <Icon as={FaTruck} color="brand.500" />
                   <Text fontSize="sm">Free shipping on orders over $1,000</Text>

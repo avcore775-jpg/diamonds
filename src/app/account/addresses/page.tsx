@@ -324,7 +324,7 @@ export default function AddressesPage() {
 
   if (status === 'loading' || loading) {
     return (
-      <Box minH="100vh" bg="gray.50">
+      <Box minH="100vh" bg="transparent">
         <Header />
         <Container maxW="6xl" py={8}>
           <VStack spacing={4}>
@@ -341,7 +341,7 @@ export default function AddressesPage() {
   }
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="6xl" py={8}>

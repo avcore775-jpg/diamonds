@@ -55,7 +55,7 @@ export default function CollectionsPage() {
   }
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
       
       <Container maxW="7xl" py={12}>

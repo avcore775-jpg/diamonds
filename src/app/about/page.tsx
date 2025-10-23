@@ -51,7 +51,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
 
       {/* Hero Section */}
@@ -152,7 +152,7 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
               {values.map((value, index) => (
                 <Box
                   key={index}
-                  bg="white"
+                  bg="transparent"
                   p={8}
                   borderRadius="lg"
                   boxShadow="md"

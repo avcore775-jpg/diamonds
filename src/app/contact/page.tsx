@@ -92,7 +92,7 @@ export default function ContactPage() {
   ]
 
   return (
-    <Box minH="100vh" bg="gray.50">
+    <Box minH="100vh" bg="transparent">
       <Header />
 
       {/* Hero Section */}
@@ -121,7 +121,7 @@ export default function ContactPage() {
       <Container maxW="7xl" py={16}>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={12}>
           {/* Contact Form */}
-          <Box bg="white" p={8} borderRadius="lg" boxShadow="lg">
+          <Box bg="transparent" p={8} borderRadius="lg" boxShadow="lg">
             <VStack spacing={6} align="stretch">
               <VStack spacing={2} align="start">
                 <Heading size="lg" fontWeight="semibold">
@@ -223,7 +223,7 @@ export default function ContactPage() {
               {contactInfo.map((info, index) => (
                 <Box
                   key={index}
-                  bg="white"
+                  bg="transparent"
                   p={6}
                   borderRadius="lg"
                   boxShadow="md"
