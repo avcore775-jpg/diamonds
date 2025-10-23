@@ -19,13 +19,13 @@ export function ProductPlaceholder({ productName, category, className = "" }: Pr
 
   const type = getJewelryType()
 
-  // Different gradients for different jewelry types
+  // Different gradients for different jewelry types - all gold tones
   const gradients = {
-    ring: 'from-rose-100 via-pink-50 to-rose-100',
+    ring: 'from-amber-100 via-yellow-50 to-amber-100',
     necklace: 'from-amber-100 via-yellow-50 to-amber-100',
-    earring: 'from-purple-100 via-indigo-50 to-purple-100',
-    bracelet: 'from-blue-100 via-cyan-50 to-blue-100',
-    gem: 'from-gray-100 via-gray-50 to-gray-100'
+    earring: 'from-amber-100 via-yellow-50 to-amber-100',
+    bracelet: 'from-amber-100 via-yellow-50 to-amber-100',
+    gem: 'from-amber-100 via-yellow-50 to-amber-100'
   }
 
   const icons = {

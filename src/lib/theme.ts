@@ -26,18 +26,6 @@ const theme = extendTheme({
       800: '#80600C',
       900: '#644604',
     },
-    green: {
-      50: '#E6F9F0',
-      100: '#B3EDDA',
-      200: '#80E1C3',
-      300: '#4DD5AD',
-      400: '#2DC997',
-      500: '#10B981', // Main green for product cards
-      600: '#0D9668',
-      700: '#0A7350',
-      800: '#075037',
-      900: '#042D1F',
-    },
   },
   fonts: {
     heading: 'Urbanist, system-ui, sans-serif',
@@ -118,13 +106,13 @@ const theme = extendTheme({
           bg: '#FFFFFF', // White background for product cards
           backdropFilter: 'blur(10px)',
           border: '2px solid',
-          borderColor: 'green.500', // Green border
+          borderColor: 'gold.500', // Gold border
           borderRadius: 'lg',
           overflow: 'hidden',
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           _hover: {
-            borderColor: 'green.400',
-            boxShadow: '0 0 35px rgba(16, 185, 129, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)',
+            borderColor: 'gold.600',
+            boxShadow: '0 0 35px rgba(212, 175, 55, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)',
             transform: 'translateY(-8px) scale(1.02)',
           },
         },
@@ -134,11 +122,11 @@ const theme = extendTheme({
           container: {
             bg: '#FFFFFF',
             border: '2px solid',
-            borderColor: 'green.500',
+            borderColor: 'gold.500',
             color: '#000000',
             _hover: {
-              borderColor: 'green.400',
-              boxShadow: '0 0 35px rgba(16, 185, 129, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)',
+              borderColor: 'gold.600',
+              boxShadow: '0 0 35px rgba(212, 175, 55, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)',
               transform: 'translateY(-8px) scale(1.02)',
             },
           },
