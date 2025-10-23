@@ -90,11 +90,32 @@ export default function AboutPage() {
               <Text fontSize="lg" color="gray.700" lineHeight="tall">
                Remy Sales opened our doors in Toronto in 1960 with the ambition of offering our customers the best quality wholesale jewelry at the lowest possible prices. During the half century that has gone by since then, we have become one of Toronto’s largest and most trusted wholesale jewelry suppliers.
               </Text>
+              
               <Text fontSize="lg" color="gray.700" lineHeight="tall">
-                Every piece in our collection tells a story of dedication, artistry, and passion.
-                From engagement rings that mark life's most precious moments to statement pieces
-                that celebrate individual style, we are honored to be part of your journey.
+                Our selection of gold and diamond wedding bands is unmatched in the industry and sure to please the eye of even the most discerning jewelry connoisseur. However, if a custom piece is what you’re shopping for we can certainly accommodate that as well. Our expert jewelers can make you anything you can imagine.
               </Text>
+              
+              <Text fontSize="lg" color="gray.700" lineHeight="tall">
+
+                We specialize in 10K, 14K and 18K white and yellow gold as well as platinum engagement rings but are also capable of making any jewelry piece you need. To go with your custom designed setting, Remy Sales also offers one of the largest selections of diamonds and other precious gems. This includes a huge variety of fancy coloured stones such as yellow, pink and blue diamonds of varying sizes and cuts.
+
+
+                 </Text>
+
+              <Text fontSize="lg" color="gray.700" lineHeight="tall">
+
+                We maintain this large selection so that when combined with our position as a jewelry wholesaler, we can fulfill the dreams of all of our customers no matter what their budget looks like. This ability has helped us through the hard times of the past and has become especially important in today’s tough economy.
+                 </Text>
+
+              <Text fontSize="lg" color="gray.700" lineHeight="tall">
+We believe that just because the economy is bad, that shouldn’t stop anyone from getting the ring or other jewelry piece of their dreams to celebrate their special day whether it’s a wedding, anniversary or even a birthday. Come in or give us a call today to see what we can do for you to make your dream jewelry become a reality or to take advantage of our cash for gold service which always pays the highest possible amount for you old gold.
+                
+                 </Text>
+
+
+
+
+              
             </VStack>
             <Box
               borderRadius="lg"
