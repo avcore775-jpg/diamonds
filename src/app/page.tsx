@@ -73,13 +73,18 @@ export default function HomePage() {
                 href="/collections"
                 size="lg"
                 bg="transparent"
-                color="gold.500"
+                color="white"
                 border="2px solid"
                 borderColor="gold.500"
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
                   bg: 'rgba(212, 175, 55, 0.1)',
+                }}
+                _active={{
+                  bg: 'gold.500',
+                  color: 'black',
+                  transform: 'translateY(0)',
                 }}
               >
                 Shop Collection
@@ -89,13 +94,18 @@ export default function HomePage() {
                 href="/catalog"
                 size="lg"
                 bg="transparent"
-                color="gold.500"
+                color="white"
                 border="2px solid"
                 borderColor="gold.500"
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
                   bg: 'rgba(212, 175, 55, 0.1)',
+                }}
+                _active={{
+                  bg: 'gold.500',
+                  color: 'black',
+                  transform: 'translateY(0)',
                 }}
               >
                 Catalog
