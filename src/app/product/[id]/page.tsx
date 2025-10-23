@@ -382,48 +382,48 @@ export default function ProductDetailPage() {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Text color="white" fontSize="md" lineHeight="tall">{product.description}</Text>
+                <Text color="#FFFFFF" fontSize="md" lineHeight="1.8" opacity={1}>{product.description}</Text>
               </TabPanel>
               <TabPanel>
-                <VStack spacing={2} align="stretch">
+                <VStack spacing={3} align="stretch">
                   {product.sku && (
                     <HStack>
-                      <Text fontWeight="300" color="white">SKU:</Text>
-                      <Text color="white">{product.sku}</Text>
+                      <Text fontWeight="300" color="#FFFFFF">SKU:</Text>
+                      <Text color="#FFFFFF">{product.sku}</Text>
                     </HStack>
                   )}
                   {product.carat && (
                     <HStack>
-                      <Text fontWeight="300" color="white">Carat Weight:</Text>
-                      <Text color="white">{product.carat} ct</Text>
+                      <Text fontWeight="300" color="#FFFFFF">Carat Weight:</Text>
+                      <Text color="#FFFFFF">{product.carat} ct</Text>
                     </HStack>
                   )}
                   {product.weight && (
                     <HStack>
-                      <Text fontWeight="300" color="white">Total Weight:</Text>
-                      <Text color="white">{product.weight}g</Text>
+                      <Text fontWeight="300" color="#FFFFFF">Total Weight:</Text>
+                      <Text color="#FFFFFF">{product.weight}g</Text>
                     </HStack>
                   )}
                   {product.category && (
                     <HStack>
-                      <Text fontWeight="300" color="white">Category:</Text>
-                      <Text color="white">{product.category.name}</Text>
+                      <Text fontWeight="300" color="#FFFFFF">Category:</Text>
+                      <Text color="#FFFFFF">{product.category.name}</Text>
                     </HStack>
                   )}
                 </VStack>
               </TabPanel>
               <TabPanel>
                 <VStack spacing={4} align="stretch">
-                  <Text fontWeight="300" color="gold.500">Shipping</Text>
-                  <Text color="white">
+                  <Text fontWeight="300" color="gold.500" fontSize="lg">Shipping</Text>
+                  <Text color="#FFFFFF" lineHeight="1.8">
                     We offer free standard shipping on all orders over $1,000.
                     Standard shipping typically takes 3-5 business days.
                     Express shipping is available for an additional fee.
                   </Text>
-                  <Text fontWeight="300" color="gold.500">Returns</Text>
-                  <Text color="white">
-                    We accept returns within 30 days of purchase. 
-                    Items must be in original condition with all tags attached. 
+                  <Text fontWeight="300" color="gold.500" fontSize="lg">Returns</Text>
+                  <Text color="#FFFFFF" lineHeight="1.8">
+                    We accept returns within 30 days of purchase.
+                    Items must be in original condition with all tags attached.
                     Custom or personalized items are final sale.
                   </Text>
                 </VStack>
