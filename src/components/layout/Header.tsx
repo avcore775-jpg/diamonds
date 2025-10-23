@@ -106,7 +106,7 @@ export default function Header() {
                 fontSize="xl"
                 color="white"
               >
-                Luxe Diamonds
+                Remy Sales
               </Text>
             </HStack>
           </Link>
