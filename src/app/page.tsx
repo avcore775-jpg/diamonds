@@ -64,38 +64,41 @@ export default function HomePage() {
         
         <Container maxW="7xl" position="relative" zIndex={1}>
           <VStack spacing={8} textAlign="center">
-            <Heading as="h1" size="3xl" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.5)">
-              Luxe Diamonds
-            </Heading>
             <Text fontSize="2xl" maxW="600px" textShadow="1px 1px 2px rgba(0,0,0,0.5)">
               Discover our great collection of handcrafted jewelry and certified diamonds
             </Text>
             <HStack spacing={4}>
               <Button
                 as={NextLink}
-                href="/catalog"
+                href="/collections"
                 size="lg"
                 bg="transparent"
-                color="brand.500"
+                color="gold.500"
+                border="2px solid"
+                borderColor="gold.500"
                 _hover={{
                   transform: 'translateY(-2px)',
-                  boxShadow: 'lg',
+                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                  bg: 'rgba(212, 175, 55, 0.1)',
                 }}
               >
                 Shop Collection
               </Button>
               <Button
                 as={NextLink}
-                href="/about"
+                href="/catalog"
                 size="lg"
-                variant="outline"
-                borderColor="white"
-                color="white"
+                bg="transparent"
+                color="gold.500"
+                border="2px solid"
+                borderColor="gold.500"
                 _hover={{
-                  bg: 'whiteAlpha.200',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                  bg: 'rgba(212, 175, 55, 0.1)',
                 }}
               >
-                Learn More
+                Catalog
               </Button>
             </HStack>
           </VStack>
