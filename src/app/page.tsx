@@ -87,7 +87,7 @@ export default function HomePage() {
               textShadow="2px 2px 4px rgba(0,0,0,0.5)"
               color="white"
             >
-              Jewels That Speak
+              Jewellery That Speaks
             </Heading>
             <Heading
               as="h2"
