@@ -75,9 +75,6 @@ export default function Header() {
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={'solid'}
-        borderColor="rgba(212, 175, 55, 0.2)"
         align={'center'}
         position="absolute"
         top={0}
