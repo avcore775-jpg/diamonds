@@ -165,7 +165,7 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
                       boxSize={12}
                       color="blue.600"
                     />
-                    <Heading size="md" fontWeight="semibold">
+                    <Heading size="md" fontWeight="300">
                       {value.title}
                     </Heading>
                     <Text color="gray.600" lineHeight="tall">
@@ -194,19 +194,19 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
               </Text>
               <HStack spacing={8} pt={4}>
                 <VStack>
-                  <Text fontSize="4xl" fontWeight="bold" color="blue.600">
+                  <Text fontSize="4xl" fontWeight="300" color="blue.600">
                     100%
                   </Text>
                   <Text color="gray.600">Certified Diamonds</Text>
                 </VStack>
                 <VStack>
-                  <Text fontSize="4xl" fontWeight="bold" color="blue.600">
+                  <Text fontSize="4xl" fontWeight="300" color="blue.600">
                     50K+
                   </Text>
                   <Text color="gray.600">Happy Customers</Text>
                 </VStack>
                 <VStack>
-                  <Text fontSize="4xl" fontWeight="bold" color="blue.600">
+                  <Text fontSize="4xl" fontWeight="300" color="blue.600">
                     25+
                   </Text>
                   <Text color="gray.600">Years Experience</Text>

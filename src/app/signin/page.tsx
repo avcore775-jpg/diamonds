@@ -150,7 +150,7 @@ function SignInContent() {
                     as={NextLink}
                     href={`/signup?redirect=${redirect}`}
                     color="brand.500"
-                    fontWeight="semibold"
+                    fontWeight="300"
                   >
                     Sign up
                   </Link>

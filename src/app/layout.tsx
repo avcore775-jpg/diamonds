@@ -4,7 +4,11 @@ import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { ChakraProvider } from "@/components/providers/ChakraProvider";
 
-const urbanist = Urbanist({ subsets: ["latin"] });
+const urbanist = Urbanist({
+  subsets: ["latin"],
+  weight: ["300"],
+  style: ["normal"],
+});
 
 export const metadata: Metadata = {
   title: "RemySales - Premium Jewelry Store",

@@ -102,7 +102,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
               <VStack spacing={2} align="stretch">
                 <Text
                   fontSize="md"
-                  fontWeight="bold"
+                  fontWeight="300"
                   color="#000000"
                   noOfLines={2}
                   minH="48px"
@@ -116,7 +116,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
                   </Text>
                 )}
 
-                <Text fontSize="lg" fontWeight="bold" color="gold.600">
+                <Text fontSize="lg" fontWeight="300" color="gold.600">
                   {formatPrice(product.price)}
                 </Text>
 

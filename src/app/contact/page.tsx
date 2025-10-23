@@ -124,7 +124,7 @@ export default function ContactPage() {
           <Box bg="transparent" p={8} borderRadius="lg" boxShadow="lg">
             <VStack spacing={6} align="stretch">
               <VStack spacing={2} align="start">
-                <Heading size="lg" fontWeight="semibold">
+                <Heading size="lg" fontWeight="300">
                   Send Us a Message
                 </Heading>
                 <Text color="gray.600">
@@ -211,7 +211,7 @@ export default function ContactPage() {
           {/* Contact Information */}
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
-              <Heading size="lg" fontWeight="semibold">
+              <Heading size="lg" fontWeight="300">
                 Get in Touch
               </Heading>
               <Text color="gray.600">
@@ -238,7 +238,7 @@ export default function ContactPage() {
                       mt={1}
                     />
                     <VStack align="start" spacing={1}>
-                      <Text fontWeight="bold" fontSize="lg">
+                      <Text fontWeight="300" fontSize="lg">
                         {info.title}
                       </Text>
                       <Text color="gray.700">{info.details}</Text>
@@ -256,12 +256,12 @@ export default function ContactPage() {
             {/* FAQ Section */}
             <Box bg="blue.50" p={6} borderRadius="lg">
               <VStack spacing={4} align="start">
-                <Heading size="md" fontWeight="semibold">
+                <Heading size="md" fontWeight="300">
                   Frequently Asked Questions
                 </Heading>
                 <VStack spacing={3} align="start" width="100%">
                   <Box>
-                    <Text fontWeight="semibold" color="blue.800">
+                    <Text fontWeight="300" color="blue.800">
                       Do you offer custom jewelry design?
                     </Text>
                     <Text color="gray.700" fontSize="sm">
@@ -269,7 +269,7 @@ export default function ContactPage() {
                     </Text>
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold" color="blue.800">
+                    <Text fontWeight="300" color="blue.800">
                       What is your return policy?
                     </Text>
                     <Text color="gray.700" fontSize="sm">
@@ -277,7 +277,7 @@ export default function ContactPage() {
                     </Text>
                   </Box>
                   <Box>
-                    <Text fontWeight="semibold" color="blue.800">
+                    <Text fontWeight="300" color="blue.800">
                       Do you provide diamond certificates?
                     </Text>
                     <Text color="gray.700" fontSize="sm">
@@ -293,7 +293,7 @@ export default function ContactPage() {
         {/* Map Section */}
         <Box mt={16}>
           <VStack spacing={4} mb={8}>
-            <Heading size="lg" fontWeight="semibold">
+            <Heading size="lg" fontWeight="300">
               Visit Our Showroom
             </Heading>
             <Text color="gray.600" textAlign="center" maxW="2xl">

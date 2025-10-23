@@ -255,7 +255,7 @@ export default function CollectionPage({ params }: { params: Promise<{ slug: str
                         <HStack justify="space-between">
                           <Box>
                             <HStack spacing={2}>
-                              <Text fontSize="xl" fontWeight="bold" color="brand.600">
+                              <Text fontSize="xl" fontWeight="300" color="brand.600">
                                 {formatPrice(product.price)}
                               </Text>
                               {product.comparePrice && product.comparePrice > product.price && (

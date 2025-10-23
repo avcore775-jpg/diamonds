@@ -140,7 +140,7 @@ export default function CollectionsPage() {
                   {/* Collection Details */}
                   <CardBody>
                     <VStack align="stretch" spacing={3}>
-                      <Heading size="lg" fontWeight="medium">
+                      <Heading size="lg" fontWeight="300">
                         {collection.name}
                       </Heading>
                       
@@ -151,7 +151,7 @@ export default function CollectionsPage() {
                       )}
 
                       <HStack justify="space-between" pt={2}>
-                        <Text color="brand.500" fontWeight="medium">
+                        <Text color="brand.500" fontWeight="300">
                           View Collection →
                         </Text>
                         <Badge colorScheme="gray" variant="subtle">

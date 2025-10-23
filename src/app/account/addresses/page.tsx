@@ -388,7 +388,7 @@ export default function AddressesPage() {
                       <VStack align="start" spacing={1}>
                         <HStack>
                           {address.type === 'SHIPPING' ? <FaHome /> : <FaBuilding />}
-                          <Text fontWeight="medium">
+                          <Text fontWeight="300">
                             {address.type === 'SHIPPING' ? 'Shipping' : 'Billing'}
                           </Text>
                           {address.isDefault && (
@@ -400,7 +400,7 @@ export default function AddressesPage() {
                             </Badge>
                           )}
                         </HStack>
-                        <Text fontSize="sm" color="gray.500" fontWeight="bold">
+                        <Text fontSize="sm" color="gray.500" fontWeight="300">
                           {address.name}
                         </Text>
                       </VStack>
@@ -580,7 +580,7 @@ export default function AddressesPage() {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            <AlertDialogHeader fontSize="lg" fontWeight="300">
               Delete Address
             </AlertDialogHeader>
 

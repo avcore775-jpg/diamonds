@@ -104,7 +104,7 @@ export default function Header() {
               <Text
                 textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
                 fontFamily={'heading'}
-                fontWeight="bold"
+                fontWeight="300"
                 fontSize="xl"
                 color="white"
               >
@@ -205,7 +205,7 @@ export default function Header() {
               <Box p={2}>
                 {session ? (
                   <VStack align="stretch" spacing={2}>
-                    <Text px={3} py={2} fontWeight="medium">
+                    <Text px={3} py={2} fontWeight="300">
                       {session.user?.name || session.user?.email}
                     </Text>
                     {session.user.role === 'ADMIN' && (

@@ -48,6 +48,10 @@ const theme = extendTheme({
       body: {
         bg: '#000000',
         color: '#FFFFFF',
+        fontWeight: '300',
+      },
+      '*': {
+        fontWeight: '300',
       },
       '*::placeholder': {
         color: 'rgba(255, 255, 255, 0.4)',
@@ -60,7 +64,7 @@ const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {
-        fontWeight: '500',
+        fontWeight: '300',
         borderRadius: 'md',
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       },
@@ -171,7 +175,7 @@ const theme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        fontWeight: '600',
+         fontWeight: "300",
       },
     },
     Text: {

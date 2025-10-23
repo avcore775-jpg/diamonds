@@ -237,7 +237,7 @@ function SignUpContent() {
                     as={NextLink}
                     href={`/signin?redirect=${redirect}`}
                     color="brand.500"
-                    fontWeight="semibold"
+                    fontWeight="300"
                   >
                     Sign in
                   </Link>
@@ -247,7 +247,7 @@ function SignUpContent() {
           </Card>
 
           <VStack spacing={4} textAlign="center">
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700">
+            <Text fontSize="sm" fontWeight="300" color="gray.700">
               Why Create an Account?
             </Text>
             <VStack spacing={2} fontSize="sm" color="gray.600">

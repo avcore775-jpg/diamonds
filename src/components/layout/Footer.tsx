@@ -22,7 +22,7 @@ export default function Footer() {
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
           {/* About */}
           <Stack spacing={4}>
-            <Heading size="sm" color="gold.500" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="300">
               About
             </Heading>
             <Stack spacing={2}>
@@ -40,7 +40,7 @@ export default function Footer() {
 
           {/* Customer Care */}
           <Stack spacing={4}>
-            <Heading size="sm" color="gold.500" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="300">
               Customer Care
             </Heading>
             <Stack spacing={2}>
@@ -61,7 +61,7 @@ export default function Footer() {
 
           {/* Legal */}
           <Stack spacing={4}>
-            <Heading size="sm" color="gold.500" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="300">
               Legal
             </Heading>
             <Stack spacing={2}>
@@ -79,7 +79,7 @@ export default function Footer() {
 
           {/* Connect */}
           <Stack spacing={4}>
-            <Heading size="sm" color="gold.500" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="300">
               Connect
             </Heading>
             <Stack spacing={2}>

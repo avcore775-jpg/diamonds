@@ -556,7 +556,7 @@ export default function AdminProductsPage() {
                                 rounded="md"
                               />
                               <VStack align="start" spacing={1}>
-                                <Text fontWeight="medium">{product.name}</Text>
+                                <Text fontWeight="300">{product.name}</Text>
                                 <HStack spacing={1}>
                                   {product.isFeatured && (
                                     <Badge colorScheme="yellow" variant="subtle">
@@ -577,7 +577,7 @@ export default function AdminProductsPage() {
                             <Text>{product.category?.name || 'Uncategorized'}</Text>
                           </Td>
                           <Td>
-                            <Text fontWeight="medium">
+                            <Text fontWeight="300">
                               {formatCurrency(product.price)}
                             </Text>
                           </Td>
@@ -836,7 +836,7 @@ export default function AdminProductsPage() {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            <AlertDialogHeader fontSize="lg" fontWeight="300">
               Delete Product
             </AlertDialogHeader>
 

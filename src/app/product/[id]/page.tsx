@@ -275,7 +275,7 @@ export default function ProductDetailPage() {
               </Box>
 
               <HStack spacing={4}>
-                <Text fontSize="3xl" fontWeight="bold" color="brand.600">
+                <Text fontSize="3xl" fontWeight="300" color="brand.600">
                   {formatPrice(product.price)}
                 </Text>
                 {product.comparePrice && (
@@ -292,18 +292,18 @@ export default function ProductDetailPage() {
                 {product.carat && (
                   <HStack>
                     <Icon as={FaGem} color="brand.500" />
-                    <Text fontWeight="semibold">Carat Weight:</Text>
+                    <Text fontWeight="300">Carat Weight:</Text>
                     <Text>{product.carat} ct</Text>
                   </HStack>
                 )}
                 {product.weight && (
                   <HStack>
-                    <Text fontWeight="semibold">Total Weight:</Text>
+                    <Text fontWeight="300">Total Weight:</Text>
                     <Text>{product.weight}g</Text>
                   </HStack>
                 )}
                 <HStack>
-                  <Text fontWeight="semibold">Availability:</Text>
+                  <Text fontWeight="300">Availability:</Text>
                   {product.stock > 0 ? (
                     <Badge colorScheme="green">In Stock ({product.stock} available)</Badge>
                   ) : (
@@ -317,7 +317,7 @@ export default function ProductDetailPage() {
               {/* Add to Cart Section */}
               <VStack spacing={4} align="stretch">
                 <HStack>
-                  <Text fontWeight="semibold">Quantity:</Text>
+                  <Text fontWeight="300">Quantity:</Text>
                   <NumberInput
                     value={quantity}
                     min={1}
@@ -388,25 +388,25 @@ export default function ProductDetailPage() {
                 <VStack spacing={2} align="stretch">
                   {product.sku && (
                     <HStack>
-                      <Text fontWeight="semibold">SKU:</Text>
+                      <Text fontWeight="300">SKU:</Text>
                       <Text>{product.sku}</Text>
                     </HStack>
                   )}
                   {product.carat && (
                     <HStack>
-                      <Text fontWeight="semibold">Carat Weight:</Text>
+                      <Text fontWeight="300">Carat Weight:</Text>
                       <Text>{product.carat} ct</Text>
                     </HStack>
                   )}
                   {product.weight && (
                     <HStack>
-                      <Text fontWeight="semibold">Total Weight:</Text>
+                      <Text fontWeight="300">Total Weight:</Text>
                       <Text>{product.weight}g</Text>
                     </HStack>
                   )}
                   {product.category && (
                     <HStack>
-                      <Text fontWeight="semibold">Category:</Text>
+                      <Text fontWeight="300">Category:</Text>
                       <Text>{product.category.name}</Text>
                     </HStack>
                   )}
@@ -414,13 +414,13 @@ export default function ProductDetailPage() {
               </TabPanel>
               <TabPanel>
                 <VStack spacing={4} align="stretch">
-                  <Text fontWeight="semibold">Shipping</Text>
+                  <Text fontWeight="300">Shipping</Text>
                   <Text>
                     We offer free standard shipping on all orders over $1,000. 
                     Standard shipping typically takes 3-5 business days. 
                     Express shipping is available for an additional fee.
                   </Text>
-                  <Text fontWeight="semibold">Returns</Text>
+                  <Text fontWeight="300">Returns</Text>
                   <Text>
                     We accept returns within 30 days of purchase. 
                     Items must be in original condition with all tags attached. 

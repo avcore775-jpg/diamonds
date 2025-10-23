@@ -249,7 +249,7 @@ export default function OrdersPage() {
                         <Tr key={order.id}>
                           <Td>
                             <VStack align="start" spacing={1}>
-                              <Text fontWeight="medium">#{order.orderNumber}</Text>
+                              <Text fontWeight="300">#{order.orderNumber}</Text>
                               <Text fontSize="sm" color="gray.500">
                                 {order.orderItems.length} items
                               </Text>
@@ -272,7 +272,7 @@ export default function OrdersPage() {
                             </Badge>
                           </Td>
                           <Td>
-                            <Text fontWeight="medium">
+                            <Text fontWeight="300">
                               {formatCurrency(order.total)}
                             </Text>
                           </Td>
@@ -319,7 +319,7 @@ export default function OrdersPage() {
                       </Text>
                     </VStack>
                     <VStack align="end">
-                      <Text fontWeight="bold" fontSize="lg">
+                      <Text fontWeight="300" fontSize="lg">
                         {formatCurrency(selectedOrder.total)}
                       </Text>
                       <Badge colorScheme={getPaymentStatusColor(selectedOrder.paymentStatus)}>
@@ -355,12 +355,12 @@ export default function OrdersPage() {
                           rounded="md"
                         />
                         <VStack align="start" flex="1" spacing={1}>
-                          <Text fontWeight="medium">{item.product.name}</Text>
+                          <Text fontWeight="300">{item.product.name}</Text>
                           <Text fontSize="sm" color="gray.500">
                             Quantity: {item.quantity}
                           </Text>
                         </VStack>
-                        <Text fontWeight="bold">
+                        <Text fontWeight="300">
                           {formatCurrency(item.price * item.quantity)}
                         </Text>
                       </HStack>
@@ -388,8 +388,8 @@ export default function OrdersPage() {
                     </HStack>
                     <Divider />
                     <HStack justify="space-between">
-                      <Text fontWeight="bold" fontSize="lg">Total</Text>
-                      <Text fontWeight="bold" fontSize="lg">
+                      <Text fontWeight="300" fontSize="lg">Total</Text>
+                      <Text fontWeight="300" fontSize="lg">
                         {formatCurrency(selectedOrder.total)}
                       </Text>
                     </HStack>
@@ -403,7 +403,7 @@ export default function OrdersPage() {
                   <Heading size="sm" mb={4}>Shipping Address</Heading>
                   <Box p={4} bg="transparent" rounded="md">
                     <VStack align="start" spacing={1}>
-                      <Text fontWeight="medium">{selectedOrder.shippingAddress.name}</Text>
+                      <Text fontWeight="300">{selectedOrder.shippingAddress.name}</Text>
                       <Text>{selectedOrder.shippingAddress.street}</Text>
                       <Text>
                         {selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.state} {selectedOrder.shippingAddress.postalCode}

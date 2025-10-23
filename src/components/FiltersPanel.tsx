@@ -126,7 +126,7 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="semibold">Categories</Text>
+                <Text fontWeight="300">Categories</Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -149,7 +149,7 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="semibold">Price Range</Text>
+                <Text fontWeight="300">Price Range</Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -183,7 +183,7 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="semibold">Carat Weight</Text>
+                <Text fontWeight="300">Carat Weight</Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -217,7 +217,7 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="semibold">Availability</Text>
+                <Text fontWeight="300">Availability</Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>

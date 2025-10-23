@@ -98,23 +98,23 @@ function CheckoutSuccessContent() {
             borderTopColor="brand.500"
           >
             <VStack spacing={4} align="stretch">
-              <Text fontSize="lg" fontWeight="semibold">What's Next?</Text>
+              <Text fontSize="lg" fontWeight="300">What's Next?</Text>
               
               <VStack align="start" spacing={3}>
                 <HStack>
-                  <Text fontWeight="medium">1.</Text>
+                  <Text fontWeight="300">1.</Text>
                   <Text>You'll receive an order confirmation email shortly</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="medium">2.</Text>
+                  <Text fontWeight="300">2.</Text>
                   <Text>We'll prepare your items for shipping</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="medium">3.</Text>
+                  <Text fontWeight="300">3.</Text>
                   <Text>You'll get a shipping notification with tracking info</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="medium">4.</Text>
+                  <Text fontWeight="300">4.</Text>
                   <Text>Your beautiful jewelry will arrive in 3-5 business days</Text>
                 </HStack>
               </VStack>

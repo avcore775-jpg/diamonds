@@ -403,7 +403,7 @@ export default function AdminDashboard() {
                       {recentOrders.map((order) => (
                         <Tr key={order.id}>
                           <Td>
-                            <Text fontWeight="medium">#{order.orderNumber}</Text>
+                            <Text fontWeight="300">#{order.orderNumber}</Text>
                           </Td>
                           <Td>
                             <VStack align="start" spacing={0}>
@@ -420,7 +420,7 @@ export default function AdminDashboard() {
                             </Badge>
                           </Td>
                           <Td>
-                            <Text fontWeight="medium">
+                            <Text fontWeight="300">
                               {formatCurrency(order.total)}
                             </Text>
                           </Td>

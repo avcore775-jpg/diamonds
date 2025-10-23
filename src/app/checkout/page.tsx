@@ -432,7 +432,7 @@ export default function CheckoutPage() {
                       <Text noOfLines={1}>
                         {item.product.name} x {item.quantity}
                       </Text>
-                      <Text fontWeight="semibold">
+                      <Text fontWeight="300">
                         {formatPrice(item.product.price * item.quantity)}
                       </Text>
                     </HStack>
@@ -445,25 +445,25 @@ export default function CheckoutPage() {
                 <VStack spacing={2} align="stretch">
                   <HStack justify="space-between">
                     <Text>Subtotal</Text>
-                    <Text fontWeight="semibold">{formatPrice(subtotal)}</Text>
+                    <Text fontWeight="300">{formatPrice(subtotal)}</Text>
                   </HStack>
                   <HStack justify="space-between">
                     <Text>Shipping</Text>
-                    <Text fontWeight="semibold">
+                    <Text fontWeight="300">
                       {shipping === 0 ? 'Free' : formatPrice(shipping)}
                     </Text>
                   </HStack>
                   <HStack justify="space-between">
                     <Text>Tax</Text>
-                    <Text fontWeight="semibold">{formatPrice(tax)}</Text>
+                    <Text fontWeight="300">{formatPrice(tax)}</Text>
                   </HStack>
                 </VStack>
 
                 <Divider />
 
                 <HStack justify="space-between">
-                  <Text fontSize="lg" fontWeight="bold">Total</Text>
-                  <Text fontSize="xl" fontWeight="bold" color="brand.600">
+                  <Text fontSize="lg" fontWeight="300">Total</Text>
+                  <Text fontSize="xl" fontWeight="300" color="brand.600">
                     {formatPrice(total)}
                   </Text>
                 </HStack>

@@ -191,7 +191,7 @@ export default function ProductCard({
 
       <CardBody>
         <VStack spacing={3} align="stretch">
-          <Text fontSize="lg" fontWeight="semibold" noOfLines={2} color="#000000">
+          <Text fontSize="lg" fontWeight="300" noOfLines={2} color="#000000">
             {product.name}
           </Text>
 
@@ -212,7 +212,7 @@ export default function ProductCard({
           )}
 
           <HStack spacing={2}>
-            <Text fontSize="xl" fontWeight="bold" color="#000000">
+            <Text fontSize="xl" fontWeight="300" color="#000000">
               {formatPrice(product.price)}
             </Text>
             {product.comparePrice && (

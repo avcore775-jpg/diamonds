@@ -329,7 +329,7 @@ export default function ProfilePage() {
                     <HStack justify="space-between">
                       <HStack>
                         <FaCalendar />
-                        <Text fontWeight="medium">Member Since</Text>
+                        <Text fontWeight="300">Member Since</Text>
                       </HStack>
                       <Text>
                         {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString() : 'N/A'}
@@ -337,21 +337,21 @@ export default function ProfilePage() {
                     </HStack>
 
                     <HStack justify="space-between">
-                      <Text fontWeight="medium">Email Verified</Text>
+                      <Text fontWeight="300">Email Verified</Text>
                       <Badge colorScheme={profile?.emailVerified ? 'green' : 'yellow'}>
                         {profile?.emailVerified ? 'Verified' : 'Pending'}
                       </Badge>
                     </HStack>
 
                     <HStack justify="space-between">
-                      <Text fontWeight="medium">Account Status</Text>
+                      <Text fontWeight="300">Account Status</Text>
                       <Badge colorScheme={profile?.isActive ? 'green' : 'red'}>
                         {profile?.isActive ? 'Active' : 'Inactive'}
                       </Badge>
                     </HStack>
 
                     <HStack justify="space-between">
-                      <Text fontWeight="medium">Last Login</Text>
+                      <Text fontWeight="300">Last Login</Text>
                       <Text>
                         {profile?.lastLogin 
                           ? new Date(profile.lastLogin).toLocaleDateString() 

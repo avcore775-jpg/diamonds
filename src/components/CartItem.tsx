@@ -116,7 +116,7 @@ export default function CartItem({ item, onUpdate, onRemove }: CartItemProps) {
           href={`/product/${item.product.slug || item.product.id}`}
           _hover={{ textDecoration: 'none' }}
         >
-          <Text fontSize="lg" fontWeight="semibold">
+          <Text fontSize="lg" fontWeight="300">
             {item.product.name}
           </Text>
         </Link>
@@ -166,7 +166,7 @@ export default function CartItem({ item, onUpdate, onRemove }: CartItemProps) {
           <Text fontSize="sm" color="gray.500">
             Unit Price
           </Text>
-          <Text fontSize="md" fontWeight="semibold">
+          <Text fontSize="md" fontWeight="300">
             {formatPrice(item.product.price)}
           </Text>
         </Box>
@@ -175,7 +175,7 @@ export default function CartItem({ item, onUpdate, onRemove }: CartItemProps) {
           <Text fontSize="sm" color="gray.500">
             Subtotal
           </Text>
-          <Text fontSize="lg" fontWeight="bold" color="brand.600">
+          <Text fontSize="lg" fontWeight="300" color="brand.600">
             {formatPrice(item.product.price * quantity)}
           </Text>
         </Box>
