@@ -3,7 +3,6 @@ import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { ChakraProvider } from "@/components/providers/ChakraProvider";
-import { DiamondSparkles } from "@/components/DiamondSparkles";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -20,14 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={urbanist.className}>
-        <DiamondSparkles />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <ChakraProvider>
-            <AuthProvider>
-              {children}
-            </AuthProvider>
-          </ChakraProvider>
-        </div>
+        <ChakraProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </ChakraProvider>
       </body>
     </html>
   );
