@@ -143,63 +143,57 @@ export default function HomePage() {
       {/* Featured Collection */}
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
-          <ScrollAnimation animation="fade-in">
-            <VStack spacing={8} align="stretch">
-              <VStack spacing={2} align="start">
-                <Heading size="xl" color="white">Featured Collection</Heading>
-                <Text fontSize="lg" color="gray.300">
-                  Handpicked pieces from our master craftsmen
-                </Text>
-              </VStack>
-
-              <ProductCarousel
-                products={featuredProducts}
-                isLoading={isLoading}
-              />
+          <VStack spacing={8} align="stretch">
+            <VStack spacing={2} align="start">
+              <Heading size="xl" color="white">Featured Collection</Heading>
+              <Text fontSize="lg" color="gray.300">
+                Handpicked pieces from our master craftsmen
+              </Text>
             </VStack>
-          </ScrollAnimation>
+
+            <ProductCarousel
+              products={featuredProducts}
+              isLoading={isLoading}
+            />
+          </VStack>
         </Container>
       </Box>
 
       {/* Bestsellers */}
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
-          <ScrollAnimation animation="fade-in">
-            <VStack spacing={8} align="stretch">
-              <VStack spacing={2} align="start">
-                <Heading size="xl" color="white">Bestsellers</Heading>
-                <Text fontSize="lg" color="gray.300">
-                  Most loved by our customers
-                </Text>
-              </VStack>
-
-              <ProductCarousel
-                products={bestsellers}
-                isLoading={isLoading}
-              />
+          <VStack spacing={8} align="stretch">
+            <VStack spacing={2} align="start">
+              <Heading size="xl" color="white">Bestsellers</Heading>
+              <Text fontSize="lg" color="gray.300">
+                Most loved by our customers
+              </Text>
             </VStack>
-          </ScrollAnimation>
+
+            <ProductCarousel
+              products={bestsellers}
+              isLoading={isLoading}
+            />
+          </VStack>
         </Container>
       </Box>
 
       {/* New Arrival */}
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
-          <ScrollAnimation animation="fade-in">
-            <VStack spacing={8} align="stretch">
-              <VStack spacing={2} align="start">
-                <Heading size="xl" color="white">New Arrival</Heading>
-                <Text fontSize="lg" color="gray.300">
-                  Latest additions to our collection
-                </Text>
-              </VStack>
-
-              <ProductCarousel
-                products={newArrivals}
-                isLoading={isLoading}
-              />
+          <VStack spacing={8} align="stretch">
+            <VStack spacing={2} align="start">
+              <Heading size="xl" color="white">New Arrival</Heading>
+              <Text fontSize="lg" color="gray.300">
+                Latest additions to our collection
+              </Text>
             </VStack>
-          </ScrollAnimation>
+
+            <ProductCarousel
+              products={newArrivals}
+              isLoading={isLoading}
+            />
+          </VStack>
         </Container>
       </Box>
 
