@@ -69,7 +69,7 @@ export default function Header() {
   return (
     <Box>
       <Flex
-        bg="rgba(0, 0, 0, 0.8)"
+        bg="transparent"
         backdropFilter="blur(10px)"
         color="white"
         minH={'60px'}
@@ -77,8 +77,13 @@ export default function Header() {
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor="rgba(212, 175, 55, 0.3)"
+        borderColor="rgba(212, 175, 55, 0.2)"
         align={'center'}
+        position="absolute"
+        top={0}
+        left={0}
+        right={0}
+        zIndex={10}
       >
         <Flex
           flex={{ base: 1, md: 'auto' }}
