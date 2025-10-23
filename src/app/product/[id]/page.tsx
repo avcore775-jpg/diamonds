@@ -382,32 +382,32 @@ export default function ProductDetailPage() {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Text color="#FFFFFF" fontSize="md" lineHeight="1.8" opacity={1}>{product.description}</Text>
+                <Text color="#FFFFFF !important" fontSize="md" lineHeight="1.8" opacity={1} sx={{ color: '#FFFFFF !important' }}>{product.description}</Text>
               </TabPanel>
               <TabPanel>
                 <VStack spacing={3} align="stretch">
                   {product.sku && (
                     <HStack>
-                      <Text fontWeight="300" color="#FFFFFF">SKU:</Text>
-                      <Text color="#FFFFFF">{product.sku}</Text>
+                      <Text fontWeight="300" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>SKU:</Text>
+                      <Text color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>{product.sku}</Text>
                     </HStack>
                   )}
                   {product.carat && (
                     <HStack>
-                      <Text fontWeight="300" color="#FFFFFF">Carat Weight:</Text>
-                      <Text color="#FFFFFF">{product.carat} ct</Text>
+                      <Text fontWeight="300" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Carat Weight:</Text>
+                      <Text color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>{product.carat} ct</Text>
                     </HStack>
                   )}
                   {product.weight && (
                     <HStack>
-                      <Text fontWeight="300" color="#FFFFFF">Total Weight:</Text>
-                      <Text color="#FFFFFF">{product.weight}g</Text>
+                      <Text fontWeight="300" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Total Weight:</Text>
+                      <Text color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>{product.weight}g</Text>
                     </HStack>
                   )}
                   {product.category && (
                     <HStack>
-                      <Text fontWeight="300" color="#FFFFFF">Category:</Text>
-                      <Text color="#FFFFFF">{product.category.name}</Text>
+                      <Text fontWeight="300" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Category:</Text>
+                      <Text color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>{product.category.name}</Text>
                     </HStack>
                   )}
                 </VStack>
@@ -415,13 +415,13 @@ export default function ProductDetailPage() {
               <TabPanel>
                 <VStack spacing={4} align="stretch">
                   <Text fontWeight="300" color="gold.500" fontSize="lg">Shipping</Text>
-                  <Text color="#FFFFFF" lineHeight="1.8">
+                  <Text color="#FFFFFF" lineHeight="1.8" sx={{ color: '#FFFFFF !important' }}>
                     We offer free standard shipping on all orders over $1,000.
                     Standard shipping typically takes 3-5 business days.
                     Express shipping is available for an additional fee.
                   </Text>
                   <Text fontWeight="300" color="gold.500" fontSize="lg">Returns</Text>
-                  <Text color="#FFFFFF" lineHeight="1.8">
+                  <Text color="#FFFFFF" lineHeight="1.8" sx={{ color: '#FFFFFF !important' }}>
                     We accept returns within 30 days of purchase.
                     Items must be in original condition with all tags attached.
                     Custom or personalized items are final sale.
