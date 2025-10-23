@@ -134,7 +134,7 @@ export default function HomePage() {
       </Box>
 
       {/* Featured Collection */}
-      <Box pt={3} pb={16} bg="transparent">
+      <Box pt={5} pb={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
