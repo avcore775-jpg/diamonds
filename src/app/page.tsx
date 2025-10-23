@@ -66,9 +66,25 @@ export default function HomePage() {
         
         <Container maxW="7xl" position="relative" zIndex={1}>
           <VStack spacing={8} textAlign="center">
-            <Text fontSize="2xl" maxW="600px" textShadow="1px 1px 2px rgba(0,0,0,0.5)">
+            <Heading
+              as="h1"
+              size="3xl"
+              fontWeight="700"
+              textShadow="2px 2px 4px rgba(0,0,0,0.5)"
+              color="white"
+            >
+              Jewels That Speak
+            </Heading>
+            <Heading
+              as="h2"
+              size="lg"
+              fontWeight="300"
+              maxW="600px"
+              textShadow="1px 1px 2px rgba(0,0,0,0.5)"
+              color="white"
+            >
               Discover our great collection of handcrafted jewelry and certified diamonds
-            </Text>
+            </Heading>
             <HStack spacing={4}>
               <Button
                 as={NextLink}
