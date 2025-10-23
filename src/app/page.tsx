@@ -83,7 +83,7 @@ export default function HomePage() {
             <Heading
               as="h1"
               size="3xl"
-              fontWeight="700"
+              fontWeight="400"
               textShadow="2px 2px 4px rgba(0,0,0,0.5)"
               color="white"
             >
