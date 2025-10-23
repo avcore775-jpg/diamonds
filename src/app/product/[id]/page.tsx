@@ -305,7 +305,7 @@ export default function ProductDetailPage() {
                 <HStack>
                   <Text fontWeight="300">Availability:</Text>
                   {product.stock > 0 ? (
-                    <Badge colorScheme="green">In Stock ({product.stock} available)</Badge>
+                    <Badge colorScheme="yellow">In Stock ({product.stock} available)</Badge>
                   ) : (
                     <Badge colorScheme="red">Out of Stock</Badge>
                   )}

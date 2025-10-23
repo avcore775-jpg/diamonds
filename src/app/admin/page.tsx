@@ -462,17 +462,17 @@ export default function AdminDashboard() {
                 
                 <HStack justify="space-between">
                   <Text>Database Connection</Text>
-                  <Badge colorScheme="green">Connected</Badge>
+                  <Badge colorScheme="yellow">Connected</Badge>
                 </HStack>
                 
                 <HStack justify="space-between">
                   <Text>Payment Gateway</Text>
-                  <Badge colorScheme="green">Active</Badge>
+                  <Badge colorScheme="yellow">Active</Badge>
                 </HStack>
                 
                 <HStack justify="space-between">
                   <Text>Email Service</Text>
-                  <Badge colorScheme="green">Active</Badge>
+                  <Badge colorScheme="yellow">Active</Badge>
                 </HStack>
               </VStack>
             </CardBody>

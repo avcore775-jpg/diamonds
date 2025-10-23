@@ -406,7 +406,7 @@ export default function CheckoutPage() {
                     <Radio value="stripe">
                       <HStack>
                         <Text>Credit/Debit Card (Stripe)</Text>
-                        <Badge colorScheme="green">Secure</Badge>
+                        <Badge colorScheme="yellow">Secure</Badge>
                       </HStack>
                     </Radio>
                     <Radio value="paypal" isDisabled>

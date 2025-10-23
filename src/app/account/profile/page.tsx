@@ -214,7 +214,7 @@ export default function ProfilePage() {
                         {profile?.role}
                       </Badge>
                       {profile?.emailVerified && (
-                        <Badge colorScheme="green" variant="subtle">
+                        <Badge colorScheme="yellow" variant="subtle">
                           <HStack spacing={1}>
                             <FaShieldAlt size="10" />
                             <Text>Verified</Text>
@@ -239,7 +239,7 @@ export default function ProfilePage() {
                     <IconButton
                       aria-label="Save"
                       icon={<FaCheck />}
-                      colorScheme="green"
+                      colorScheme="yellow"
                       isLoading={saving}
                       onClick={handleSave}
                     />

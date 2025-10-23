@@ -392,7 +392,7 @@ export default function AddressesPage() {
                             {address.type === 'SHIPPING' ? 'Shipping' : 'Billing'}
                           </Text>
                           {address.isDefault && (
-                            <Badge colorScheme="green" variant="subtle">
+                            <Badge colorScheme="yellow" variant="subtle">
                               <HStack spacing={1}>
                                 <FaStar size="10" />
                                 <Text>Default</Text>
