@@ -17,22 +17,22 @@ import { FaInstagram, FaFacebook, FaPinterest, FaTwitter } from 'react-icons/fa'
 
 export default function Footer() {
   return (
-    <Box bg="gray.900" color="gray.200">
-      <Container maxW="7xl" py={12}>
+    <Box bg="transparent" color="white" py={12} borderTop="1px solid" borderColor="rgba(212, 175, 55, 0.2)">
+      <Container maxW="7xl">
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
           {/* About */}
           <Stack spacing={4}>
-            <Heading size="sm" color="white" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="semibold">
               About
             </Heading>
             <Stack spacing={2}>
-              <Link as={NextLink} href="/about" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link as={NextLink} href="/about" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Our Story
               </Link>
-              <Link as={NextLink} href="/contact" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link as={NextLink} href="/contact" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Contact Us
               </Link>
-              <Link as={NextLink} href="/collections" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link as={NextLink} href="/collections" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Collections
               </Link>
             </Stack>
@@ -40,20 +40,20 @@ export default function Footer() {
 
           {/* Customer Care */}
           <Stack spacing={4}>
-            <Heading size="sm" color="white" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="semibold">
               Customer Care
             </Heading>
             <Stack spacing={2}>
-              <Link as={NextLink} href="/account/orders" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link as={NextLink} href="/account/orders" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Track Order
               </Link>
-              <Link href="#" fontSize="sm" _hover={{ color: 'white' }}>
-                Shipping & Returns
+              <Link href="#" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
+                Shipping &amp; Returns
               </Link>
-              <Link href="#" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link href="#" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Size Guide
               </Link>
-              <Link href="#" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link href="#" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 FAQ
               </Link>
             </Stack>
@@ -61,17 +61,17 @@ export default function Footer() {
 
           {/* Legal */}
           <Stack spacing={4}>
-            <Heading size="sm" color="white" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="semibold">
               Legal
             </Heading>
             <Stack spacing={2}>
-              <Link href="#" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link href="#" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Privacy Policy
               </Link>
-              <Link href="#" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link href="#" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Terms of Service
               </Link>
-              <Link href="#" fontSize="sm" _hover={{ color: 'white' }}>
+              <Link href="#" fontSize="sm" color="gray.300" _hover={{ color: 'gold.500' }}>
                 Cookie Policy
               </Link>
             </Stack>
@@ -79,35 +79,21 @@ export default function Footer() {
 
           {/* Connect */}
           <Stack spacing={4}>
-            <Heading size="sm" color="white" fontWeight="semibold">
+            <Heading size="sm" color="gold.500" fontWeight="semibold">
               Connect
             </Heading>
             <Stack spacing={2}>
-              <HStack spacing={4}>
-                <Link href="#" _hover={{ color: 'white' }}>
-                  <Icon as={FaInstagram} boxSize={5} />
-                </Link>
-                <Link href="#" _hover={{ color: 'white' }}>
-                  <Icon as={FaFacebook} boxSize={5} />
-                </Link>
-                <Link href="#" _hover={{ color: 'white' }}>
-                  <Icon as={FaPinterest} boxSize={5} />
-                </Link>
-                <Link href="#" _hover={{ color: 'white' }}>
-                  <Icon as={FaTwitter} boxSize={5} />
-                </Link>
-              </HStack>
-              <Text fontSize="sm" mt={4}>
+              <Text fontSize="sm" color="gray.300">
                 Email: info@diamondstore.com
               </Text>
-              <Text fontSize="sm">
+              <Text fontSize="sm" color="gray.300">
                 Phone: +1 (555) 123-4567
               </Text>
             </Stack>
           </Stack>
         </SimpleGrid>
 
-        <Divider my={8} borderColor="gray.700" />
+        <Divider my={8} borderColor="rgba(212, 175, 55, 0.2)" />
 
         <Stack
           direction={{ base: 'column', md: 'row' }}
@@ -115,26 +101,9 @@ export default function Footer() {
           align="center"
           spacing={4}
         >
-          <Text fontSize="xs" color="gray.400">
-            © {new Date().getFullYear()} Diamond Store. All rights reserved.
+          <Text fontSize="sm" color="gray.400">
+            © {new Date().getFullYear()} Luxe Diamonds. All rights reserved.
           </Text>
-          <HStack spacing={6}>
-            <Link
-              as={NextLink}
-              href="/admin"
-              fontSize="xs"
-              color="gray.400"
-              _hover={{ color: 'white' }}
-            >
-              Admin Panel
-            </Link>
-            <Text fontSize="xs" color="gray.400">
-              USD
-            </Text>
-            <Text fontSize="xs" color="gray.400">
-              English
-            </Text>
-          </HStack>
         </Stack>
       </Container>
     </Box>

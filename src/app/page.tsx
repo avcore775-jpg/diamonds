@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { FaGem, FaTruck, FaShieldAlt, FaCertificate } from 'react-icons/fa'
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 import ProductGrid from '@/components/ProductGrid'
 import { ScrollAnimation } from '@/components/ScrollAnimation'
 import { apiClient } from '@/lib/api/client'
@@ -136,29 +137,32 @@ export default function HomePage() {
       {/* Featured Products */}
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
-          <VStack spacing={12}>
-            <VStack spacing={4} textAlign="center">
-              <Heading size="xl" color="white">Featured Collection</Heading>
-              <Text fontSize="lg" color="gray.300">
-                Handpicked pieces from our master craftsmen
-              </Text>
+          <ScrollAnimation animation="fade-in">
+            <VStack spacing={12}>
+              <VStack spacing={4} textAlign="center">
+                <Heading size="xl" color="white">Featured Collection</Heading>
+                <Text fontSize="lg" color="gray.300">
+                  Handpicked pieces from our master craftsmen
+                </Text>
+              </VStack>
+
+              <ProductGrid
+                products={featuredProducts || []}
+                isLoading={isLoading}
+                columns={{ base: 1, sm: 2, lg: 4 }}
+              />
+
+              <Button
+                as={NextLink}
+                href="/catalog"
+                size="lg"
+                colorScheme="gold"
+                variant="solid"
+              >
+                View All Products
+              </Button>
             </VStack>
-            
-            <ProductGrid 
-              products={featuredProducts || []}
-              isLoading={isLoading}
-              columns={{ base: 1, sm: 2, lg: 4 }}
-            />
-            
-            <Button
-              as={NextLink}
-              href="/catalog"
-              size="lg"
-              colorScheme="brand"
-            >
-              View All Products
-            </Button>
-          </VStack>
+          </ScrollAnimation>
         </Container>
       </Box>
 
@@ -185,49 +189,7 @@ export default function HomePage() {
       </Box>
 
       {/* Footer */}
-      <Box bg="transparent" color="white" py={12}>
-        <Container maxW="7xl">
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
-            <VStack align="start" spacing={4}>
-              <Heading size="md">About Us</Heading>
-              <Text fontSize="sm" color="gray.400">
-                Luxe Diamonds has been crafting exceptional jewelry for over 50 years,
-                combining traditional craftsmanship with modern design.
-              </Text>
-            </VStack>
-            <VStack align="start" spacing={4}>
-              <Heading size="md">Quick Links</Heading>
-              <VStack align="start" spacing={2}>
-                <Text as={NextLink} href="/catalog" fontSize="sm" color="gray.400" _hover={{ color: 'white' }}>
-                  Shop
-                </Text>
-                <Text as={NextLink} href="/about" fontSize="sm" color="gray.400" _hover={{ color: 'white' }}>
-                  About
-                </Text>
-                <Text as={NextLink} href="/contact" fontSize="sm" color="gray.400" _hover={{ color: 'white' }}>
-                  Contact
-                </Text>
-              </VStack>
-            </VStack>
-            <VStack align="start" spacing={4}>
-              <Heading size="md">Contact</Heading>
-              <VStack align="start" spacing={2}>
-                <Text fontSize="sm" color="gray.400">
-                  Email: hello@luxediamonds.com
-                </Text>
-                <Text fontSize="sm" color="gray.400">
-                  Phone: 1-800-DIAMONDS
-                </Text>
-              </VStack>
-            </VStack>
-          </SimpleGrid>
-          <Box borderTopWidth={1} borderColor="gray.700" mt={8} pt={8} textAlign="center">
-            <Text fontSize="sm" color="gray.400">
-              © 2024 Luxe Diamonds. All rights reserved.
-            </Text>
-          </Box>
-        </Container>
-      </Box>
+      <Footer />
     </Box>
   )
 }
