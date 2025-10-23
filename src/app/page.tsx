@@ -146,7 +146,7 @@ export default function HomePage() {
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
               <Heading size="xl" color="gold.500">Featured Collection</Heading>
-              <Text fontSize="lg" color="gray.300">
+              <Text fontSize="lg" color="gold.500">
                 Handpicked pieces from our master craftsmen
               </Text>
             </VStack>
@@ -165,7 +165,7 @@ export default function HomePage() {
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
               <Heading size="xl" color="gold.500">Bestsellers</Heading>
-              <Text fontSize="lg" color="gray.300">
+              <Text fontSize="lg" color="gold.500">
                 Most loved by our customers
               </Text>
             </VStack>
@@ -184,7 +184,7 @@ export default function HomePage() {
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
               <Heading size="xl" color="gold.500">New Arrival</Heading>
-              <Text fontSize="lg" color="gray.300">
+              <Text fontSize="lg" color="gold.500">
                 Latest additions to our collection
               </Text>
             </VStack>
