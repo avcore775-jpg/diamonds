@@ -374,54 +374,54 @@ export default function ProductDetailPage() {
 
         {/* Product Tabs */}
         <Box mt={12}>
-          <Tabs colorScheme="brand">
-            <TabList>
-              <Tab>Description</Tab>
-              <Tab>Details</Tab>
-              <Tab>Shipping & Returns</Tab>
+          <Tabs colorScheme="yellow">
+            <TabList borderColor="gold.500">
+              <Tab color="white" _selected={{ color: "gold.500", borderColor: "gold.500" }}>Description</Tab>
+              <Tab color="white" _selected={{ color: "gold.500", borderColor: "gold.500" }}>Details</Tab>
+              <Tab color="white" _selected={{ color: "gold.500", borderColor: "gold.500" }}>Shipping & Returns</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Text>{product.description}</Text>
+                <Text color="white" fontSize="md" lineHeight="tall">{product.description}</Text>
               </TabPanel>
               <TabPanel>
                 <VStack spacing={2} align="stretch">
                   {product.sku && (
                     <HStack>
-                      <Text fontWeight="300">SKU:</Text>
-                      <Text>{product.sku}</Text>
+                      <Text fontWeight="300" color="white">SKU:</Text>
+                      <Text color="white">{product.sku}</Text>
                     </HStack>
                   )}
                   {product.carat && (
                     <HStack>
-                      <Text fontWeight="300">Carat Weight:</Text>
-                      <Text>{product.carat} ct</Text>
+                      <Text fontWeight="300" color="white">Carat Weight:</Text>
+                      <Text color="white">{product.carat} ct</Text>
                     </HStack>
                   )}
                   {product.weight && (
                     <HStack>
-                      <Text fontWeight="300">Total Weight:</Text>
-                      <Text>{product.weight}g</Text>
+                      <Text fontWeight="300" color="white">Total Weight:</Text>
+                      <Text color="white">{product.weight}g</Text>
                     </HStack>
                   )}
                   {product.category && (
                     <HStack>
-                      <Text fontWeight="300">Category:</Text>
-                      <Text>{product.category.name}</Text>
+                      <Text fontWeight="300" color="white">Category:</Text>
+                      <Text color="white">{product.category.name}</Text>
                     </HStack>
                   )}
                 </VStack>
               </TabPanel>
               <TabPanel>
                 <VStack spacing={4} align="stretch">
-                  <Text fontWeight="300">Shipping</Text>
-                  <Text>
-                    We offer free standard shipping on all orders over $1,000. 
-                    Standard shipping typically takes 3-5 business days. 
+                  <Text fontWeight="300" color="gold.500">Shipping</Text>
+                  <Text color="white">
+                    We offer free standard shipping on all orders over $1,000.
+                    Standard shipping typically takes 3-5 business days.
                     Express shipping is available for an additional fee.
                   </Text>
-                  <Text fontWeight="300">Returns</Text>
-                  <Text>
+                  <Text fontWeight="300" color="gold.500">Returns</Text>
+                  <Text color="white">
                     We accept returns within 30 days of purchase. 
                     Items must be in original condition with all tags attached. 
                     Custom or personalized items are final sale.
