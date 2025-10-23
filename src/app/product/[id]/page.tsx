@@ -285,25 +285,25 @@ export default function ProductDetailPage() {
                 )}
               </HStack>
 
-              <Text color="gray.600">{product.description}</Text>
+              <Text color="#FFFFFF" fontSize="md" lineHeight="1.8" sx={{ color: '#FFFFFF !important' }}>{product.description}</Text>
 
               {/* Product Details */}
               <VStack spacing={2} align="stretch">
                 {product.carat && (
                   <HStack>
-                    <Icon as={FaGem} color="brand.500" />
-                    <Text fontWeight="300">Carat Weight:</Text>
-                    <Text>{product.carat} ct</Text>
+                    <Icon as={FaGem} color="gold.500" />
+                    <Text fontWeight="300" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Carat Weight:</Text>
+                    <Text color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>{product.carat} ct</Text>
                   </HStack>
                 )}
                 {product.weight && (
                   <HStack>
-                    <Text fontWeight="300">Total Weight:</Text>
-                    <Text>{product.weight}g</Text>
+                    <Text fontWeight="300" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Total Weight:</Text>
+                    <Text color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>{product.weight}g</Text>
                   </HStack>
                 )}
                 <HStack>
-                  <Text fontWeight="300">Availability:</Text>
+                  <Text fontWeight="300" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Availability:</Text>
                   {product.stock > 0 ? (
                     <Badge colorScheme="yellow">In Stock ({product.stock} available)</Badge>
                   ) : (
@@ -360,12 +360,12 @@ export default function ProductDetailPage() {
               {/* Shipping Info */}
               <VStack spacing={3} align="stretch" p={4} bg="transparent" borderRadius="md">
                 <HStack>
-                  <Icon as={FaTruck} color="brand.500" />
-                  <Text fontSize="sm">Free shipping on orders over $1,000</Text>
+                  <Icon as={FaTruck} color="gold.500" />
+                  <Text fontSize="sm" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Free shipping on orders over $1,000</Text>
                 </HStack>
                 <HStack>
-                  <Icon as={FaShieldAlt} color="brand.500" />
-                  <Text fontSize="sm">Secure payment with SSL encryption</Text>
+                  <Icon as={FaShieldAlt} color="gold.500" />
+                  <Text fontSize="sm" color="#FFFFFF" sx={{ color: '#FFFFFF !important' }}>Secure payment with SSL encryption</Text>
                 </HStack>
               </VStack>
             </VStack>
