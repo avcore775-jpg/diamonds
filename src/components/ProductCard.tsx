@@ -21,7 +21,6 @@ import { apiClient } from '@/lib/api/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { mutate } from 'swr'
-import { ScrollAnimation } from './ScrollAnimation'
 
 interface ProductCardProps {
   product: Product
@@ -115,7 +114,6 @@ export default function ProductCard({
     : 0
 
   return (
-    <ScrollAnimation animation="slide-up" duration={0.6}>
       <Card
         as={NextLink}
         href={`/product/${product.slug || product.id}`}
@@ -243,6 +241,5 @@ export default function ProductCard({
         </VStack>
       </CardBody>
     </Card>
-    </ScrollAnimation>
   )
 }
