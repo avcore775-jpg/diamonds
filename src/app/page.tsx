@@ -145,7 +145,7 @@ export default function HomePage() {
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
-              <Heading size="xl" color="white">Featured Collection</Heading>
+              <Heading size="xl" color="gold.500">Featured Collection</Heading>
               <Text fontSize="lg" color="gray.300">
                 Handpicked pieces from our master craftsmen
               </Text>
@@ -164,7 +164,7 @@ export default function HomePage() {
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
-              <Heading size="xl" color="white">Bestsellers</Heading>
+              <Heading size="xl" color="gold.500">Bestsellers</Heading>
               <Text fontSize="lg" color="gray.300">
                 Most loved by our customers
               </Text>
@@ -183,7 +183,7 @@ export default function HomePage() {
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
-              <Heading size="xl" color="white">New Arrival</Heading>
+              <Heading size="xl" color="gold.500">New Arrival</Heading>
               <Text fontSize="lg" color="gray.300">
                 Latest additions to our collection
               </Text>
