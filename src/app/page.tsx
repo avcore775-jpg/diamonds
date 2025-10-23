@@ -17,19 +17,25 @@ import {
 import { FaGem, FaTruck, FaShieldAlt, FaCertificate } from 'react-icons/fa'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import ProductGrid from '@/components/ProductGrid'
+import ProductCarousel from '@/components/ProductCarousel'
 import { ScrollAnimation } from '@/components/ScrollAnimation'
 import { apiClient } from '@/lib/api/client'
 import useSWR from 'swr'
 
 export default function HomePage() {
-  const { data: featuredProducts, isLoading } = useSWR(
-    '/api/products?limit=4',
+  // Fetch all products and split them into sections
+  const { data: allProducts, isLoading } = useSWR(
+    '/api/products',
     async () => {
-      const products = await apiClient.getProducts({ limit: 4 })
+      const products = await apiClient.getProducts({ limit: 20 })
       return products
     }
   )
+
+  // Split products into three sections (random distribution for now)
+  const featuredProducts = allProducts?.slice(0, 6) || []
+  const bestsellers = allProducts?.slice(6, 12) || []
+  const newArrivals = allProducts?.slice(12, 18) || []
 
   return (
     <Box minH="100vh" bg="transparent">
@@ -134,33 +140,64 @@ export default function HomePage() {
         </Container>
       </Box>
 
-      {/* Featured Products */}
+      {/* Featured Collection */}
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <ScrollAnimation animation="fade-in">
-            <VStack spacing={12}>
-              <VStack spacing={4} textAlign="center">
+            <VStack spacing={8} align="stretch">
+              <VStack spacing={2} align="start">
                 <Heading size="xl" color="white">Featured Collection</Heading>
                 <Text fontSize="lg" color="gray.300">
                   Handpicked pieces from our master craftsmen
                 </Text>
               </VStack>
 
-              <ProductGrid
-                products={featuredProducts || []}
+              <ProductCarousel
+                products={featuredProducts}
                 isLoading={isLoading}
-                columns={{ base: 1, sm: 2, lg: 4 }}
               />
+            </VStack>
+          </ScrollAnimation>
+        </Container>
+      </Box>
 
-              <Button
-                as={NextLink}
-                href="/catalog"
-                size="lg"
-                colorScheme="gold"
-                variant="solid"
-              >
-                View All Products
-              </Button>
+      {/* Bestsellers */}
+      <Box py={16} bg="transparent">
+        <Container maxW="7xl">
+          <ScrollAnimation animation="fade-in">
+            <VStack spacing={8} align="stretch">
+              <VStack spacing={2} align="start">
+                <Heading size="xl" color="white">Bestsellers</Heading>
+                <Text fontSize="lg" color="gray.300">
+                  Most loved by our customers
+                </Text>
+              </VStack>
+
+              <ProductCarousel
+                products={bestsellers}
+                isLoading={isLoading}
+              />
+            </VStack>
+          </ScrollAnimation>
+        </Container>
+      </Box>
+
+      {/* New Arrival */}
+      <Box py={16} bg="transparent">
+        <Container maxW="7xl">
+          <ScrollAnimation animation="fade-in">
+            <VStack spacing={8} align="stretch">
+              <VStack spacing={2} align="start">
+                <Heading size="xl" color="white">New Arrival</Heading>
+                <Text fontSize="lg" color="gray.300">
+                  Latest additions to our collection
+                </Text>
+              </VStack>
+
+              <ProductCarousel
+                products={newArrivals}
+                isLoading={isLoading}
+              />
             </VStack>
           </ScrollAnimation>
         </Container>
