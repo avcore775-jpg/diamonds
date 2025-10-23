@@ -145,16 +145,16 @@ function CatalogContent() {
       <Header />
 
       {/* Breadcrumb */}
-      <Box bg="transparent" py={4} borderBottom="1px" borderColor="gray.200">
+      <Box bg="transparent" py={4} borderBottom="1px" borderColor="gold.500">
         <Container maxW="7xl">
-          <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+          <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gold.500' />}>
             <BreadcrumbItem>
-              <BreadcrumbLink as={NextLink} href='/'>
+              <BreadcrumbLink as={NextLink} href='/' color="white" _hover={{ color: "gold.500" }}>
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink>Catalog</BreadcrumbLink>
+              <BreadcrumbLink color="gold.500">Catalog</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
         </Container>
@@ -164,10 +164,10 @@ function CatalogContent() {
         {/* Page Header */}
         <Flex justify="space-between" align="center" mb={8}>
           <Box>
-            <Heading size="xl">
+            <Heading size="xl" color="gold.500">
               {searchQuery ? `Search Results for "${searchQuery}"` : 'All Products'}
             </Heading>
-            <Text color="gray.600" mt={2}>
+            <Text color="white" mt={2}>
               {products?.length || 0} products found
             </Text>
           </Box>
@@ -178,8 +178,11 @@ function CatalogContent() {
                 leftIcon={<FaFilter />}
                 onClick={onOpen}
                 variant="outline"
+                borderColor="gold.500"
+                color="gold.500"
+                _hover={{ bg: "rgba(212, 175, 55, 0.1)" }}
                 rightIcon={activeFiltersCount > 0 && (
-                  <Badge colorScheme="brand" ml={2}>
+                  <Badge colorScheme="yellow" ml={2}>
                     {activeFiltersCount}
                   </Badge>
                 )}
@@ -187,19 +190,22 @@ function CatalogContent() {
                 Filters
               </Button>
             </Box>
-            
+
             {/* Sort Dropdown */}
             <Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               maxW="200px"
               bg="transparent"
+              color="white"
+              borderColor="gold.500"
+              _hover={{ borderColor: "gold.600" }}
             >
-              <option value="featured">Featured</option>
-              <option value="newest">Newest</option>
-              <option value="name">Name</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
+              <option value="featured" style={{ background: '#000000', color: '#FFFFFF' }}>Featured</option>
+              <option value="newest" style={{ background: '#000000', color: '#FFFFFF' }}>Newest</option>
+              <option value="name" style={{ background: '#000000', color: '#FFFFFF' }}>Name</option>
+              <option value="price-asc" style={{ background: '#000000', color: '#FFFFFF' }}>Price: Low to High</option>
+              <option value="price-desc" style={{ background: '#000000', color: '#FFFFFF' }}>Price: High to Low</option>
             </Select>
           </HStack>
         </Flex>
@@ -233,9 +239,9 @@ function CatalogContent() {
       {/* Mobile Filters Drawer */}
       <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="sm">
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Filters</DrawerHeader>
+        <DrawerContent bg="#000000" borderRight="2px solid" borderColor="gold.500">
+          <DrawerCloseButton color="gold.500" />
+          <DrawerHeader color="gold.500">Filters</DrawerHeader>
           <DrawerBody>
             <FiltersPanel
               categories={categories}

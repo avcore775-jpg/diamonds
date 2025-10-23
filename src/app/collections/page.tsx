@@ -61,12 +61,12 @@ export default function CollectionsPage() {
       <Container maxW="7xl" py={12}>
         {/* Page Header */}
         <VStack spacing={4} mb={12} textAlign="center">
-          <Icon as={FaGem} boxSize={10} color="brand.500" />
-          <Heading size="2xl" fontWeight="light">
+          <Icon as={FaGem} boxSize={10} color="gold.500" />
+          <Heading size="2xl" fontWeight="light" color="gold.500">
             Our Collections
           </Heading>
-          <Text fontSize="lg" color="gray.600" maxW="3xl">
-            Discover our carefully curated collections of exquisite diamond jewelry, 
+          <Text fontSize="lg" color="white" maxW="3xl">
+            Discover our carefully curated collections of exquisite diamond jewelry,
             each piece crafted to perfection and designed to celebrate life's special moments.
           </Text>
         </VStack>
@@ -94,9 +94,12 @@ export default function CollectionsPage() {
                   overflow="hidden"
                   h="full"
                   transition="all 0.3s"
+                  bg="#FFFFFF"
+                  border="2px solid"
+                  borderColor="gold.500"
                   _hover={{
                     transform: 'translateY(-4px)',
-                    shadow: 'xl',
+                    shadow: '0 0 20px rgba(212, 175, 55, 0.5)',
                     cursor: 'pointer',
                   }}
                 >
@@ -140,21 +143,21 @@ export default function CollectionsPage() {
                   {/* Collection Details */}
                   <CardBody>
                     <VStack align="stretch" spacing={3}>
-                      <Heading size="lg" fontWeight="300">
+                      <Heading size="lg" fontWeight="300" color="#000000">
                         {collection.name}
                       </Heading>
-                      
+
                       {collection.description && (
-                        <Text color="gray.600" noOfLines={2}>
+                        <Text color="#000000" noOfLines={2}>
                           {collection.description}
                         </Text>
                       )}
 
                       <HStack justify="space-between" pt={2}>
-                        <Text color="brand.500" fontWeight="300">
+                        <Text color="gold.500" fontWeight="300">
                           View Collection →
                         </Text>
-                        <Badge colorScheme="gray" variant="subtle">
+                        <Badge colorScheme="yellow" variant="subtle">
                           {collection._count.products} {collection._count.products === 1 ? 'item' : 'items'}
                         </Badge>
                       </HStack>

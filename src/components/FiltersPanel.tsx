@@ -110,12 +110,12 @@ export default function FiltersPanel({
     filters.inStock
 
   return (
-    <Box bg="white" p={6} borderRadius="lg" shadow="sm">
+    <Box bg="transparent" p={6} borderRadius="lg" border="2px solid" borderColor="gold.500">
       <VStack spacing={6} align="stretch">
         <HStack justify="space-between">
-          <Heading size="md">Filters</Heading>
+          <Heading size="md" color="gold.500">Filters</Heading>
           {hasActiveFilters && (
-            <Button size="sm" variant="ghost" onClick={clearFilters}>
+            <Button size="sm" variant="ghost" onClick={clearFilters} color="gold.500" _hover={{ bg: "rgba(212, 175, 55, 0.1)" }}>
               Clear all
             </Button>
           )}
@@ -126,16 +126,16 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="300">Categories</Text>
+                <Text fontWeight="300" color="white">Categories</Text>
               </Box>
-              <AccordionIcon />
+              <AccordionIcon color="gold.500" />
             </AccordionButton>
             <AccordionPanel px={0} pb={4}>
               <CheckboxGroup value={selectedCategories} onChange={handleCategoryChange}>
                 <Stack spacing={2}>
                   {categories.map((category) => (
-                    <Checkbox key={category.id} value={category.slug}>
-                      {category.name}
+                    <Checkbox key={category.id} value={category.slug} colorScheme="yellow">
+                      <Text color="white">{category.name}</Text>
                     </Checkbox>
                   ))}
                 </Stack>
@@ -149,15 +149,15 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="300">Price Range</Text>
+                <Text fontWeight="300" color="white">Price Range</Text>
               </Box>
-              <AccordionIcon />
+              <AccordionIcon color="gold.500" />
             </AccordionButton>
             <AccordionPanel px={0} pb={4}>
               <VStack spacing={4} align="stretch">
                 <HStack justify="space-between">
-                  <Badge>${(filters.priceRange[0] / 100).toFixed(0)}</Badge>
-                  <Badge>${(filters.priceRange[1] / 100).toFixed(0)}</Badge>
+                  <Badge colorScheme="yellow">${(filters.priceRange[0] / 100).toFixed(0)}</Badge>
+                  <Badge colorScheme="yellow">${(filters.priceRange[1] / 100).toFixed(0)}</Badge>
                 </HStack>
                 <RangeSlider
                   min={minPrice}
@@ -167,11 +167,11 @@ export default function FiltersPanel({
                   onChange={handlePriceChange}
                   onChangeEnd={handlePriceChangeEnd}
                 >
-                  <RangeSliderTrack>
-                    <RangeSliderFilledTrack bg="brand.500" />
+                  <RangeSliderTrack bg="rgba(255, 255, 255, 0.2)">
+                    <RangeSliderFilledTrack bg="gold.500" />
                   </RangeSliderTrack>
-                  <RangeSliderThumb index={0} />
-                  <RangeSliderThumb index={1} />
+                  <RangeSliderThumb index={0} bg="gold.500" />
+                  <RangeSliderThumb index={1} bg="gold.500" />
                 </RangeSlider>
               </VStack>
             </AccordionPanel>
@@ -183,15 +183,15 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="300">Carat Weight</Text>
+                <Text fontWeight="300" color="white">Carat Weight</Text>
               </Box>
-              <AccordionIcon />
+              <AccordionIcon color="gold.500" />
             </AccordionButton>
             <AccordionPanel px={0} pb={4}>
               <VStack spacing={4} align="stretch">
                 <HStack justify="space-between">
-                  <Badge>{filters.caratRange[0]} ct</Badge>
-                  <Badge>{filters.caratRange[1]} ct</Badge>
+                  <Badge colorScheme="yellow">{filters.caratRange[0]} ct</Badge>
+                  <Badge colorScheme="yellow">{filters.caratRange[1]} ct</Badge>
                 </HStack>
                 <RangeSlider
                   min={0}
@@ -201,11 +201,11 @@ export default function FiltersPanel({
                   onChange={handleCaratChange}
                   onChangeEnd={handleCaratChangeEnd}
                 >
-                  <RangeSliderTrack>
-                    <RangeSliderFilledTrack bg="brand.500" />
+                  <RangeSliderTrack bg="rgba(255, 255, 255, 0.2)">
+                    <RangeSliderFilledTrack bg="gold.500" />
                   </RangeSliderTrack>
-                  <RangeSliderThumb index={0} />
-                  <RangeSliderThumb index={1} />
+                  <RangeSliderThumb index={0} bg="gold.500" />
+                  <RangeSliderThumb index={1} bg="gold.500" />
                 </RangeSlider>
               </VStack>
             </AccordionPanel>
@@ -217,13 +217,13 @@ export default function FiltersPanel({
           <AccordionItem border="none">
             <AccordionButton px={0}>
               <Box flex="1" textAlign="left">
-                <Text fontWeight="300">Availability</Text>
+                <Text fontWeight="300" color="white">Availability</Text>
               </Box>
-              <AccordionIcon />
+              <AccordionIcon color="gold.500" />
             </AccordionButton>
             <AccordionPanel px={0} pb={4}>
-              <Checkbox isChecked={filters.inStock} onChange={handleStockChange}>
-                In Stock Only
+              <Checkbox isChecked={filters.inStock} onChange={handleStockChange} colorScheme="yellow">
+                <Text color="white">In Stock Only</Text>
               </Checkbox>
             </AccordionPanel>
           </AccordionItem>

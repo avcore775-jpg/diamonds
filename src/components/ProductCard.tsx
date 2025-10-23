@@ -121,7 +121,7 @@ export default function ProductCard({
         cursor="pointer"
         bg="#FFFFFF"
         border="2px solid"
-        borderColor="green.500"
+        borderColor="gold.500"
         color="#000000"
       >
       <Box position="relative" height="300px" width="100%" overflow="hidden">
@@ -174,13 +174,13 @@ export default function ProductCard({
           size="sm"
           variant="solid"
           bg="white"
-          color="green.500"
+          color="gold.500"
           opacity={0.9}
           _hover={{
             opacity: 1,
             transform: "scale(1.15)",
-            color: "green.600",
-            boxShadow: "0 0 15px rgba(16, 185, 129, 0.4)",
+            color: "gold.600",
+            boxShadow: "0 0 15px rgba(212, 175, 55, 0.4)",
           }}
           onClick={handleAddToWishlist}
           isLoading={isAddingToWishlist}
@@ -194,7 +194,7 @@ export default function ProductCard({
           </Text>
 
           {product.category && (
-            <Badge colorScheme="green" width="fit-content">
+            <Badge colorScheme="yellow" width="fit-content">
               {product.category.name}
             </Badge>
           )}
@@ -222,18 +222,17 @@ export default function ProductCard({
 
           <Button
             leftIcon={<FaShoppingCart />}
-            colorScheme="green"
             size="md"
             width="full"
             onClick={handleAddToCart}
             isLoading={isAddingToCart}
             isDisabled={product.stock === 0}
-            bg="green.500"
-            color="white"
+            bg="gold.500"
+            color="black"
             _hover={{
-              bg: "green.600",
+              bg: "gold.600",
               transform: "translateY(-3px) scale(1.02)",
-              boxShadow: "0 0 20px rgba(16, 185, 129, 0.5)",
+              boxShadow: "0 0 20px rgba(212, 175, 55, 0.5)",
             }}
           >
             {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
