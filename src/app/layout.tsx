@@ -8,7 +8,7 @@ import { DiamondSparkles } from "@/components/DiamondSparkles";
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Luxe Diamonds - Premium Jewelry Store",
+  title: "RemySales - Premium Jewelry Store",
   description: "Discover our collection of exquisite diamonds and fine jewelry",
 };
 

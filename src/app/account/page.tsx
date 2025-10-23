@@ -178,7 +178,7 @@ export default function AccountPage() {
           {/* Logo and Title */}
           <VStack spacing={4}>
             <Icon as={FaGem} boxSize={12} color="brand.500" />
-            <Heading size="xl">Welcome to Luxe Diamonds</Heading>
+            <Heading size="xl">Welcome to RemySales</Heading>
             <Text color="gray.600">Sign in to your account or create a new one</Text>
           </VStack>
 

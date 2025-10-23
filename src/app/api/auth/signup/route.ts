@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     try {
       await sendEmail({
         to: user.email,
-        subject: 'Verify your email - Luxe Diamonds',
+        subject: 'Verify your email - RemySales',
         html: getEmailVerificationTemplate(user.name || 'there', verificationUrl),
       });
     } catch (emailError) {

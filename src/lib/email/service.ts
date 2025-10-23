@@ -14,7 +14,7 @@ interface EmailOptions {
 // Send email using Resend
 export async function sendEmail({ to, subject, html }: EmailOptions) {
   try {
-    const from = process.env.EMAIL_FROM || 'Luxe Diamonds <onboarding@resend.dev>';
+    const from = process.env.EMAIL_FROM || 'RemySales <onboarding@resend.dev>';
     
     // In test mode, redirect all emails to your account
     // This allows testing with any email address
@@ -76,11 +76,11 @@ export function getEmailVerificationTemplate(name: string, verificationUrl: stri
       <body>
         <div class="container">
           <div class="header">
-            <h1>Welcome to Luxe Diamonds!</h1>
+            <h1>Welcome to RemySales!</h1>
           </div>
           <div class="content">
             <h2>Hi ${name || 'there'},</h2>
-            <p>Thank you for signing up with Luxe Diamonds. To complete your registration, please verify your email address by clicking the button below:</p>
+            <p>Thank you for signing up with RemySales. To complete your registration, please verify your email address by clicking the button below:</p>
             <div style="text-align: center;">
               <a href="${verificationUrl}" class="button">Verify Email Address</a>
             </div>
@@ -90,7 +90,7 @@ export function getEmailVerificationTemplate(name: string, verificationUrl: stri
             <p>If you didn't create an account with us, please ignore this email.</p>
           </div>
           <div class="footer">
-            <p>&copy; 2024 Luxe Diamonds. All rights reserved.</p>
+            <p>&copy; 2024 RemySales. All rights reserved.</p>
           </div>
         </div>
       </body>
@@ -122,7 +122,7 @@ export function getPasswordResetTemplate(name: string, resetUrl: string) {
           </div>
           <div class="content">
             <h2>Hi ${name || 'there'},</h2>
-            <p>We received a request to reset the password for your Luxe Diamonds account. Click the button below to reset your password:</p>
+            <p>We received a request to reset the password for your RemySales account. Click the button below to reset your password:</p>
             <div style="text-align: center;">
               <a href="${resetUrl}" class="button">Reset Password</a>
             </div>
@@ -132,7 +132,7 @@ export function getPasswordResetTemplate(name: string, resetUrl: string) {
             <p>If you didn't request a password reset, please ignore this email. Your password will remain unchanged.</p>
           </div>
           <div class="footer">
-            <p>&copy; 2024 Luxe Diamonds. All rights reserved.</p>
+            <p>&copy; 2024 RemySales. All rights reserved.</p>
           </div>
         </div>
       </body>
@@ -147,7 +147,7 @@ export function getWelcomeTemplate(name: string) {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to Luxe Diamonds</title>
+        <title>Welcome to RemySales</title>
         <style>
           body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
           .container { max-width: 600px; margin: 0 auto; padding: 20px; }
@@ -160,11 +160,11 @@ export function getWelcomeTemplate(name: string) {
       <body>
         <div class="container">
           <div class="header">
-            <h1>Welcome to Luxe Diamonds!</h1>
+            <h1>Welcome to RemySales!</h1>
           </div>
           <div class="content">
             <h2>Hi ${name},</h2>
-            <p>Your email has been successfully verified! We're thrilled to have you as part of the Luxe Diamonds family.</p>
+            <p>Your email has been successfully verified! We're thrilled to have you as part of the RemySales family.</p>
             <p>Start exploring our exquisite collection of diamond jewelry:</p>
             <div style="text-align: center;">
               <a href="${process.env.NEXT_PUBLIC_APP_URL}/catalog" class="button">Shop Now</a>
@@ -178,7 +178,7 @@ export function getWelcomeTemplate(name: string) {
             <p>If you have any questions, our customer service team is here to help.</p>
           </div>
           <div class="footer">
-            <p>&copy; 2024 Luxe Diamonds. All rights reserved.</p>
+            <p>&copy; 2024 RemySales. All rights reserved.</p>
           </div>
         </div>
       </body>

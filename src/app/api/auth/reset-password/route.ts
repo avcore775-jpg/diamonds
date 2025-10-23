@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     try {
       await sendEmail({
         to: user.email,
-        subject: 'Reset your password - Luxe Diamonds',
+        subject: 'Reset your password - RemySales',
         html: getPasswordResetTemplate(user.name || 'there', resetUrl),
       });
     } catch (emailError) {

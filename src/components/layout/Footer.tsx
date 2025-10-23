@@ -102,7 +102,7 @@ export default function Footer() {
           spacing={4}
         >
           <Text fontSize="sm" color="gray.400">
-            © {new Date().getFullYear()} Luxe Diamonds. All rights reserved.
+            © {new Date().getFullYear()} RemySales. All rights reserved.
           </Text>
         </Stack>
       </Container>

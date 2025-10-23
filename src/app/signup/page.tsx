@@ -143,7 +143,7 @@ function SignUpContent() {
           <VStack spacing={2} textAlign="center">
             <Heading size="xl">Create an Account</Heading>
             <Text color="gray.600">
-              Join Luxe Diamonds to start shopping for exquisite jewelry
+              Join RemySales to start shopping for exquisite jewelry
             </Text>
           </VStack>
 

@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     try {
       await sendEmail({
         to: verificationToken.email,
-        subject: 'Welcome to Luxe Diamonds!',
+        subject: 'Welcome to RemySales!',
         html: getWelcomeTemplate(verificationToken.user.name || 'there'),
       });
     } catch (emailError) {
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
       const { getEmailVerificationTemplate } = await import('@/lib/email/service');
       await sendEmail({
         to: user.email,
-        subject: 'Verify your email - Luxe Diamonds',
+        subject: 'Verify your email - RemySales',
         html: getEmailVerificationTemplate(user.name || 'there', verificationUrl),
       });
     } catch (emailError) {
