@@ -48,7 +48,9 @@ export default function HomePage() {
         bgRepeat="no-repeat"
         bgSize="cover"
         color="white"
-        py={20}
+        minH="100vh"
+        display="flex"
+        alignItems="center"
         position="relative"
       >
         {/* Dark overlay for better text readability */}
