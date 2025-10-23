@@ -117,46 +117,8 @@ export default function HomePage() {
         </Container>
       </Box>
 
-      {/* Features */}
-      <Box py={16}>
-        <Container maxW="7xl">
-          <ScrollAnimation animation="fade-in">
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
-            <VStack spacing={4}>
-              <Icon as={FaGem} boxSize={10} color="gold.500" />
-              <Heading size="md" color="white">Premium Quality</Heading>
-              <Text textAlign="center" color="gray.300">
-                Ethically sourced diamonds with GIA certification
-              </Text>
-            </VStack>
-            <VStack spacing={4}>
-              <Icon as={FaTruck} boxSize={10} color="gold.500" />
-              <Heading size="md" color="white">Free Shipping</Heading>
-              <Text textAlign="center" color="gray.300">
-                Complimentary shipping on all orders over $1000
-              </Text>
-            </VStack>
-            <VStack spacing={4}>
-              <Icon as={FaShieldAlt} boxSize={10} color="gold.500" />
-              <Heading size="md" color="white">Secure Payment</Heading>
-              <Text textAlign="center" color="gray.300">
-                256-bit SSL encryption for all transactions
-              </Text>
-            </VStack>
-            <VStack spacing={4}>
-              <Icon as={FaCertificate} boxSize={10} color="gold.500" />
-              <Heading size="md" color="white">Lifetime Warranty</Heading>
-              <Text textAlign="center" color="gray.300">
-                Comprehensive warranty on all our jewelry
-              </Text>
-            </VStack>
-          </SimpleGrid>
-          </ScrollAnimation>
-        </Container>
-      </Box>
-
       {/* Featured Collection */}
-      <Box pt={8} pb={16} bg="transparent">
+      <Box pt={0} pb={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
