@@ -43,7 +43,7 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <Box
-        bgImage="url('/images/95d9fc6a0c18d048022fb963094bf931a9b0be9a-2632x1197.avif')"
+        bgImage="url('/images/pexels-lalesh-168927.jpg')"
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -52,6 +52,20 @@ export default function HomePage() {
         display="flex"
         alignItems="center"
         position="relative"
+        _before={{
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          bgImage: "url('/images/pexels-lalesh-168927.jpg')",
+          bgPosition: "center",
+          bgRepeat: "no-repeat",
+          bgSize: "cover",
+          filter: "blur(3px)",
+          zIndex: 0,
+        }}
       >
         {/* Dark overlay for better text readability */}
         <Box
