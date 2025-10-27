@@ -27,6 +27,7 @@ import {
   Avatar,
   Divider,
 } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import {
   HamburgerIcon,
   CloseIcon,
@@ -38,12 +39,19 @@ import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import { apiClient } from '@/lib/api/client'
+import { cartBounce, getAnimationVariants, buttonPress } from '@/lib/animations'
+
+// Wrap Chakra components with motion
+const MotionBox = motion(Box)
+const MotionIconButton = motion(IconButton)
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure()
   const { data: session } = useSession()
   const router = useRouter()
   const [searchQuery, setSearchQuery] = React.useState('')
+  const [cartIconKey, setCartIconKey] = React.useState(0)
+  const prevCartCount = React.useRef(0)
 
   // Fetch cart data
   const { data: cart } = useSWR(
@@ -53,6 +61,14 @@ export default function Header() {
   )
 
   const cartItemsCount = cart?.items?.reduce((acc: number, item: any) => acc + item.quantity, 0) || 0
+
+  // Trigger bounce animation when cart count increases
+  React.useEffect(() => {
+    if (cartItemsCount > prevCartCount.current) {
+      setCartIconKey(prev => prev + 1)
+    }
+    prevCartCount.current = cartItemsCount
+  }, [cartItemsCount])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -154,12 +170,24 @@ export default function Header() {
 
           {/* Cart */}
           <Box position="relative">
-            <IconButton
+            <MotionIconButton
               as={NextLink}
               href="/cart"
               aria-label="Shopping Cart"
-              icon={<FaShoppingCart />}
+              icon={
+                <MotionBox
+                  key={cartIconKey}
+                  variants={getAnimationVariants(cartBounce)}
+                  initial="idle"
+                  animate={cartIconKey > 0 ? "bounce" : "idle"}
+                >
+                  <FaShoppingCart />
+                </MotionBox>
+              }
               variant="ghost"
+              variants={getAnimationVariants(buttonPress)}
+              whileHover="hover"
+              whileTap="tap"
             />
             {cartItemsCount > 0 && (
               <Badge

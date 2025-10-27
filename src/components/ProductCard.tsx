@@ -15,12 +15,20 @@ import {
   IconButton,
   useToast,
 } from '@chakra-ui/react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FaHeart, FaShoppingCart } from 'react-icons/fa'
 import { Product } from '@/lib/api/client'
 import { apiClient } from '@/lib/api/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { mutate } from 'swr'
+import { buttonPress, cartBounce, getAnimationVariants } from '@/lib/animations'
+
+// Wrap Chakra components with motion
+const MotionCard = motion(Card)
+const MotionButton = motion(Button)
+const MotionIconButton = motion(IconButton)
+const MotionBox = motion(Box)
 
 interface ProductCardProps {
   product: Product
@@ -28,16 +36,17 @@ interface ProductCardProps {
   onAddToWishlist?: (product: Product) => void
 }
 
-export default function ProductCard({ 
-  product, 
-  onAddToCart, 
-  onAddToWishlist 
+export default function ProductCard({
+  product,
+  onAddToCart,
+  onAddToWishlist
 }: ProductCardProps) {
   const { data: session } = useSession()
   const router = useRouter()
   const toast = useToast()
   const [isAddingToCart, setIsAddingToCart] = React.useState(false)
   const [isAddingToWishlist, setIsAddingToWishlist] = React.useState(false)
+  const [cartIconKey, setCartIconKey] = React.useState(0)
 
   const formatPrice = (cents: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -59,6 +68,8 @@ export default function ProductCard({
     try {
       await apiClient.addToCart(product.id, 1)
       mutate('/api/cart')
+      // Trigger cart icon bounce animation
+      setCartIconKey(prev => prev + 1)
       toast({
         title: 'Added to cart',
         status: 'success',
@@ -114,7 +125,7 @@ export default function ProductCard({
     : 0
 
   return (
-      <Card
+      <MotionCard
         as={NextLink}
         href={`/product/${product.slug || product.id}`}
         maxW="sm"
@@ -123,6 +134,25 @@ export default function ProductCard({
         border="2px solid"
         borderColor="gold.500"
         color="#000000"
+        position="relative"
+        initial={{ opacity: 1, y: 0 }}
+        whileHover={{
+          y: -8,
+          transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
+        }}
+        _before={{
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '50%',
+          background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+          borderRadius: 'lg',
+          opacity: 0.6,
+        }}
       >
       <Box position="relative" height="300px" width="100%" overflow="hidden">
         <NextImage
@@ -220,8 +250,17 @@ export default function ProductCard({
             )}
           </HStack>
 
-          <Button
-            leftIcon={<FaShoppingCart />}
+          <MotionButton
+            leftIcon={
+              <MotionBox
+                key={cartIconKey}
+                variants={getAnimationVariants(cartBounce)}
+                initial="idle"
+                animate={cartIconKey > 0 ? "bounce" : "idle"}
+              >
+                <FaShoppingCart />
+              </MotionBox>
+            }
             size="md"
             width="full"
             onClick={handleAddToCart}
@@ -229,6 +268,9 @@ export default function ProductCard({
             isDisabled={product.stock === 0}
             bg="gold.500"
             color="black"
+            variants={getAnimationVariants(buttonPress)}
+            whileHover="hover"
+            whileTap="tap"
             _hover={{
               bg: "gold.600",
               transform: "translateY(-3px) scale(1.02)",
@@ -236,9 +278,9 @@ export default function ProductCard({
             }}
           >
             {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-          </Button>
+          </MotionButton>
         </VStack>
       </CardBody>
-    </Card>
+    </MotionCard>
   )
 }

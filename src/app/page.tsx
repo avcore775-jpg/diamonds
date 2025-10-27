@@ -14,6 +14,7 @@ import {
   Icon,
   Flex,
 } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import { FaGem, FaTruck, FaShieldAlt, FaCertificate } from 'react-icons/fa'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -21,6 +22,13 @@ import ProductCarousel from '@/components/ProductCarousel'
 import { ScrollAnimation } from '@/components/ScrollAnimation'
 import { apiClient } from '@/lib/api/client'
 import useSWR from 'swr'
+import { heroTitle, heroSubtitle, buttonPress, getAnimationVariants } from '@/lib/animations'
+
+// Wrap Chakra components with motion
+const MotionButton = motion(Button)
+const MotionHeading = motion(Heading)
+const MotionText = motion(Text)
+const MotionHStack = motion(HStack)
 
 export default function HomePage() {
   // Fetch all products and split them into sections
@@ -80,27 +88,38 @@ export default function HomePage() {
         
         <Container maxW="7xl" position="relative" zIndex={1}>
           <VStack spacing={8} textAlign="center">
-            <Heading
+            <MotionHeading
               as="h1"
               size="3xl"
               fontWeight="400"
               textShadow="2px 2px 4px rgba(0,0,0,0.5)"
               color="white"
+              variants={getAnimationVariants(heroTitle)}
+              initial="hidden"
+              animate="visible"
             >
               Jewellery That Speaks
-            </Heading>
-            <Heading
+            </MotionHeading>
+            <MotionText
               as="h2"
-              size="lg"
+              fontSize={{ base: 'xl', md: '2xl' }}
               fontWeight="300"
               maxW="600px"
               textShadow="1px 1px 2px rgba(0,0,0,0.5)"
               color="white"
+              variants={getAnimationVariants(heroSubtitle)}
+              initial="hidden"
+              animate="visible"
             >
               Discover our great collection of handcrafted jewelry and certified diamonds
-            </Heading>
-            <HStack spacing={4}>
-              <Button
+            </MotionText>
+            <MotionHStack
+              spacing={4}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <MotionButton
                 as={NextLink}
                 href="/collections"
                 size="lg"
@@ -108,6 +127,9 @@ export default function HomePage() {
                 color="white"
                 border="2px solid"
                 borderColor="gold.500"
+                variants={getAnimationVariants(buttonPress)}
+                whileHover="hover"
+                whileTap="tap"
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
@@ -120,8 +142,8 @@ export default function HomePage() {
                 }}
               >
                 Shop Collection
-              </Button>
-              <Button
+              </MotionButton>
+              <MotionButton
                 as={NextLink}
                 href="/catalog"
                 size="lg"
@@ -129,6 +151,9 @@ export default function HomePage() {
                 color="white"
                 border="2px solid"
                 borderColor="gold.500"
+                variants={getAnimationVariants(buttonPress)}
+                whileHover="hover"
+                whileTap="tap"
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
@@ -141,8 +166,8 @@ export default function HomePage() {
                 }}
               >
                 Catalog
-              </Button>
-            </HStack>
+              </MotionButton>
+            </MotionHStack>
           </VStack>
         </Container>
       </Box>
@@ -151,17 +176,21 @@ export default function HomePage() {
       <Box pt={7} pb={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
-            <VStack spacing={2} align="start">
-              <Heading size="xl" color="gold.500">Featured Collection</Heading>
-              <Text fontSize="lg" color="gold.500">
-                Handpicked pieces from our master craftsmen
-              </Text>
-            </VStack>
+            <ScrollAnimation animation="slide-up" delay={0.1}>
+              <VStack spacing={2} align="start">
+                <Heading size="xl" color="gold.500">Featured Collection</Heading>
+                <Text fontSize="lg" color="gold.500">
+                  Handpicked pieces from our master craftsmen
+                </Text>
+              </VStack>
+            </ScrollAnimation>
 
-            <ProductCarousel
-              products={featuredProducts}
-              isLoading={isLoading}
-            />
+            <ScrollAnimation animation="fade-in" delay={0.2}>
+              <ProductCarousel
+                products={featuredProducts}
+                isLoading={isLoading}
+              />
+            </ScrollAnimation>
           </VStack>
         </Container>
       </Box>
@@ -170,17 +199,21 @@ export default function HomePage() {
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
-            <VStack spacing={2} align="start">
-              <Heading size="xl" color="gold.500">Bestsellers</Heading>
-              <Text fontSize="lg" color="gold.500">
-                Most loved by our customers
-              </Text>
-            </VStack>
+            <ScrollAnimation animation="slide-up" delay={0.1}>
+              <VStack spacing={2} align="start">
+                <Heading size="xl" color="gold.500">Bestsellers</Heading>
+                <Text fontSize="lg" color="gold.500">
+                  Most loved by our customers
+                </Text>
+              </VStack>
+            </ScrollAnimation>
 
-            <ProductCarousel
-              products={bestsellers}
-              isLoading={isLoading}
-            />
+            <ScrollAnimation animation="fade-in" delay={0.2}>
+              <ProductCarousel
+                products={bestsellers}
+                isLoading={isLoading}
+              />
+            </ScrollAnimation>
           </VStack>
         </Container>
       </Box>
@@ -189,17 +222,21 @@ export default function HomePage() {
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
-            <VStack spacing={2} align="start">
-              <Heading size="xl" color="gold.500">New Arrival</Heading>
-              <Text fontSize="lg" color="gold.500">
-                Latest additions to our collection
-              </Text>
-            </VStack>
+            <ScrollAnimation animation="slide-up" delay={0.1}>
+              <VStack spacing={2} align="start">
+                <Heading size="xl" color="gold.500">New Arrival</Heading>
+                <Text fontSize="lg" color="gold.500">
+                  Latest additions to our collection
+                </Text>
+              </VStack>
+            </ScrollAnimation>
 
-            <ProductCarousel
-              products={newArrivals}
-              isLoading={isLoading}
-            />
+            <ScrollAnimation animation="fade-in" delay={0.2}>
+              <ProductCarousel
+                products={newArrivals}
+                isLoading={isLoading}
+              />
+            </ScrollAnimation>
           </VStack>
         </Container>
       </Box>
@@ -207,22 +244,31 @@ export default function HomePage() {
       {/* CTA Section */}
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
-          <Flex
-            direction={{ base: 'column', md: 'row' }}
-            align="center"
-            justify="space-between"
-            gap={8}
-          >
-            <VStack align={{ base: 'center', md: 'start' }} spacing={4}>
-              <Heading size="lg" color="white">Subscribe to Our Newsletter</Heading>
-              <Text color="gray.300">
-                Get exclusive offers and be the first to know about new collections
-              </Text>
-            </VStack>
-            <Button size="lg" colorScheme="gold" variant="solid">
-              Subscribe Now
-            </Button>
-          </Flex>
+          <ScrollAnimation animation="scale-in">
+            <Flex
+              direction={{ base: 'column', md: 'row' }}
+              align="center"
+              justify="space-between"
+              gap={8}
+            >
+              <VStack align={{ base: 'center', md: 'start' }} spacing={4}>
+                <Heading size="lg" color="white">Subscribe to Our Newsletter</Heading>
+                <Text color="gray.300">
+                  Get exclusive offers and be the first to know about new collections
+                </Text>
+              </VStack>
+              <MotionButton
+                size="lg"
+                colorScheme="gold"
+                variant="solid"
+                variants={getAnimationVariants(buttonPress)}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                Subscribe Now
+              </MotionButton>
+            </Flex>
+          </ScrollAnimation>
         </Container>
       </Box>
 

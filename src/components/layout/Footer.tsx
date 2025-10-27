@@ -17,7 +17,25 @@ import { FaInstagram, FaFacebook, FaPinterest, FaTwitter } from 'react-icons/fa'
 
 export default function Footer() {
   return (
-    <Box bg="transparent" color="white" py={12} borderTop="1px solid" borderColor="rgba(212, 175, 55, 0.2)">
+    <Box
+      bg="transparent"
+      color="white"
+      py={12}
+      borderTop="2px solid"
+      borderColor="rgba(212, 175, 55, 0.3)"
+      position="relative"
+      boxShadow="0 -8px 32px rgba(0, 0, 0, 0.4), 0 -4px 16px rgba(212, 175, 55, 0.1)"
+      _before={{
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '2px',
+        background: 'linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.8) 50%, transparent 100%)',
+        opacity: 0.7,
+      }}
+    >
       <Container maxW="7xl">
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
           {/* About */}

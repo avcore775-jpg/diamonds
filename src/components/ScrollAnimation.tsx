@@ -1,101 +1,87 @@
 'use client'
 
-import { useEffect, useRef, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { Box } from '@chakra-ui/react'
+import { motion, Variants } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
+import {
+  fadeInUp,
+  fadeIn,
+  scaleIn,
+  slideInLeft,
+  slideInRight,
+  getAnimationVariants,
+} from '@/lib/animations'
+
+const MotionBox = motion(Box)
 
 interface ScrollAnimationProps {
   children: ReactNode
   animation?: 'fade-in' | 'slide-up' | 'scale-in' | 'slide-left' | 'slide-right'
   delay?: number
   duration?: number
+  threshold?: number
+  triggerOnce?: boolean
 }
 
 export function ScrollAnimation({
   children,
-  animation = 'fade-in',
+  animation = 'slide-up',
   delay = 0,
-  duration = 0.6,
+  duration = 0.5,
+  threshold = 0.1,
+  triggerOnce = true,
 }: ScrollAnimationProps) {
-  const elementRef = useRef<HTMLDivElement>(null)
+  const [ref, inView] = useInView({
+    threshold,
+    triggerOnce,
+  })
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in')
-          }
-        })
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px',
-      }
-    )
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current)
-    }
-
-    return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current)
-      }
-    }
-  }, [])
-
-  const getAnimationStyles = () => {
-    const baseStyle = {
-      opacity: 0,
-      transition: `all ${duration}s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s`,
-    }
+  const getVariants = (): Variants => {
+    let baseVariants: Variants
 
     switch (animation) {
       case 'fade-in':
-        return baseStyle
-
+        baseVariants = fadeIn
+        break
       case 'slide-up':
-        return {
-          ...baseStyle,
-          transform: 'translateY(40px)',
-        }
-
+        baseVariants = fadeInUp
+        break
       case 'scale-in':
-        return {
-          ...baseStyle,
-          transform: 'scale(0.9)',
-        }
-
+        baseVariants = scaleIn
+        break
       case 'slide-left':
-        return {
-          ...baseStyle,
-          transform: 'translateX(40px)',
-        }
-
+        baseVariants = slideInLeft
+        break
       case 'slide-right':
-        return {
-          ...baseStyle,
-          transform: 'translateX(-40px)',
-        }
-
+        baseVariants = slideInRight
+        break
       default:
-        return baseStyle
+        baseVariants = fadeInUp
+    }
+
+    // Apply custom duration and delay
+    return {
+      hidden: baseVariants.hidden,
+      visible: {
+        ...baseVariants.visible,
+        transition: {
+          duration,
+          delay,
+          ease: [0.4, 0, 0.2, 1],
+        },
+      },
     }
   }
 
   return (
-    <Box
-      ref={elementRef}
-      className="scroll-animate"
-      style={getAnimationStyles()}
-      sx={{
-        '&.animate-in': {
-          opacity: 1,
-          transform: 'translateY(0) translateX(0) scale(1)',
-        },
-      }}
+    <MotionBox
+      ref={ref}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      variants={getAnimationVariants(getVariants())}
     >
       {children}
-    </Box>
+    </MotionBox>
   )
 }

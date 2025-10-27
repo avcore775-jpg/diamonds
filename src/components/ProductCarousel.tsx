@@ -51,6 +51,9 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
       overflowX="auto"
       overflowY="hidden"
       sx={{
+        scrollBehavior: 'smooth',
+        scrollSnapType: 'x mandatory',
+        WebkitOverflowScrolling: 'touch',
         '&::-webkit-scrollbar': {
           height: '8px',
         },
@@ -81,7 +84,8 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
             borderColor="gold.500"
             color="#000000"
             cursor="pointer"
-            transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+            transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+            scrollSnapAlign="center"
             _hover={{
               transform: 'translateY(-8px) scale(1.02)',
               boxShadow: '0 0 30px rgba(212, 175, 55, 0.5), 0 10px 40px rgba(0, 0, 0, 0.3)',

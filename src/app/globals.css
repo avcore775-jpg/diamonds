@@ -41,7 +41,12 @@
   * {
     border-color: hsl(var(--border));
   }
-  
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));

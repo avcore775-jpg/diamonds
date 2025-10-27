@@ -32,6 +32,7 @@ import {
   Skeleton,
   Icon,
 } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import { FaShoppingCart, FaHeart, FaTruck, FaShieldAlt, FaGem } from 'react-icons/fa'
 import NextLink from 'next/link'
@@ -41,6 +42,13 @@ import ProductGrid from '@/components/ProductGrid'
 import { apiClient, Product } from '@/lib/api/client'
 import { useSession } from 'next-auth/react'
 import useSWR, { mutate } from 'swr'
+import { ScrollAnimation } from '@/components/ScrollAnimation'
+import { buttonPress, cartBounce, getAnimationVariants } from '@/lib/animations'
+
+// Wrap Chakra components with motion
+const MotionButton = motion(Button)
+const MotionBox = motion(Box)
+const MotionGrid = motion(Grid)
 
 export default function ProductDetailPage() {
   const params = useParams()
@@ -52,6 +60,7 @@ export default function ProductDetailPage() {
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0)
   const [isAddingToCart, setIsAddingToCart] = React.useState(false)
   const [isAddingToWishlist, setIsAddingToWishlist] = React.useState(false)
+  const [cartIconKey, setCartIconKey] = React.useState(0)
 
   // Fetch product details
   const { data: product, isLoading } = useSWR(
@@ -89,6 +98,8 @@ export default function ProductDetailPage() {
     try {
       await apiClient.addToCart(product.id, quantity)
       mutate('/api/cart')
+      // Trigger cart icon bounce animation
+      setCartIconKey(prev => prev + 1)
       toast({
         title: 'Added to cart',
         description: `${quantity} item${quantity > 1 ? 's' : ''} added to your cart`,
@@ -334,26 +345,41 @@ export default function ProductDetailPage() {
                 </HStack>
 
                 <HStack spacing={4}>
-                  <Button
-                    leftIcon={<FaShoppingCart />}
+                  <MotionButton
+                    leftIcon={
+                      <MotionBox
+                        key={cartIconKey}
+                        variants={getAnimationVariants(cartBounce)}
+                        initial="idle"
+                        animate={cartIconKey > 0 ? "bounce" : "idle"}
+                      >
+                        <FaShoppingCart />
+                      </MotionBox>
+                    }
                     colorScheme="brand"
                     size="lg"
                     flex={1}
                     onClick={handleAddToCart}
                     isLoading={isAddingToCart}
                     isDisabled={product.stock === 0}
+                    variants={getAnimationVariants(buttonPress)}
+                    whileHover="hover"
+                    whileTap="tap"
                   >
                     {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-                  </Button>
-                  <Button
+                  </MotionButton>
+                  <MotionButton
                     leftIcon={<FaHeart />}
                     variant="outline"
                     size="lg"
                     onClick={handleAddToWishlist}
                     isLoading={isAddingToWishlist}
+                    variants={getAnimationVariants(buttonPress)}
+                    whileHover="hover"
+                    whileTap="tap"
                   >
                     Wishlist
-                  </Button>
+                  </MotionButton>
                 </HStack>
               </VStack>
 
@@ -434,13 +460,15 @@ export default function ProductDetailPage() {
 
         {/* Related Products */}
         {relatedProducts && relatedProducts.length > 0 && (
-          <Box mt={16}>
-            <Heading size="lg" mb={8}>You May Also Like</Heading>
-            <ProductGrid
-              products={relatedProducts}
-              columns={{ base: 1, sm: 2, md: 4 }}
-            />
-          </Box>
+          <ScrollAnimation animation="slide-up">
+            <Box mt={16}>
+              <Heading size="lg" mb={8}>You May Also Like</Heading>
+              <ProductGrid
+                products={relatedProducts}
+                columns={{ base: 1, sm: 2, md: 4 }}
+              />
+            </Box>
+          </ScrollAnimation>
         )}
       </Container>
     </Box>
