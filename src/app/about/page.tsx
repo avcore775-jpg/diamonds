@@ -84,6 +84,7 @@ export default function AboutPage() {
           height="100%"
           zIndex={0}
           bg="black"
+          overflow="hidden"
         >
           <video
             autoPlay
@@ -92,8 +93,10 @@ export default function AboutPage() {
             playsInline
             style={{
               width: '100%',
-              height: '100%',
+              height: 'calc(100% + 2cm)',
               objectFit: 'contain',
+              position: 'relative',
+              top: '0',
             }}
           >
             <source src="/images/videos/about.mp4" type="video/mp4" />
