@@ -69,7 +69,7 @@ export default function ContactPage() {
       icon: FaPhone,
       title: 'Phone',
       details: '+1 (555) 123-4567',
-      subDetails: 'Mon-Sat 9AM-6PM EST',
+      subDetails: 'Mon-Sat 10AM-5PM EST',
     },
     {
       icon: FaEnvelope,
@@ -80,24 +80,24 @@ export default function ContactPage() {
     {
       icon: FaMapMarkerAlt,
       title: 'Address',
-      details: '123 Diamond Street',
-      subDetails: 'New York, NY 10001',
+      details: '#203, 221 Victoria St',
+      subDetails: 'Toronto, ON M5B 1V4',
     },
     {
       icon: FaClock,
       title: 'Business Hours',
       details: 'Monday - Saturday',
-      subDetails: '9:00 AM - 6:00 PM EST',
+      subDetails: '10:00 AM - 5:00 PM EST',
     },
   ]
 
   return (
-    <Box minH="100vh" bg="transparent">
+    <Box minH="100vh" bg="black">
       <Header />
 
       {/* Hero Section */}
       <Box
-        bgGradient="linear(to-r, blue.900, purple.900)"
+        bg="black"
         color="white"
         py={{ base: 16, md: 24 }}
       >
@@ -107,10 +107,11 @@ export default function ContactPage() {
               fontSize={{ base: '4xl', md: '6xl' }}
               fontWeight="light"
               letterSpacing="wide"
+              color="white"
             >
               Contact Us
             </Heading>
-            <Text fontSize={{ base: 'lg', md: 'xl' }} maxW="3xl" opacity={0.9}>
+            <Text fontSize={{ base: 'lg', md: 'xl' }} maxW="3xl" color="white">
               We're here to help you find the perfect piece or answer any questions
             </Text>
           </VStack>
@@ -124,10 +125,10 @@ export default function ContactPage() {
           <Box bg="transparent" p={8} borderRadius="lg" boxShadow="lg">
             <VStack spacing={6} align="stretch">
               <VStack spacing={2} align="start">
-                <Heading size="lg" fontWeight="300">
+                <Heading size="lg" fontWeight="300" color="white">
                   Send Us a Message
                 </Heading>
-                <Text color="gray.600">
+                <Text color="white">
                   Fill out the form below and we'll get back to you as soon as possible
                 </Text>
               </VStack>
@@ -135,18 +136,22 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit}>
                 <VStack spacing={4}>
                   <FormControl isRequired>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel color="white">Full Name</FormLabel>
                     <Input
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="John Doe"
                       size="lg"
+                      color="white"
+                      borderColor="gold.500"
+                      _hover={{ borderColor: 'gold.600' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     />
                   </FormControl>
 
                   <FormControl isRequired>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel color="white">Email Address</FormLabel>
                     <Input
                       name="email"
                       type="email"
@@ -154,11 +159,15 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder="john@example.com"
                       size="lg"
+                      color="white"
+                      borderColor="gold.500"
+                      _hover={{ borderColor: 'gold.600' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     />
                   </FormControl>
 
                   <FormControl>
-                    <FormLabel>Phone Number</FormLabel>
+                    <FormLabel color="white">Phone Number</FormLabel>
                     <Input
                       name="phone"
                       type="tel"
@@ -166,22 +175,30 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder="+1 (555) 123-4567"
                       size="lg"
+                      color="white"
+                      borderColor="gold.500"
+                      _hover={{ borderColor: 'gold.600' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     />
                   </FormControl>
 
                   <FormControl isRequired>
-                    <FormLabel>Subject</FormLabel>
+                    <FormLabel color="white">Subject</FormLabel>
                     <Input
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
                       placeholder="How can we help you?"
                       size="lg"
+                      color="white"
+                      borderColor="gold.500"
+                      _hover={{ borderColor: 'gold.600' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     />
                   </FormControl>
 
                   <FormControl isRequired>
-                    <FormLabel>Message</FormLabel>
+                    <FormLabel color="white">Message</FormLabel>
                     <Textarea
                       name="message"
                       value={formData.message}
@@ -189,6 +206,10 @@ export default function ContactPage() {
                       placeholder="Tell us more about your inquiry..."
                       rows={6}
                       size="lg"
+                      color="white"
+                      borderColor="gold.500"
+                      _hover={{ borderColor: 'gold.600' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     />
                   </FormControl>
 
@@ -211,10 +232,10 @@ export default function ContactPage() {
           {/* Contact Information */}
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
-              <Heading size="lg" fontWeight="300">
+              <Heading size="lg" fontWeight="300" color="white">
                 Get in Touch
               </Heading>
-              <Text color="gray.600">
+              <Text color="white">
                 Have questions? We'd love to hear from you. Here's how you can reach us.
               </Text>
             </VStack>
@@ -234,15 +255,15 @@ export default function ContactPage() {
                     <Icon
                       as={info.icon}
                       boxSize={8}
-                      color="blue.600"
+                      color="gold.500"
                       mt={1}
                     />
                     <VStack align="start" spacing={1}>
-                      <Text fontWeight="300" fontSize="lg">
+                      <Text fontWeight="300" fontSize="lg" color="white">
                         {info.title}
                       </Text>
-                      <Text color="gray.700">{info.details}</Text>
-                      <Text color="gray.500" fontSize="sm">
+                      <Text color="white">{info.details}</Text>
+                      <Text color="white" fontSize="sm">
                         {info.subDetails}
                       </Text>
                     </VStack>
@@ -254,33 +275,33 @@ export default function ContactPage() {
             <Divider />
 
             {/* FAQ Section */}
-            <Box bg="blue.50" p={6} borderRadius="lg">
+            <Box bg="rgba(255, 255, 255, 0.05)" p={6} borderRadius="lg" border="1px solid" borderColor="gold.500">
               <VStack spacing={4} align="start">
-                <Heading size="md" fontWeight="300">
+                <Heading size="md" fontWeight="bold" color="black" bg="white" px={4} py={2} borderRadius="md">
                   Frequently Asked Questions
                 </Heading>
                 <VStack spacing={3} align="start" width="100%">
                   <Box>
-                    <Text fontWeight="300" color="blue.800">
+                    <Text fontWeight="bold" color="white">
                       Do you offer custom jewelry design?
                     </Text>
-                    <Text color="gray.700" fontSize="sm">
+                    <Text color="white" fontSize="sm">
                       Yes! Our expert jewelers can work with you to create a custom piece that perfectly matches your vision.
                     </Text>
                   </Box>
                   <Box>
-                    <Text fontWeight="300" color="blue.800">
+                    <Text fontWeight="bold" color="white">
                       What is your return policy?
                     </Text>
-                    <Text color="gray.700" fontSize="sm">
+                    <Text color="white" fontSize="sm">
                       We offer a 30-day return policy for all unworn items in original condition.
                     </Text>
                   </Box>
                   <Box>
-                    <Text fontWeight="300" color="blue.800">
+                    <Text fontWeight="bold" color="white">
                       Do you provide diamond certificates?
                     </Text>
-                    <Text color="gray.700" fontSize="sm">
+                    <Text color="white" fontSize="sm">
                       All our diamonds come with official certifications from leading gemological institutes.
                     </Text>
                   </Box>
@@ -293,10 +314,10 @@ export default function ContactPage() {
         {/* Map Section */}
         <Box mt={16}>
           <VStack spacing={4} mb={8}>
-            <Heading size="lg" fontWeight="300">
+            <Heading size="lg" fontWeight="300" color="white">
               Visit Our Showroom
             </Heading>
-            <Text color="gray.600" textAlign="center" maxW="2xl">
+            <Text color="white" textAlign="center" maxW="2xl">
               Experience our collection in person. Our showroom is open by appointment to provide you with personalized attention.
             </Text>
           </VStack>
@@ -308,7 +329,7 @@ export default function ContactPage() {
             position="relative"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2412648718453!2d-73.98823492346069!3d40.758896035284614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1704905000000!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.3557776896173!2d-79.38092682346069!3d43.65510307903573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb61ded8ee95%3A0xe7dd8f4c3d3ef179!2sRemy%20Sales!5e0!3m2!1sen!2sus!4v1730219000000!5m2!1sen!2sus"
               width="100%"
               height="100%"
               style={{ border: 0 }}

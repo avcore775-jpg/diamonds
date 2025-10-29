@@ -19,7 +19,9 @@ import { FaGem, FaTruck, FaShieldAlt, FaCertificate } from 'react-icons/fa'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ProductCarousel from '@/components/ProductCarousel'
+import CategoryTiles from '@/components/CategoryTiles'
 import { ScrollAnimation } from '@/components/ScrollAnimation'
+import TypewriterText from '@/components/TypewriterText'
 import { apiClient } from '@/lib/api/client'
 import useSWR from 'swr'
 import { heroTitle, heroSubtitle, buttonPress, getAnimationVariants } from '@/lib/animations'
@@ -85,8 +87,20 @@ export default function HomePage() {
           bg="blackAlpha.600"
           zIndex={0}
         />
-        
-        <Container maxW="7xl" position="relative" zIndex={1}>
+
+        {/* Bottom gradient transition - creates smooth fade from dark to transparent */}
+        <Box
+          position="absolute"
+          left="0"
+          right="0"
+          bottom="0"
+          h="100px"
+          bgGradient="linear(to-b, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))"
+          zIndex={1}
+          pointerEvents="none"
+        />
+
+        <Container maxW="7xl" position="relative" zIndex={2}>
           <VStack spacing={8} textAlign="center">
             <MotionHeading
               as="h1"
@@ -119,71 +133,307 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
             >
-              <MotionButton
-                as={NextLink}
-                href="/collections"
-                size="lg"
-                bg="transparent"
-                color="white"
-                border="2px solid"
-                borderColor="gold.500"
-                variants={getAnimationVariants(buttonPress)}
-                whileHover="hover"
-                whileTap="tap"
-                _hover={{
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
-                  bg: 'rgba(212, 175, 55, 0.1)',
-                }}
-                _active={{
-                  bg: 'gold.500',
-                  color: 'black',
-                  transform: 'translateY(0)',
-                }}
-              >
-                Shop Collection
-              </MotionButton>
-              <MotionButton
-                as={NextLink}
-                href="/catalog"
-                size="lg"
-                bg="transparent"
-                color="white"
-                border="2px solid"
-                borderColor="gold.500"
-                variants={getAnimationVariants(buttonPress)}
-                whileHover="hover"
-                whileTap="tap"
-                _hover={{
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
-                  bg: 'rgba(212, 175, 55, 0.1)',
-                }}
-                _active={{
-                  bg: 'gold.500',
-                  color: 'black',
-                  transform: 'translateY(0)',
-                }}
-              >
-                Catalog
-              </MotionButton>
+              <NextLink href="/collections" passHref legacyBehavior>
+                <MotionButton
+                  as="a"
+                  size="lg"
+                  bg="transparent"
+                  color="white"
+                  border="2px solid"
+                  borderColor="gold.500"
+                  variants={getAnimationVariants(buttonPress)}
+                  whileHover="hover"
+                  whileTap="tap"
+                  sx={{
+                    transition: 'all 0.3s ease-in-out',
+                  }}
+                  _hover={{
+                    bg: 'gold.500',
+                    color: 'black',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                  }}
+                  _active={{
+                    bg: 'gold.500',
+                    color: 'black',
+                    transform: 'translateY(0)',
+                  }}
+                >
+                  Shop Collection
+                </MotionButton>
+              </NextLink>
+              <NextLink href="/catalog" passHref legacyBehavior>
+                <MotionButton
+                  as="a"
+                  size="lg"
+                  bg="transparent"
+                  color="white"
+                  border="2px solid"
+                  borderColor="gold.500"
+                  variants={getAnimationVariants(buttonPress)}
+                  whileHover="hover"
+                  whileTap="tap"
+                  sx={{
+                    transition: 'all 0.3s ease-in-out',
+                  }}
+                  _hover={{
+                    bg: 'gold.500',
+                    color: 'black',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                  }}
+                  _active={{
+                    bg: 'gold.500',
+                    color: 'black',
+                    transform: 'translateY(0)',
+                  }}
+                >
+                  Catalog
+                </MotionButton>
+              </NextLink>
             </MotionHStack>
           </VStack>
         </Container>
       </Box>
 
+      {/* Black dividing bar with gradient transitions - 2cm spacing between hero and diagonal section */}
+      <Box
+        w="100vw"
+        position="relative"
+        left="50%"
+        right="50%"
+        ml="-50vw"
+        mr="-50vw"
+        h="0cm"
+        bg="black"
+        bgGradient="linear(to-b, rgba(0, 0, 0, 0.8), black, black, rgba(0, 0, 0, 0.8))"
+      />
+
+      
+
+      {/* Diagonal Brand Story Section */}
+      <Box
+        w="100vw"
+        position="relative"
+        left="50%"
+        right="50%"
+        ml="-50vw"
+        mr="-50vw"
+        minH="100vh"
+        bg="black"
+        py={16}
+        display="flex"
+        flexDirection="column"
+      >
+        {/* Top Text Area - Black space above diagonal grid */}
+        <Box
+          w="100%"
+          position="relative"
+          pt={{ base: 4, md: 6, lg: 8 }}
+          pb={{ base: 6, md: 8, lg: 12 }}
+          px={{ base: 8, md: 16, lg: 20 }}
+        >
+          {/* Main Slogan - Top Left */}
+          <Box
+            position="absolute"
+            top={{ base: '8%', md: '10%', lg: '12%' }}
+            left={{ base: 8, md: 16, lg: 20 }}
+            maxW={{ base: '60%', md: '50%', lg: '40%' }}
+          >
+            <TypewriterText text="Crafted by Time" speed={50} delay={100}>
+              {(displayText) => (
+                <Heading
+                  fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
+                  fontWeight="300"
+                  color="white"
+                  textAlign="left"
+                  lineHeight="1.2"
+                >
+                  {displayText}
+                </Heading>
+              )}
+            </TypewriterText>
+          </Box>
+
+          {/* Tagline - Right side */}
+          <Box
+            position="absolute"
+            top={{ base: '50%', md: '50%', lg: '50%' }}
+            right={{ base: 8, md: 16, lg: 20 }}
+            maxW={{ base: '70%', md: '60%', lg: '45%' }}
+            transform="translateY(-50%)"
+          >
+            <TypewriterText text="From a single spark to a timeless creation" speed={50} delay={100}>
+              {(displayText) => (
+                <Text
+                  fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+                  fontWeight="300"
+                  color="white"
+                  textAlign="right"
+                  lineHeight="1.6"
+                >
+                  {displayText}
+                </Text>
+              )}
+            </TypewriterText>
+          </Box>
+        </Box>
+
+        {/* Diagonal Grid Container */}
+        <Container maxW="7xl" flex="1">
+          <Box
+            display="grid"
+            gridTemplateColumns="repeat(2, 1fr)"
+            gridTemplateRows="repeat(2, 1fr)"
+            gap={8}
+            h="80vh"
+            position="relative"
+          >
+            {/* BrandStory Button - Center between four elements */}
+            <Box
+              position="absolute"
+              top="50%"
+              left="50%"
+              transform="translate(-50%, -50%)"
+              zIndex={20}
+            >
+              <Button
+                as={NextLink}
+                href="/about"
+                size="md"
+                bg="white"
+                color="black"
+                px={{ base: 6, md: 8 }}
+                py={{ base: 3, md: 4 }}
+                fontSize={{ base: 'sm', md: 'md' }}
+                fontWeight="bold"
+                textTransform="uppercase"
+                letterSpacing="wide"
+                _hover={{
+                  bg: 'gold.500',
+                  color: 'white',
+                  transform: 'scale(1.05)',
+                }}
+                transition="all 0.3s ease-in-out"
+              >
+                Brand Story
+              </Button>
+            </Box>
+
+            {/* Top Left - Left1 Video */}
+            <Box
+              gridColumn="1"
+              gridRow="1"
+              position="relative"
+              overflow="hidden"
+              borderRadius="lg"
+              boxShadow="2xl"
+            >
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              >
+                <source src="/images/brandstoryhome/left1.mp4" type="video/mp4" />
+              </video>
+            </Box>
+
+            {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
+            <Box
+              gridColumn="1"
+              gridRow="2"
+              position="relative"
+              overflow="hidden"
+              borderRadius="lg"
+              boxShadow="2xl"
+            >
+              <Box
+                as="img"
+                src="/images/brandstoryhome/left2.jpg"
+                alt="Brand Story"
+                width="100%"
+                height="100%"
+                objectFit="cover"
+                objectPosition="center"
+              />
+            </Box>
+
+            {/* Top Right - Right1 Image */}
+            <Box
+              gridColumn="2"
+              gridRow="1"
+              position="relative"
+              overflow="hidden"
+              borderRadius="lg"
+              boxShadow="2xl"
+            >
+              <Box
+                as="img"
+                src="/images/brandstoryhome/right1.jpg"
+                alt="Craftsmanship"
+                width="100%"
+                height="100%"
+                objectFit="cover"
+                objectPosition="center"
+              />
+            </Box>
+
+            {/* Bottom Right - Right2 Video */}
+            <Box
+              gridColumn="2"
+              gridRow="2"
+              position="relative"
+              overflow="hidden"
+              borderRadius="lg"
+              boxShadow="2xl"
+            >
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              >
+                <source src="/images/brandstoryhome/right2.mp4" type="video/mp4" />
+              </video>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Category Tiles Section */}
+      <CategoryTiles />
+
       {/* Featured Collection */}
       <Box pt={7} pb={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
-            <ScrollAnimation animation="slide-up" delay={0.1}>
-              <VStack spacing={2} align="start">
-                <Heading size="xl" color="gold.500">Featured Collection</Heading>
-                <Text fontSize="lg" color="gold.500">
-                  Handpicked pieces from our master craftsmen
-                </Text>
-              </VStack>
-            </ScrollAnimation>
+            <VStack spacing={2} align="start">
+              <TypewriterText text="Featured Collection" speed={50} delay={100}>
+                {(displayText) => (
+                  <Heading size="xl" color="white">{displayText}</Heading>
+                )}
+              </TypewriterText>
+              <TypewriterText text="Handpicked pieces from our master craftsmen" speed={50} delay={100}>
+                {(displayText) => (
+                  <Text fontSize="lg" color="white">
+                    {displayText}
+                  </Text>
+                )}
+              </TypewriterText>
+            </VStack>
 
             <ScrollAnimation animation="fade-in" delay={0.2}>
               <ProductCarousel
@@ -199,14 +449,20 @@ export default function HomePage() {
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
-            <ScrollAnimation animation="slide-up" delay={0.1}>
-              <VStack spacing={2} align="start">
-                <Heading size="xl" color="gold.500">Bestsellers</Heading>
-                <Text fontSize="lg" color="gold.500">
-                  Most loved by our customers
-                </Text>
-              </VStack>
-            </ScrollAnimation>
+            <VStack spacing={2} align="start">
+              <TypewriterText text="Bestsellers" speed={50} delay={100}>
+                {(displayText) => (
+                  <Heading size="xl" color="white">{displayText}</Heading>
+                )}
+              </TypewriterText>
+              <TypewriterText text="Most loved by our customers" speed={50} delay={100}>
+                {(displayText) => (
+                  <Text fontSize="lg" color="white">
+                    {displayText}
+                  </Text>
+                )}
+              </TypewriterText>
+            </VStack>
 
             <ScrollAnimation animation="fade-in" delay={0.2}>
               <ProductCarousel
@@ -222,14 +478,20 @@ export default function HomePage() {
       <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
-            <ScrollAnimation animation="slide-up" delay={0.1}>
-              <VStack spacing={2} align="start">
-                <Heading size="xl" color="gold.500">New Arrival</Heading>
-                <Text fontSize="lg" color="gold.500">
-                  Latest additions to our collection
-                </Text>
-              </VStack>
-            </ScrollAnimation>
+            <VStack spacing={2} align="start">
+              <TypewriterText text="New Arrival" speed={50} delay={100}>
+                {(displayText) => (
+                  <Heading size="xl" color="white">{displayText}</Heading>
+                )}
+              </TypewriterText>
+              <TypewriterText text="Latest additions to our collection" speed={50} delay={100}>
+                {(displayText) => (
+                  <Text fontSize="lg" color="white">
+                    {displayText}
+                  </Text>
+                )}
+              </TypewriterText>
+            </VStack>
 
             <ScrollAnimation animation="fade-in" delay={0.2}>
               <ProductCarousel
@@ -241,8 +503,208 @@ export default function HomePage() {
         </Container>
       </Box>
 
+      {/* Come Say Hi Section */}
+      <Box minH="50vh" bg="transparent" display="flex" alignItems="center" py={12}>
+        <Container maxW="7xl">
+          <Flex
+            direction={{ base: 'column', md: 'row' }}
+            align="center"
+            justify="center"
+            gap="1cm"
+          >
+            {/* Left Rectangle - Text with Video Background */}
+            <Box
+              flex="1"
+              position="relative"
+              border="2px solid white"
+              borderRadius="md"
+              overflow="hidden"
+              h={{ base: '300px', md: '400px', lg: '450px' }}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              {/* Background Video */}
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                width="100%"
+                height="100%"
+                zIndex={0}
+              >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                  }}
+                >
+                  <source src="/images/directionsHome/20251029_1719_New Video_storyboard_01k8rxd3nbfwn97y0w3yka3jnf.mp4" type="video/mp4" />
+                </video>
+              </Box>
+
+              {/* Dark overlay for text readability */}
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                width="100%"
+                height="100%"
+                bg="blackAlpha.500"
+                zIndex={1}
+              />
+
+              {/* Centered Text */}
+              <VStack
+                spacing={6}
+                zIndex={2}
+                position="relative"
+                textAlign="center"
+                px={8}
+              >
+                <Heading
+                  fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }}
+                  fontWeight="bold"
+                  color="white"
+                >
+                  COME SAY HI
+                </Heading>
+                <Text
+                  fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+                  color="white"
+                  fontWeight="300"
+                  maxW="80%"
+                >
+                  Shop your faves in store, get styled, and join the journey.
+                </Text>
+                <Button
+                  as="a"
+                  href="https://google.com/maps/dir//Suite+%23203,+221+Victoria+St,+Toronto,+ON+M5B+1V4/@43.8026371,-79.4373134,12z/data=!4m9!4m8!1m1!4e2!1m5!1m1!1s0x89d4cb61ded8ee95:0xe7dd8f4c3d3ef179!2m2!1d-79.3789273!2d43.6551031?entry=ttu&g_ep=EgoyMDI1MTAyNy4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  size="lg"
+                  bg="white"
+                  color="black"
+                  px={8}
+                  py={6}
+                  fontSize="md"
+                  fontWeight="bold"
+                  border="2px solid white"
+                  _hover={{
+                    bg: 'gold.500',
+                    color: 'white',
+                    borderColor: 'gold.500',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                  }}
+                  transition="all 0.3s ease-in-out"
+                >
+                  Get Directions
+                </Button>
+              </VStack>
+            </Box>
+
+            {/* Right Rectangle - Image with Address */}
+            <Box
+              flex="1"
+              position="relative"
+              border="2px solid white"
+              borderRadius="md"
+              overflow="hidden"
+              h={{ base: '300px', md: '400px', lg: '450px' }}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              {/* Background Image */}
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                width="100%"
+                height="100%"
+                zIndex={0}
+              >
+                <Box
+                  as="img"
+                  src="/images/directionsHome/misfit_boat_1920x794_crop_center.webp"
+                  alt="Store Location"
+                  width="100%"
+                  height="100%"
+                  objectFit="cover"
+                  objectPosition="center"
+                />
+              </Box>
+
+              {/* Top Left - Remy Sales */}
+              <Text
+                position="absolute"
+                top={{ base: 4, md: 6 }}
+                left={{ base: 4, md: 6 }}
+                fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }}
+                fontWeight="bold"
+                color="black"
+                textDecoration="underline"
+                textDecorationColor="black"
+                textDecorationThickness="2px"
+                zIndex={2}
+              >
+                Remy Sales
+              </Text>
+
+              {/* Top Right - Address */}
+              <Text
+                position="absolute"
+                top={{ base: 4, md: 6 }}
+                right={{ base: 4, md: 6 }}
+                fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+                fontWeight="bold"
+                color="black"
+                textAlign="right"
+                zIndex={2}
+              >
+                #203, 221 Victoria St
+              </Text>
+
+              {/* Bottom Left - City */}
+              <Text
+                position="absolute"
+                bottom={{ base: 4, md: 6 }}
+                left={{ base: 4, md: 6 }}
+                fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+                fontWeight="bold"
+                color="black"
+                zIndex={2}
+              >
+                Toronto, ON M5B 1V4
+              </Text>
+
+              {/* Bottom Right - Hours */}
+              <Text
+                position="absolute"
+                bottom={{ base: 4, md: 6 }}
+                right={{ base: 4, md: 6 }}
+                fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+                fontWeight="bold"
+                color="black"
+                textAlign="right"
+                zIndex={2}
+              >
+                10 am to 5 pm
+              </Text>
+            </Box>
+          </Flex>
+        </Container>
+      </Box>
+
       {/* CTA Section */}
-      <Box py={16} bg="transparent">
+      <Box minH="50vh" bg="transparent" display="flex" alignItems="center" py={12}>
         <Container maxW="7xl">
           <ScrollAnimation animation="scale-in">
             <Flex
@@ -252,10 +714,18 @@ export default function HomePage() {
               gap={8}
             >
               <VStack align={{ base: 'center', md: 'start' }} spacing={4}>
-                <Heading size="lg" color="white">Subscribe to Our Newsletter</Heading>
-                <Text color="gray.300">
-                  Get exclusive offers and be the first to know about new collections
-                </Text>
+                <TypewriterText text="Subscribe to Our Newsletter" speed={50} delay={100}>
+                  {(displayText) => (
+                    <Heading size="lg" color="white">{displayText}</Heading>
+                  )}
+                </TypewriterText>
+                <TypewriterText text="Get exclusive offers and be the first to know about new collections" speed={50} delay={100}>
+                  {(displayText) => (
+                    <Text color="gray.300">
+                      {displayText}
+                    </Text>
+                  )}
+                </TypewriterText>
               </VStack>
               <MotionButton
                 size="lg"

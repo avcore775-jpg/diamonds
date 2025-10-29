@@ -162,8 +162,14 @@ function CatalogContent() {
 
       <Container maxW="7xl" py={8}>
         {/* Page Header */}
-        <Flex justify="space-between" align="center" mb={8}>
-          <Box>
+        <Flex
+          justify="space-between"
+          align={{ base: 'flex-start', md: 'center' }}
+          mb={8}
+          direction={{ base: 'column', md: 'row' }}
+          gap={{ base: 6, md: 0 }}
+        >
+          <Box mb={{ base: 4, md: 0 }}>
             <Heading size="xl" color="gold.500">
               {searchQuery ? `Search Results for "${searchQuery}"` : 'All Products'}
             </Heading>
@@ -171,7 +177,7 @@ function CatalogContent() {
               {products?.length || 0} products found
             </Text>
           </Box>
-          <HStack spacing={4}>
+          <HStack spacing={4} w={{ base: '100%', md: 'auto' }} justify={{ base: 'space-between', md: 'flex-end' }}>
             {/* Mobile Filter Toggle */}
             <Box display={{ base: 'block', lg: 'none' }}>
               <Button

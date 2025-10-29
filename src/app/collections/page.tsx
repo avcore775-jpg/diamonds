@@ -55,10 +55,45 @@ export default function CollectionsPage() {
   }
 
   return (
-    <Box minH="100vh" bg="transparent">
+    <Box minH="100vh" bg="transparent" position="relative">
       <Header />
-      
-      <Container maxW="7xl" py={12}>
+
+      {/* Full-screen Video Background */}
+      <Box
+        position="fixed"
+        top="0"
+        left="0"
+        width="100%"
+        height="100%"
+        zIndex={-1}
+        overflow="hidden"
+      >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+        >
+          <source src="/images/collections /20251029_1720_New Video_storyboard_01k8rxerzkfpk9gs6wx96ph5ta.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay for better readability */}
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          width="100%"
+          height="100%"
+          bg="blackAlpha.600"
+        />
+      </Box>
+
+      <Container maxW="7xl" py={12} position="relative" zIndex={1}>
         {/* Page Header */}
         <VStack spacing={4} mb={12} textAlign="center">
           <Icon as={FaGem} boxSize={10} color="gold.500" />
@@ -93,14 +128,35 @@ export default function CollectionsPage() {
                   href={`/collections/${collection.slug}`}
                   overflow="hidden"
                   h="full"
-                  transition="all 0.3s"
+                  transition="all 0.4s ease-in-out"
                   bg="#FFFFFF"
                   border="2px solid"
                   borderColor="gold.500"
+                  sx={{
+                    '& .card-heading': {
+                      transition: 'color 0.4s ease-in-out',
+                    },
+                    '& .card-description': {
+                      transition: 'color 0.4s ease-in-out',
+                    },
+                    '& .view-collection-text': {
+                      transition: 'color 0.4s ease-in-out',
+                    },
+                  }}
                   _hover={{
                     transform: 'translateY(-4px)',
-                    shadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                    shadow: '0 0 30px rgba(212, 175, 55, 0.6)',
                     cursor: 'pointer',
+                    bg: 'black',
+                    '& .card-heading': {
+                      color: 'white',
+                    },
+                    '& .card-description': {
+                      color: 'white',
+                    },
+                    '& .view-collection-text': {
+                      color: 'gold.500',
+                    },
                   }}
                 >
                   {/* Collection Image */}
@@ -143,21 +199,29 @@ export default function CollectionsPage() {
                   {/* Collection Details */}
                   <CardBody>
                     <VStack align="stretch" spacing={3}>
-                      <Heading size="lg" fontWeight="300" color="#000000">
+                      <Heading size="lg" fontWeight="300" color="black" className="card-heading">
                         {collection.name}
                       </Heading>
 
                       {collection.description && (
-                        <Text color="#000000" noOfLines={2}>
+                        <Text color="black" noOfLines={2} className="card-description">
                           {collection.description}
                         </Text>
                       )}
 
                       <HStack justify="space-between" pt={2}>
-                        <Text color="gold.500" fontWeight="300">
+                        <Text color="black" fontWeight="300" className="view-collection-text">
                           View Collection →
                         </Text>
-                        <Badge colorScheme="yellow" variant="subtle">
+                        <Badge
+                          bg="gold.500"
+                          color="black"
+                          fontWeight="bold"
+                          px={3}
+                          py={1}
+                          borderRadius="md"
+                          boxShadow="0 0 10px rgba(212, 175, 55, 0.5)"
+                        >
                           {collection._count.products} {collection._count.products === 1 ? 'item' : 'items'}
                         </Badge>
                       </HStack>

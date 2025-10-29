@@ -114,15 +114,48 @@ export default function Header() {
         </Flex>
         
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }} align="center">
-          <Link as={NextLink} href="/">
+          <Link
+            as={NextLink}
+            href="/"
+            position="relative"
+            _hover={{
+              textDecoration: 'none',
+              '& .brand-text': {
+                color: 'gold.500',
+                fontWeight: 'bold',
+                fontSize: '2xl',
+              },
+              _after: {
+                content: '""',
+                position: 'absolute',
+                bottom: '-2px',
+                left: 0,
+                right: 0,
+                height: '2px',
+                bg: 'gold.500',
+              },
+            }}
+            _after={{
+              content: '""',
+              position: 'absolute',
+              bottom: '-2px',
+              left: 0,
+              right: 0,
+              height: '2px',
+              bg: 'transparent',
+              transition: 'background-color 0.3s ease',
+            }}
+          >
             <HStack spacing={2}>
               <Icon as={FaGem} color="brand.500" boxSize={6} />
               <Text
+                className="brand-text"
                 textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
                 fontFamily={'heading'}
                 fontWeight="300"
                 fontSize="xl"
                 color="white"
+                transition="all 0.3s ease"
               >
                 Remy Sales
               </Text>
@@ -291,7 +324,20 @@ export default function Header() {
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
+        <Box
+          display={{ base: 'block', md: 'none' }}
+          position="fixed"
+          top="60px"
+          left="0"
+          right="0"
+          bottom="0"
+          bg="rgba(0, 0, 0, 0.98)"
+          backdropFilter="blur(10px)"
+          zIndex={9}
+          overflowY="auto"
+        >
+          <MobileNav />
+        </Box>
       </Collapse>
     </Box>
   )
@@ -315,10 +361,30 @@ const DesktopNav = () => {
                 fontSize={'sm'}
                 fontWeight={500}
                 color={linkColor}
+                position="relative"
                 _hover={{
                   textDecoration: 'none',
                   color: linkHoverColor,
                   textShadow: '0 0 10px rgba(212, 175, 55, 0.5)',
+                  _after: {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: '2px',
+                    bg: 'gold.500',
+                  },
+                }}
+                _after={{
+                  content: '""',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '2px',
+                  bg: 'transparent',
+                  transition: 'background-color 0.3s ease',
                 }}
               >
                 {navItem.label}
@@ -395,12 +461,9 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 const MobileNav = () => {
   return (
     <Stack
-      bg="rgba(0, 0, 0, 0.95)"
-      backdropFilter="blur(10px)"
-      p={4}
-      display={{ md: 'none' }}
-      borderBottom="1px solid"
-      borderColor="rgba(212, 175, 55, 0.3)"
+      p={6}
+      spacing={6}
+      h="100%"
     >
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />

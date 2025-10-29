@@ -120,7 +120,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
                   </Text>
                 )}
 
-                <Text fontSize="lg" fontWeight="300" color="gold.600">
+                <Text fontSize="lg" fontWeight="300" color="black">
                   {formatPrice(product.price)}
                 </Text>
 

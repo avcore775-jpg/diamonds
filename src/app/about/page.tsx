@@ -54,28 +54,92 @@ export default function AboutPage() {
     <Box minH="100vh" bg="transparent">
       <Header />
 
-      {/* Hero Section */}
+      {/* Black dividing bar between header and video */}
       <Box
-        bgGradient="linear(to-r, blue.900, purple.900)"
-        color="white"
-        py={{ base: 16, md: 24 }}
+        w="100vw"
+        position="relative"
+        left="50%"
+        right="50%"
+        ml="-50vw"
+        mr="-50vw"
+        h="80px"
+        bg="black"
+        mt="60px"
+      />
+
+      {/* Hero Section with Video Background */}
+      <Box
         position="relative"
         overflow="hidden"
+        minH="100vh"
+        display="flex"
+        alignItems="flex-end"
       >
-        <Container maxW="7xl" position="relative" zIndex={1}>
-          <VStack spacing={6} textAlign="center">
+        {/* Video Background - positioned below header */}
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          width="100%"
+          height="100%"
+          zIndex={0}
+          bg="black"
+        >
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+            }}
+          >
+            <source src="/images/videos/about.mp4" type="video/mp4" />
+          </video>
+        </Box>
+
+        {/* Dark overlay for better text readability */}
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          bg="blackAlpha.400"
+          zIndex={1}
+        />
+
+        {/* Text Content - Bottom Left - Positioned with 1cm gap from video */}
+        <Box
+          position="absolute"
+          bottom={{ base: '25%', md: '30%', lg: '35%' }}
+          left={{ base: 6, md: 8, lg: 12 }}
+          zIndex={2}
+          pr="1cm"
+        >
+          <VStack spacing={4} align="flex-start">
             <Heading
-              fontSize={{ base: '4xl', md: '6xl' }}
-              fontWeight="light"
+              fontSize={{ base: '5xl', md: '7xl', lg: '8xl' }}
+              fontWeight="300"
               letterSpacing="wide"
+              color="white"
+              textShadow="3px 3px 12px rgba(0,0,0,0.9)"
             >
               Our Story
             </Heading>
-            <Text fontSize={{ base: 'lg', md: 'xl' }} maxW="3xl" opacity={0.9}>
-              Crafting Timeless Elegance Since Our Inception
+            <Text
+              fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }}
+              maxW="2xl"
+              color="white"
+              fontWeight="300"
+              textShadow="2px 2px 8px rgba(0,0,0,0.9)"
+            >
+              Crafting Timeless Elegance
             </Text>
           </VStack>
-        </Container>
+        </Box>
       </Box>
 
       {/* Main Content */}
@@ -84,32 +148,32 @@ export default function AboutPage() {
           {/* Story Section */}
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} alignItems="center">
             <VStack align="start" spacing={6}>
-              <Heading size="xl" fontWeight="light">
+              <Heading size="xl" fontWeight="light" color="white">
                 A Legacy of Excellence
               </Heading>
-              <Text fontSize="lg" color="gray.700" lineHeight="tall">
-               Remy Sales opened our doors in Toronto in 1960 with the ambition of offering our customers the best quality wholesale jewelry at the lowest possible prices. During the half century that has gone by since then, we have become one of Toronto’s largest and most trusted wholesale jewelry suppliers.
+              <Text fontSize="lg" color="white" lineHeight="tall">
+               Remy Sales opened our doors in Toronto in 1960 with the ambition of offering our customers the best quality wholesale jewelry at the lowest possible prices. During the half century that has gone by since then, we have become one of Toronto's largest and most trusted wholesale jewelry suppliers.
               </Text>
-              
-              <Text fontSize="lg" color="gray.700" lineHeight="tall">
-                Our selection of gold and diamond wedding bands is unmatched in the industry and sure to please the eye of even the most discerning jewelry connoisseur. However, if a custom piece is what you’re shopping for we can certainly accommodate that as well. Our expert jewelers can make you anything you can imagine.
+
+              <Text fontSize="lg" color="white" lineHeight="tall">
+                Our selection of gold and diamond wedding bands is unmatched in the industry and sure to please the eye of even the most discerning jewelry connoisseur. However, if a custom piece is what you're shopping for we can certainly accommodate that as well. Our expert jewelers can make you anything you can imagine.
               </Text>
-              
-              <Text fontSize="lg" color="gray.700" lineHeight="tall">
+
+              <Text fontSize="lg" color="white" lineHeight="tall">
 
                 We specialize in 10K, 14K and 18K white and yellow gold as well as platinum engagement rings but are also capable of making any jewelry piece you need. To go with your custom designed setting, Remy Sales also offers one of the largest selections of diamonds and other precious gems. This includes a huge variety of fancy coloured stones such as yellow, pink and blue diamonds of varying sizes and cuts.
 
 
                  </Text>
 
-              <Text fontSize="lg" color="gray.700" lineHeight="tall">
+              <Text fontSize="lg" color="white" lineHeight="tall">
 
-                We maintain this large selection so that when combined with our position as a jewelry wholesaler, we can fulfill the dreams of all of our customers no matter what their budget looks like. This ability has helped us through the hard times of the past and has become especially important in today’s tough economy.
+                We maintain this large selection so that when combined with our position as a jewelry wholesaler, we can fulfill the dreams of all of our customers no matter what their budget looks like. This ability has helped us through the hard times of the past and has become especially important in today's tough economy.
                  </Text>
 
-              <Text fontSize="lg" color="gray.700" lineHeight="tall">
-We believe that just because the economy is bad, that shouldn’t stop anyone from getting the ring or other jewelry piece of their dreams to celebrate their special day whether it’s a wedding, anniversary or even a birthday. Come in or give us a call today to see what we can do for you to make your dream jewelry become a reality or to take advantage of our cash for gold service which always pays the highest possible amount for you old gold.
-                
+              <Text fontSize="lg" color="white" lineHeight="tall">
+We believe that just because the economy is bad, that shouldn't stop anyone from getting the ring or other jewelry piece of their dreams to celebrate their special day whether it's a wedding, anniversary or even a birthday. Come in or give us a call today to see what we can do for you to make your dream jewelry become a reality or to take advantage of our cash for gold service which always pays the highest possible amount for you old gold.
+
                  </Text>
 
 
@@ -124,13 +188,20 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
               height="400px"
               position="relative"
             >
-              <Image
-                src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80"
-                alt="Jewelry craftsmanship"
-                objectFit="cover"
-                width="100%"
-                height="100%"
-              />
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                }}
+              >
+                <source src="/images/videos/about2.mp4" type="video/mp4" />
+              </video>
             </Box>
           </SimpleGrid>
 
@@ -139,10 +210,10 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
           {/* Values Section */}
           <VStack spacing={8}>
             <VStack spacing={4} textAlign="center">
-              <Heading size="xl" fontWeight="light">
+              <Heading size="xl" fontWeight="light" color="white">
                 Our Values
               </Heading>
-              <Text fontSize="lg" color="gray.600" maxW="3xl">
+              <Text fontSize="lg" color="white" maxW="3xl">
                 These principles guide everything we do, from sourcing our diamonds to
                 serving our customers.
               </Text>
@@ -163,12 +234,12 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
                     <Icon
                       as={value.icon}
                       boxSize={12}
-                      color="blue.600"
+                      color="gold.500"
                     />
-                    <Heading size="md" fontWeight="300">
+                    <Heading size="md" fontWeight="300" color="white">
                       {value.title}
                     </Heading>
-                    <Text color="gray.600" lineHeight="tall">
+                    <Text color="white" lineHeight="tall">
                       {value.description}
                     </Text>
                   </VStack>
@@ -180,13 +251,13 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
           <Divider />
 
           {/* Commitment Section */}
-          <Box bg="blue.50" p={12} borderRadius="lg">
+          <Box bg="rgba(0, 0, 0, 0.3)" p={12} borderRadius="lg" border="1px solid" borderColor="gold.500">
             <VStack spacing={6} textAlign="center">
-              <Icon as={FaGem} boxSize={16} color="blue.600" />
-              <Heading size="xl" fontWeight="light">
+              <Icon as={FaGem} boxSize={16} color="gold.500" />
+              <Heading size="xl" fontWeight="light" color="white">
                 Our Commitment to You
               </Heading>
-              <Text fontSize="lg" color="gray.700" maxW="3xl" lineHeight="tall">
+              <Text fontSize="lg" color="white" maxW="3xl" lineHeight="tall">
                 When you choose us, you're not just purchasing jewelry – you're investing
                 in quality, authenticity, and exceptional service. We stand behind every
                 piece we sell with comprehensive warranties, free lifetime cleaning and
@@ -194,22 +265,22 @@ We believe that just because the economy is bad, that shouldn’t stop anyone fr
               </Text>
               <HStack spacing={8} pt={4}>
                 <VStack>
-                  <Text fontSize="4xl" fontWeight="300" color="blue.600">
+                  <Text fontSize="4xl" fontWeight="300" color="gold.500">
                     100%
                   </Text>
-                  <Text color="gray.600">Certified Diamonds</Text>
+                  <Text color="white">Certified Diamonds</Text>
                 </VStack>
                 <VStack>
-                  <Text fontSize="4xl" fontWeight="300" color="blue.600">
+                  <Text fontSize="4xl" fontWeight="300" color="gold.500">
                     50K+
                   </Text>
-                  <Text color="gray.600">Happy Customers</Text>
+                  <Text color="white">Happy Customers</Text>
                 </VStack>
                 <VStack>
-                  <Text fontSize="4xl" fontWeight="300" color="blue.600">
+                  <Text fontSize="4xl" fontWeight="300" color="gold.500">
                     25+
                   </Text>
-                  <Text color="gray.600">Years Experience</Text>
+                  <Text color="white">Years Experience</Text>
                 </VStack>
               </HStack>
             </VStack>
