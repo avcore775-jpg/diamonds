@@ -224,17 +224,25 @@ export default function ProductCard({
           </Text>
 
           {product.category && (
-            <Badge colorScheme="yellow" width="fit-content">
+            <Badge
+              bg="gold.500"
+              color="#000000"
+              width="fit-content"
+              fontWeight="bold"
+              px={3}
+              py={1}
+              boxShadow="0 0 10px rgba(212, 175, 55, 0.6)"
+            >
               {product.category.name}
             </Badge>
           )}
 
-          <Text fontSize="sm" color="gray.700" noOfLines={2}>
+          <Text fontSize="sm" color="#000000" noOfLines={2}>
             {product.description}
           </Text>
 
           {product.carat && (
-            <Text fontSize="xs" color="gray.600">
+            <Text fontSize="xs" color="#000000">
               {product.carat} carats
             </Text>
           )}
@@ -244,7 +252,7 @@ export default function ProductCard({
               {formatPrice(product.price)}
             </Text>
             {product.comparePrice && (
-              <Text fontSize="sm" color="gray.500" textDecoration="line-through">
+              <Text fontSize="sm" color="#666666" textDecoration="line-through">
                 {formatPrice(product.comparePrice)}
               </Text>
             )}
@@ -267,14 +275,18 @@ export default function ProductCard({
             isLoading={isAddingToCart}
             isDisabled={product.stock === 0}
             bg="gold.500"
-            color="black"
+            color="#000000"
+            border="2px solid"
+            borderColor="gold.500"
             variants={getAnimationVariants(buttonPress)}
             whileHover="hover"
             whileTap="tap"
             _hover={{
-              bg: "gold.600",
+              bg: "#000000",
+              color: "gold.500",
+              borderColor: "gold.500",
               transform: "translateY(-3px) scale(1.02)",
-              boxShadow: "0 0 20px rgba(212, 175, 55, 0.5)",
+              boxShadow: "0 0 20px rgba(212, 175, 55, 0.6)",
             }}
           >
             {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
