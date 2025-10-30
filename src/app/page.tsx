@@ -627,10 +627,12 @@ export default function HomePage() {
               border="2px solid white"
               borderRadius="md"
               overflow="hidden"
-              h={{ base: '350px', sm: '400px', md: '400px', lg: '450px' }}
+              h={{ base: '400px', sm: '450px', md: '400px', lg: '450px' }}
+              minH={{ base: '400px', md: 'auto' }}
               display="flex"
               alignItems="center"
               justifyContent="center"
+              bg="gray.300"
             >
               {/* Background Image */}
               <Box
@@ -640,7 +642,6 @@ export default function HomePage() {
                 width="100%"
                 height="100%"
                 zIndex={0}
-                bg="gray.200"
               >
                 <Box
                   as="img"
@@ -651,7 +652,7 @@ export default function HomePage() {
                   objectFit="cover"
                   objectPosition="center"
                   loading="eager"
-                  style={{ display: 'block' }}
+                  style={{ display: 'block', minHeight: '100%' }}
                 />
               </Box>
 
