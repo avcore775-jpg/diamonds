@@ -235,26 +235,24 @@ export default function HomePage() {
         <Box
           w="100%"
           position="relative"
-          pt={{ base: 8, md: 6, lg: 8 }}
-          pb={{ base: 16, md: 8, lg: 12 }}
-          px={{ base: 4, md: 16, lg: 20 }}
-          minH={{ base: '200px', md: 'auto' }}
+          pt={{ base: 4, md: 6, lg: 8 }}
+          pb={{ base: 6, md: 8, lg: 12 }}
+          px={{ base: 8, md: 16, lg: 20 }}
         >
           {/* Main Slogan - Top Left */}
           <Box
-            position={{ base: 'relative', md: 'absolute' }}
-            top={{ base: 'auto', md: '10%', lg: '12%' }}
-            left={{ base: 'auto', md: 16, lg: 20 }}
-            maxW={{ base: '100%', md: '50%', lg: '40%' }}
-            mb={{ base: 6, md: 0 }}
+            position="absolute"
+            top={{ base: '8%', md: '10%', lg: '12%' }}
+            left={{ base: 8, md: 16, lg: 20 }}
+            maxW={{ base: '60%', md: '50%', lg: '40%' }}
           >
             <TypewriterText text="Crafted by Time" speed={50} delay={100}>
               {(displayText) => (
                 <Heading
-                  fontSize={{ base: '2xl', sm: '3xl', md: '5xl', lg: '6xl' }}
+                  fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
                   fontWeight="300"
                   color="white"
-                  textAlign={{ base: 'center', md: 'left' }}
+                  textAlign="left"
                   lineHeight="1.2"
                 >
                   {displayText}
@@ -265,19 +263,19 @@ export default function HomePage() {
 
           {/* Tagline - Right side */}
           <Box
-            position={{ base: 'relative', md: 'absolute' }}
-            top={{ base: 'auto', md: '50%', lg: '50%' }}
-            right={{ base: 'auto', md: 16, lg: 20 }}
-            maxW={{ base: '100%', md: '60%', lg: '45%' }}
-            transform={{ base: 'none', md: 'translateY(-50%)' }}
+            position="absolute"
+            top={{ base: '50%', md: '50%', lg: '50%' }}
+            right={{ base: 8, md: 16, lg: 20 }}
+            maxW={{ base: '70%', md: '60%', lg: '45%' }}
+            transform="translateY(-50%)"
           >
             <TypewriterText text="From a single spark to a timeless creation" speed={50} delay={100}>
               {(displayText) => (
                 <Text
-                  fontSize={{ base: 'md', sm: 'lg', md: 'xl', lg: '2xl' }}
+                  fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
                   fontWeight="300"
                   color="white"
-                  textAlign={{ base: 'center', md: 'right' }}
+                  textAlign="right"
                   lineHeight="1.6"
                 >
                   {displayText}
@@ -288,42 +286,39 @@ export default function HomePage() {
         </Box>
 
         {/* Diagonal Grid Container */}
-        <Container maxW="7xl" flex="1" px={{ base: 4, md: 8 }}>
+        <Container maxW="7xl" flex="1">
           <Box
             display="grid"
-            gridTemplateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }}
-            gridTemplateRows={{ base: 'repeat(4, 1fr)', md: 'repeat(2, 1fr)' }}
-            gap={{ base: 4, md: 8 }}
-            h={{ base: 'auto', md: '80vh' }}
-            minH={{ base: '1000px', md: 'auto' }}
+            gridTemplateColumns="repeat(2, 1fr)"
+            gridTemplateRows="repeat(2, 1fr)"
+            gap={8}
+            h="80vh"
             position="relative"
           >
             {/* BrandStory Button - Center between four elements */}
             <Box
               position="absolute"
-              top={{ base: 'auto', md: '50%' }}
-              bottom={{ base: '20px', md: 'auto' }}
+              top="50%"
               left="50%"
-              transform={{ base: 'translateX(-50%)', md: 'translate(-50%, -50%)' }}
+              transform="translate(-50%, -50%)"
               zIndex={20}
             >
               <Button
                 as={NextLink}
                 href="/about"
-                size={{ base: 'lg', md: 'md' }}
+                size="md"
                 bg="white"
                 color="black"
-                px={{ base: 8, md: 8 }}
-                py={{ base: 6, md: 4 }}
-                fontSize={{ base: 'md', md: 'md' }}
+                px={{ base: 6, md: 8 }}
+                py={{ base: 3, md: 4 }}
+                fontSize={{ base: 'sm', md: 'md' }}
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wide"
-                minH="48px"
                 _hover={{
                   bg: 'gold.500',
                   color: 'white',
-                  transform: { base: 'translateX(-50%) scale(1.05)', md: 'scale(1.05)' },
+                  transform: 'scale(1.05)',
                 }}
                 transition="all 0.3s ease-in-out"
               >
@@ -333,13 +328,12 @@ export default function HomePage() {
 
             {/* Top Left - Left1 Video */}
             <Box
-              gridColumn={{ base: '1', md: '1' }}
-              gridRow={{ base: '1', md: '1' }}
+              gridColumn="1"
+              gridRow="1"
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
-              h={{ base: '220px', md: 'auto' }}
             >
               <video
                 autoPlay
@@ -359,13 +353,12 @@ export default function HomePage() {
 
             {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
             <Box
-              gridColumn={{ base: '1', md: '1' }}
-              gridRow={{ base: '2', md: '2' }}
+              gridColumn="1"
+              gridRow="2"
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
-              h={{ base: '220px', md: 'auto' }}
             >
               <Box
                 as="img"
@@ -380,13 +373,12 @@ export default function HomePage() {
 
             {/* Top Right - Right1 Image */}
             <Box
-              gridColumn={{ base: '1', md: '2' }}
-              gridRow={{ base: '3', md: '1' }}
+              gridColumn="2"
+              gridRow="1"
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
-              h={{ base: '220px', md: 'auto' }}
             >
               <Box
                 as="img"
@@ -401,13 +393,12 @@ export default function HomePage() {
 
             {/* Bottom Right - Right2 Video */}
             <Box
-              gridColumn={{ base: '1', md: '2' }}
-              gridRow={{ base: '4', md: '2' }}
+              gridColumn="2"
+              gridRow="2"
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
-              h={{ base: '220px', md: 'auto' }}
             >
               <video
                 autoPlay

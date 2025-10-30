@@ -49,22 +49,26 @@ export default function CategoryTiles() {
       right="50%"
       ml="-50vw"
       mr="-50vw"
-      h="100vh"
-      display="flex"
-      flexDirection="row"
+      h={{ base: 'auto', md: '100vh' }}
+      minH={{ base: '100vh', md: 'auto' }}
+      display={{ base: 'grid', md: 'flex' }}
+      gridTemplateColumns={{ base: '1fr 1fr', md: 'none' }}
+      gridTemplateRows={{ base: '1fr 1fr', md: 'none' }}
+      flexDirection={{ base: 'column', md: 'row' }}
     >
         {categories.map((category, index) => (
           <MotionBox
             key={category.name}
             position="relative"
-            flex="1"
-            h="100%"
+            flex={{ base: 'none', md: '1' }}
+            h={{ base: '50vh', md: '100%' }}
             overflow="hidden"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            borderRight={index < categories.length - 1 ? "2px solid" : undefined}
+            borderRight={{ base: 'none', md: index < categories.length - 1 ? "2px solid" : undefined }}
+            borderBottom={{ base: index < 2 ? "2px solid" : undefined, md: 'none' }}
             borderColor="rgba(255, 255, 255, 0.5)"
           >
             {/* Background Image */}
