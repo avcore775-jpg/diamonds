@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import NextImage from 'next/image'
 import {
@@ -21,12 +21,89 @@ interface ProductCarouselProps {
 }
 
 export default function ProductCarousel({ products, isLoading }: ProductCarouselProps) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [isUserInteracting, setIsUserInteracting] = useState(false)
+  const [scrollDirection, setScrollDirection] = useState<'right' | 'left'>('right')
+
   const formatPrice = (cents: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
     }).format(cents / 100)
   }
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer || isUserInteracting || !products || products.length === 0) return
+
+    const scrollSpeed = 0.5 // pixels per frame (slow speed)
+    let animationFrameId: number
+
+    const autoScroll = () => {
+      if (!scrollContainer) return
+
+      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth
+
+      if (scrollDirection === 'right') {
+        scrollContainer.scrollLeft += scrollSpeed
+        // When reaching the end, reverse direction
+        if (scrollContainer.scrollLeft >= maxScroll - 1) {
+          setScrollDirection('left')
+        }
+      } else {
+        scrollContainer.scrollLeft -= scrollSpeed
+        // When reaching the start, reverse direction
+        if (scrollContainer.scrollLeft <= 1) {
+          setScrollDirection('right')
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(autoScroll)
+    }
+
+    animationFrameId = requestAnimationFrame(autoScroll)
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
+    }
+  }, [isUserInteracting, scrollDirection, products])
+
+  // Handle user interaction
+  useEffect(() => {
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer) return
+
+    let interactionTimer: NodeJS.Timeout
+
+    const handleInteractionStart = () => {
+      setIsUserInteracting(true)
+      clearTimeout(interactionTimer)
+    }
+
+    const handleInteractionEnd = () => {
+      clearTimeout(interactionTimer)
+      // Resume auto-scroll after 3 seconds of no interaction
+      interactionTimer = setTimeout(() => {
+        setIsUserInteracting(false)
+      }, 3000)
+    }
+
+    scrollContainer.addEventListener('mousedown', handleInteractionStart)
+    scrollContainer.addEventListener('touchstart', handleInteractionStart)
+    scrollContainer.addEventListener('wheel', handleInteractionStart)
+    scrollContainer.addEventListener('scroll', handleInteractionEnd)
+
+    return () => {
+      scrollContainer.removeEventListener('mousedown', handleInteractionStart)
+      scrollContainer.removeEventListener('touchstart', handleInteractionStart)
+      scrollContainer.removeEventListener('wheel', handleInteractionStart)
+      scrollContainer.removeEventListener('scroll', handleInteractionEnd)
+      clearTimeout(interactionTimer)
+    }
+  }, [])
 
   if (isLoading) {
     return (
@@ -48,10 +125,11 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
 
   return (
     <Box
+      ref={scrollRef}
       overflowX="auto"
       overflowY="hidden"
       sx={{
-        scrollBehavior: 'smooth',
+        scrollBehavior: isUserInteracting ? 'smooth' : 'auto',
         scrollSnapType: 'x mandatory',
         WebkitOverflowScrolling: 'touch',
         '&::-webkit-scrollbar': {
