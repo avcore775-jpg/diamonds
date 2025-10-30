@@ -640,6 +640,7 @@ export default function HomePage() {
                 width="100%"
                 height="100%"
                 zIndex={0}
+                bg="gray.200"
               >
                 <Box
                   as="img"
@@ -649,32 +650,34 @@ export default function HomePage() {
                   height="100%"
                   objectFit="cover"
                   objectPosition="center"
+                  loading="eager"
+                  style={{ display: 'block' }}
                 />
               </Box>
 
-              {/* Light overlay for better text contrast */}
+              {/* Light overlay for better text contrast - reduced opacity on mobile */}
               <Box
                 position="absolute"
                 top="0"
                 left="0"
                 width="100%"
                 height="100%"
-                bg="whiteAlpha.200"
+                bg={{ base: "whiteAlpha.100", md: "whiteAlpha.200" }}
                 zIndex={1}
               />
 
               {/* Top Left - Remy Sales */}
               <Text
                 position="absolute"
-                top={{ base: 3, md: 6 }}
-                left={{ base: 3, md: 6 }}
-                fontSize={{ base: 'lg', sm: 'xl', md: '2xl', lg: '3xl' }}
+                top={{ base: 4, md: 6 }}
+                left={{ base: 4, md: 6 }}
+                fontSize={{ base: 'xl', sm: '2xl', md: '2xl', lg: '3xl' }}
                 fontWeight="bold"
                 color="black"
                 textDecoration="underline"
                 textDecorationColor="black"
-                textDecorationThickness="2px"
-                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                textDecorationThickness={{ base: '3px', md: '2px' }}
+                textShadow="0 0 12px rgba(255,255,255,1), 0 0 8px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.8)"
                 zIndex={3}
               >
                 Remy Sales
@@ -683,15 +686,15 @@ export default function HomePage() {
               {/* Top Right - Address */}
               <Text
                 position="absolute"
-                top={{ base: 3, md: 6 }}
-                right={{ base: 3, md: 6 }}
-                fontSize={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
+                top={{ base: 4, md: 6 }}
+                right={{ base: 4, md: 6 }}
+                fontSize={{ base: 'md', sm: 'lg', md: 'lg', lg: 'xl' }}
                 fontWeight="bold"
                 color="black"
                 textAlign="right"
-                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                textShadow="0 0 12px rgba(255,255,255,1), 0 0 8px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.8)"
                 zIndex={3}
-                maxW={{ base: '45%', md: 'none' }}
+                maxW={{ base: '50%', md: 'none' }}
               >
                 #203, 221 Victoria St
               </Text>
@@ -699,14 +702,14 @@ export default function HomePage() {
               {/* Bottom Left - City */}
               <Text
                 position="absolute"
-                bottom={{ base: 3, md: 6 }}
-                left={{ base: 3, md: 6 }}
-                fontSize={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
+                bottom={{ base: 4, md: 6 }}
+                left={{ base: 4, md: 6 }}
+                fontSize={{ base: 'md', sm: 'lg', md: 'lg', lg: 'xl' }}
                 fontWeight="bold"
                 color="black"
-                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                textShadow="0 0 12px rgba(255,255,255,1), 0 0 8px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.8)"
                 zIndex={3}
-                maxW={{ base: '55%', md: 'none' }}
+                maxW={{ base: '60%', md: 'none' }}
               >
                 Toronto, ON M5B 1V4
               </Text>
@@ -714,13 +717,13 @@ export default function HomePage() {
               {/* Bottom Right - Hours */}
               <Text
                 position="absolute"
-                bottom={{ base: 3, md: 6 }}
-                right={{ base: 3, md: 6 }}
-                fontSize={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
+                bottom={{ base: 4, md: 6 }}
+                right={{ base: 4, md: 6 }}
+                fontSize={{ base: 'md', sm: 'lg', md: 'lg', lg: 'xl' }}
                 fontWeight="bold"
                 color="black"
                 textAlign="right"
-                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                textShadow="0 0 12px rgba(255,255,255,1), 0 0 8px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.8)"
                 zIndex={3}
               >
                 10 am to 5 pm
