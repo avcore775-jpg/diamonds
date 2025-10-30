@@ -104,7 +104,7 @@ export default function HomePage() {
           <VStack spacing={8} textAlign="center">
             <MotionHeading
               as="h1"
-              size="3xl"
+              fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '5xl' }}
               fontWeight="400"
               textShadow="2px 2px 4px rgba(0,0,0,0.5)"
               color="white"
@@ -128,7 +128,9 @@ export default function HomePage() {
               Discover our great collection of handcrafted jewelry and certified diamonds
             </MotionText>
             <MotionHStack
-              spacing={4}
+              spacing={{ base: 3, md: 4 }}
+              flexDirection={{ base: 'column', sm: 'row' }}
+              width={{ base: 'full', sm: 'auto' }}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
@@ -137,6 +139,8 @@ export default function HomePage() {
                 <MotionButton
                   as="a"
                   size="lg"
+                  width={{ base: 'full', sm: 'auto' }}
+                  minH="48px"
                   bg="transparent"
                   color="white"
                   border="2px solid"
@@ -166,6 +170,8 @@ export default function HomePage() {
                 <MotionButton
                   as="a"
                   size="lg"
+                  width={{ base: 'full', sm: 'auto' }}
+                  minH="48px"
                   bg="transparent"
                   color="white"
                   border="2px solid"
@@ -229,24 +235,26 @@ export default function HomePage() {
         <Box
           w="100%"
           position="relative"
-          pt={{ base: 4, md: 6, lg: 8 }}
-          pb={{ base: 6, md: 8, lg: 12 }}
-          px={{ base: 8, md: 16, lg: 20 }}
+          pt={{ base: 8, md: 6, lg: 8 }}
+          pb={{ base: 16, md: 8, lg: 12 }}
+          px={{ base: 4, md: 16, lg: 20 }}
+          minH={{ base: '200px', md: 'auto' }}
         >
           {/* Main Slogan - Top Left */}
           <Box
-            position="absolute"
-            top={{ base: '8%', md: '10%', lg: '12%' }}
-            left={{ base: 8, md: 16, lg: 20 }}
-            maxW={{ base: '60%', md: '50%', lg: '40%' }}
+            position={{ base: 'relative', md: 'absolute' }}
+            top={{ base: 'auto', md: '10%', lg: '12%' }}
+            left={{ base: 'auto', md: 16, lg: 20 }}
+            maxW={{ base: '100%', md: '50%', lg: '40%' }}
+            mb={{ base: 6, md: 0 }}
           >
             <TypewriterText text="Crafted by Time" speed={50} delay={100}>
               {(displayText) => (
                 <Heading
-                  fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
+                  fontSize={{ base: '2xl', sm: '3xl', md: '5xl', lg: '6xl' }}
                   fontWeight="300"
                   color="white"
-                  textAlign="left"
+                  textAlign={{ base: 'center', md: 'left' }}
                   lineHeight="1.2"
                 >
                   {displayText}
@@ -257,19 +265,19 @@ export default function HomePage() {
 
           {/* Tagline - Right side */}
           <Box
-            position="absolute"
-            top={{ base: '50%', md: '50%', lg: '50%' }}
-            right={{ base: 8, md: 16, lg: 20 }}
-            maxW={{ base: '70%', md: '60%', lg: '45%' }}
-            transform="translateY(-50%)"
+            position={{ base: 'relative', md: 'absolute' }}
+            top={{ base: 'auto', md: '50%', lg: '50%' }}
+            right={{ base: 'auto', md: 16, lg: 20 }}
+            maxW={{ base: '100%', md: '60%', lg: '45%' }}
+            transform={{ base: 'none', md: 'translateY(-50%)' }}
           >
             <TypewriterText text="From a single spark to a timeless creation" speed={50} delay={100}>
               {(displayText) => (
                 <Text
-                  fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+                  fontSize={{ base: 'md', sm: 'lg', md: 'xl', lg: '2xl' }}
                   fontWeight="300"
                   color="white"
-                  textAlign="right"
+                  textAlign={{ base: 'center', md: 'right' }}
                   lineHeight="1.6"
                 >
                   {displayText}
@@ -280,39 +288,42 @@ export default function HomePage() {
         </Box>
 
         {/* Diagonal Grid Container */}
-        <Container maxW="7xl" flex="1">
+        <Container maxW="7xl" flex="1" px={{ base: 4, md: 8 }}>
           <Box
             display="grid"
-            gridTemplateColumns="repeat(2, 1fr)"
-            gridTemplateRows="repeat(2, 1fr)"
-            gap={8}
-            h="80vh"
+            gridTemplateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }}
+            gridTemplateRows={{ base: 'repeat(4, 1fr)', md: 'repeat(2, 1fr)' }}
+            gap={{ base: 4, md: 8 }}
+            h={{ base: 'auto', md: '80vh' }}
+            minH={{ base: '1000px', md: 'auto' }}
             position="relative"
           >
             {/* BrandStory Button - Center between four elements */}
             <Box
               position="absolute"
-              top="50%"
+              top={{ base: 'auto', md: '50%' }}
+              bottom={{ base: '20px', md: 'auto' }}
               left="50%"
-              transform="translate(-50%, -50%)"
+              transform={{ base: 'translateX(-50%)', md: 'translate(-50%, -50%)' }}
               zIndex={20}
             >
               <Button
                 as={NextLink}
                 href="/about"
-                size="md"
+                size={{ base: 'lg', md: 'md' }}
                 bg="white"
                 color="black"
-                px={{ base: 6, md: 8 }}
-                py={{ base: 3, md: 4 }}
-                fontSize={{ base: 'sm', md: 'md' }}
+                px={{ base: 8, md: 8 }}
+                py={{ base: 6, md: 4 }}
+                fontSize={{ base: 'md', md: 'md' }}
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wide"
+                minH="48px"
                 _hover={{
                   bg: 'gold.500',
                   color: 'white',
-                  transform: 'scale(1.05)',
+                  transform: { base: 'translateX(-50%) scale(1.05)', md: 'scale(1.05)' },
                 }}
                 transition="all 0.3s ease-in-out"
               >
@@ -322,12 +333,13 @@ export default function HomePage() {
 
             {/* Top Left - Left1 Video */}
             <Box
-              gridColumn="1"
-              gridRow="1"
+              gridColumn={{ base: '1', md: '1' }}
+              gridRow={{ base: '1', md: '1' }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              h={{ base: '220px', md: 'auto' }}
             >
               <video
                 autoPlay
@@ -347,12 +359,13 @@ export default function HomePage() {
 
             {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
             <Box
-              gridColumn="1"
-              gridRow="2"
+              gridColumn={{ base: '1', md: '1' }}
+              gridRow={{ base: '2', md: '2' }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              h={{ base: '220px', md: 'auto' }}
             >
               <Box
                 as="img"
@@ -367,12 +380,13 @@ export default function HomePage() {
 
             {/* Top Right - Right1 Image */}
             <Box
-              gridColumn="2"
-              gridRow="1"
+              gridColumn={{ base: '1', md: '2' }}
+              gridRow={{ base: '3', md: '1' }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              h={{ base: '220px', md: 'auto' }}
             >
               <Box
                 as="img"
@@ -387,12 +401,13 @@ export default function HomePage() {
 
             {/* Bottom Right - Right2 Video */}
             <Box
-              gridColumn="2"
-              gridRow="2"
+              gridColumn={{ base: '1', md: '2' }}
+              gridRow={{ base: '4', md: '2' }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              h={{ base: '220px', md: 'auto' }}
             >
               <video
                 autoPlay
@@ -504,22 +519,23 @@ export default function HomePage() {
       </Box>
 
       {/* Come Say Hi Section */}
-      <Box minH="50vh" bg="transparent" display="flex" alignItems="center" py={12}>
-        <Container maxW="7xl">
+      <Box minH="50vh" bg="transparent" display="flex" alignItems="center" py={{ base: 8, md: 12 }}>
+        <Container maxW="7xl" px={{ base: 4, md: 8 }}>
           <Flex
             direction={{ base: 'column', md: 'row' }}
             align="center"
             justify="center"
-            gap="1cm"
+            gap={{ base: 6, md: 8 }}
           >
             {/* Left Rectangle - Text with Video Background */}
             <Box
               flex="1"
+              width={{ base: 'full', md: 'auto' }}
               position="relative"
               border="2px solid white"
               borderRadius="md"
               overflow="hidden"
-              h={{ base: '300px', md: '400px', lg: '450px' }}
+              h={{ base: '350px', sm: '400px', md: '400px', lg: '450px' }}
               display="flex"
               alignItems="center"
               justifyContent="center"
@@ -562,24 +578,25 @@ export default function HomePage() {
 
               {/* Centered Text */}
               <VStack
-                spacing={6}
+                spacing={{ base: 4, md: 6 }}
                 zIndex={2}
                 position="relative"
                 textAlign="center"
-                px={8}
+                px={{ base: 4, md: 8 }}
               >
                 <Heading
-                  fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }}
+                  fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
                   fontWeight="bold"
                   color="white"
+                  lineHeight="1.2"
                 >
                   COME SAY HI
                 </Heading>
                 <Text
-                  fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+                  fontSize={{ base: 'md', sm: 'lg', md: 'md', lg: 'lg' }}
                   color="white"
                   fontWeight="300"
-                  maxW="80%"
+                  maxW={{ base: '90%', md: '80%' }}
                 >
                   Shop your faves in store, get styled, and join the journey.
                 </Text>
@@ -588,14 +605,15 @@ export default function HomePage() {
                   href="https://google.com/maps/dir//Suite+%23203,+221+Victoria+St,+Toronto,+ON+M5B+1V4/@43.8026371,-79.4373134,12z/data=!4m9!4m8!1m1!4e2!1m5!1m1!1s0x89d4cb61ded8ee95:0xe7dd8f4c3d3ef179!2m2!1d-79.3789273!2d43.6551031?entry=ttu&g_ep=EgoyMDI1MTAyNy4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
-                  size="lg"
+                  size={{ base: 'md', md: 'lg' }}
                   bg="white"
                   color="black"
-                  px={8}
-                  py={6}
-                  fontSize="md"
+                  px={{ base: 6, md: 8 }}
+                  py={{ base: 5, md: 6 }}
+                  fontSize={{ base: 'sm', md: 'md' }}
                   fontWeight="bold"
                   border="2px solid white"
+                  minH="48px"
                   _hover={{
                     bg: 'gold.500',
                     color: 'white',
@@ -613,11 +631,12 @@ export default function HomePage() {
             {/* Right Rectangle - Image with Address */}
             <Box
               flex="1"
+              width={{ base: 'full', md: 'auto' }}
               position="relative"
               border="2px solid white"
               borderRadius="md"
               overflow="hidden"
-              h={{ base: '300px', md: '400px', lg: '450px' }}
+              h={{ base: '350px', sm: '400px', md: '400px', lg: '450px' }}
               display="flex"
               alignItems="center"
               justifyContent="center"
@@ -645,9 +664,9 @@ export default function HomePage() {
               {/* Top Left - Remy Sales */}
               <Text
                 position="absolute"
-                top={{ base: 4, md: 6 }}
-                left={{ base: 4, md: 6 }}
-                fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }}
+                top={{ base: 3, md: 6 }}
+                left={{ base: 3, md: 6 }}
+                fontSize={{ base: 'lg', sm: 'xl', md: '2xl', lg: '3xl' }}
                 fontWeight="bold"
                 color="black"
                 textDecoration="underline"
@@ -661,13 +680,14 @@ export default function HomePage() {
               {/* Top Right - Address */}
               <Text
                 position="absolute"
-                top={{ base: 4, md: 6 }}
-                right={{ base: 4, md: 6 }}
-                fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+                top={{ base: 3, md: 6 }}
+                right={{ base: 3, md: 6 }}
+                fontSize={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
                 fontWeight="bold"
                 color="black"
                 textAlign="right"
                 zIndex={2}
+                maxW={{ base: '45%', md: 'none' }}
               >
                 #203, 221 Victoria St
               </Text>
@@ -675,12 +695,13 @@ export default function HomePage() {
               {/* Bottom Left - City */}
               <Text
                 position="absolute"
-                bottom={{ base: 4, md: 6 }}
-                left={{ base: 4, md: 6 }}
-                fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+                bottom={{ base: 3, md: 6 }}
+                left={{ base: 3, md: 6 }}
+                fontSize={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
                 fontWeight="bold"
                 color="black"
                 zIndex={2}
+                maxW={{ base: '55%', md: 'none' }}
               >
                 Toronto, ON M5B 1V4
               </Text>
@@ -688,9 +709,9 @@ export default function HomePage() {
               {/* Bottom Right - Hours */}
               <Text
                 position="absolute"
-                bottom={{ base: 4, md: 6 }}
-                right={{ base: 4, md: 6 }}
-                fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
+                bottom={{ base: 3, md: 6 }}
+                right={{ base: 3, md: 6 }}
+                fontSize={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
                 fontWeight="bold"
                 color="black"
                 textAlign="right"
@@ -704,36 +725,49 @@ export default function HomePage() {
       </Box>
 
       {/* CTA Section */}
-      <Box minH="50vh" bg="transparent" display="flex" alignItems="center" py={12}>
-        <Container maxW="7xl">
+      <Box minH="50vh" bg="transparent" display="flex" alignItems="center" py={{ base: 8, md: 12 }}>
+        <Container maxW="7xl" px={{ base: 4, md: 8 }}>
           <ScrollAnimation animation="scale-in">
             <Flex
               direction={{ base: 'column', md: 'row' }}
               align="center"
               justify="space-between"
-              gap={8}
+              gap={{ base: 6, md: 8 }}
             >
-              <VStack align={{ base: 'center', md: 'start' }} spacing={4}>
+              <VStack align={{ base: 'center', md: 'start' }} spacing={4} flex="1">
                 <TypewriterText text="Subscribe to Our Newsletter" speed={50} delay={100}>
                   {(displayText) => (
-                    <Heading size="lg" color="white">{displayText}</Heading>
+                    <Heading
+                      fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
+                      color="white"
+                      textAlign={{ base: 'center', md: 'left' }}
+                    >
+                      {displayText}
+                    </Heading>
                   )}
                 </TypewriterText>
                 <TypewriterText text="Get exclusive offers and be the first to know about new collections" speed={50} delay={100}>
                   {(displayText) => (
-                    <Text color="gray.300">
+                    <Text
+                      color="gray.300"
+                      fontSize={{ base: 'sm', md: 'md' }}
+                      textAlign={{ base: 'center', md: 'left' }}
+                    >
                       {displayText}
                     </Text>
                   )}
                 </TypewriterText>
               </VStack>
               <MotionButton
-                size="lg"
+                size={{ base: 'md', md: 'lg' }}
                 colorScheme="gold"
                 variant="solid"
                 variants={getAnimationVariants(buttonPress)}
                 whileHover="hover"
                 whileTap="tap"
+                minH="48px"
+                width={{ base: 'full', md: 'auto' }}
+                px={{ base: 6, md: 8 }}
               >
                 Subscribe Now
               </MotionButton>
