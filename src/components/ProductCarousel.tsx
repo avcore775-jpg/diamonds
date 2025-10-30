@@ -22,9 +22,7 @@ interface ProductCarouselProps {
 
 export default function ProductCarousel({ products, isLoading }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const [isUserInteracting, setIsUserInteracting] = useState(false)
-  const isAutoScrollingRef = useRef(false)
-  const interactionTimerRef = useRef<NodeJS.Timeout>()
+  const [isHovered, setIsHovered] = useState(false)
 
   const formatPrice = (cents: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -33,39 +31,30 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
     }).format(cents / 100)
   }
 
-  // Auto-scroll functionality
+  // Infinite loop auto-scroll functionality
   useEffect(() => {
     const scrollContainer = scrollRef.current
-    if (!scrollContainer || isUserInteracting || !products || products.length === 0) return
+    if (!scrollContainer || isHovered || !products || products.length === 0) return
 
-    const scrollSpeed = 1 // pixels per frame (slow speed)
+    const scrollSpeed = 0.5 // pixels per frame (slow, smooth speed)
     let animationFrameId: number
-    let direction: 'right' | 'left' = 'right'
 
     const autoScroll = () => {
       if (!scrollContainer) return
 
-      isAutoScrollingRef.current = true
       const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth
 
       // Check if there's actually content to scroll
       if (maxScroll <= 0) {
-        isAutoScrollingRef.current = false
         return
       }
 
-      if (direction === 'right') {
-        scrollContainer.scrollLeft += scrollSpeed
-        // When reaching the end, reverse direction
-        if (scrollContainer.scrollLeft >= maxScroll - 1) {
-          direction = 'left'
-        }
-      } else {
-        scrollContainer.scrollLeft -= scrollSpeed
-        // When reaching the start, reverse direction
-        if (scrollContainer.scrollLeft <= 1) {
-          direction = 'right'
-        }
+      // Scroll to the right
+      scrollContainer.scrollLeft += scrollSpeed
+
+      // When reaching the end, loop back to the beginning
+      if (scrollContainer.scrollLeft >= maxScroll) {
+        scrollContainer.scrollLeft = 0
       }
 
       animationFrameId = requestAnimationFrame(autoScroll)
@@ -77,51 +66,8 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId)
       }
-      isAutoScrollingRef.current = false
     }
-  }, [isUserInteracting, products])
-
-  // Handle user interaction
-  useEffect(() => {
-    const scrollContainer = scrollRef.current
-    if (!scrollContainer) return
-
-    const handleInteractionStart = () => {
-      setIsUserInteracting(true)
-      if (interactionTimerRef.current) {
-        clearTimeout(interactionTimerRef.current)
-      }
-    }
-
-    const handleScroll = () => {
-      // Only pause auto-scroll if this is a user-initiated scroll
-      if (!isAutoScrollingRef.current) {
-        setIsUserInteracting(true)
-        if (interactionTimerRef.current) {
-          clearTimeout(interactionTimerRef.current)
-        }
-        // Resume auto-scroll after 3 seconds of no interaction
-        interactionTimerRef.current = setTimeout(() => {
-          setIsUserInteracting(false)
-        }, 3000)
-      }
-    }
-
-    scrollContainer.addEventListener('mousedown', handleInteractionStart, { passive: true })
-    scrollContainer.addEventListener('touchstart', handleInteractionStart, { passive: true })
-    scrollContainer.addEventListener('wheel', handleInteractionStart, { passive: true })
-    scrollContainer.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => {
-      scrollContainer.removeEventListener('mousedown', handleInteractionStart)
-      scrollContainer.removeEventListener('touchstart', handleInteractionStart)
-      scrollContainer.removeEventListener('wheel', handleInteractionStart)
-      scrollContainer.removeEventListener('scroll', handleScroll)
-      if (interactionTimerRef.current) {
-        clearTimeout(interactionTimerRef.current)
-      }
-    }
-  }, [])
+  }, [isHovered, products])
 
   if (isLoading) {
     return (
@@ -146,9 +92,11 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
       ref={scrollRef}
       overflowX="auto"
       overflowY="hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       sx={{
-        scrollBehavior: isUserInteracting ? 'smooth' : 'auto',
-        scrollSnapType: 'x mandatory',
+        scrollBehavior: 'auto',
+        scrollSnapType: 'none',
         WebkitOverflowScrolling: 'touch',
         '&::-webkit-scrollbar': {
           height: '8px',
