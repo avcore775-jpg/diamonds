@@ -652,6 +652,17 @@ export default function HomePage() {
                 />
               </Box>
 
+              {/* Light overlay for better text contrast */}
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                width="100%"
+                height="100%"
+                bg="whiteAlpha.200"
+                zIndex={1}
+              />
+
               {/* Top Left - Remy Sales */}
               <Text
                 position="absolute"
@@ -663,7 +674,8 @@ export default function HomePage() {
                 textDecoration="underline"
                 textDecorationColor="black"
                 textDecorationThickness="2px"
-                zIndex={2}
+                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                zIndex={3}
               >
                 Remy Sales
               </Text>
@@ -677,7 +689,8 @@ export default function HomePage() {
                 fontWeight="bold"
                 color="black"
                 textAlign="right"
-                zIndex={2}
+                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                zIndex={3}
                 maxW={{ base: '45%', md: 'none' }}
               >
                 #203, 221 Victoria St
@@ -691,7 +704,8 @@ export default function HomePage() {
                 fontSize={{ base: 'sm', sm: 'md', md: 'lg', lg: 'xl' }}
                 fontWeight="bold"
                 color="black"
-                zIndex={2}
+                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                zIndex={3}
                 maxW={{ base: '55%', md: 'none' }}
               >
                 Toronto, ON M5B 1V4
@@ -706,7 +720,8 @@ export default function HomePage() {
                 fontWeight="bold"
                 color="black"
                 textAlign="right"
-                zIndex={2}
+                textShadow="0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.6)"
+                zIndex={3}
               >
                 10 am to 5 pm
               </Text>
