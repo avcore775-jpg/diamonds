@@ -323,7 +323,7 @@ export default function ContactPage() {
           </VStack>
           <Box
             bg="gray.200"
-            height="400px"
+            height={{ base: "300px", md: "400px", lg: "500px" }}
             borderRadius="lg"
             overflow="hidden"
             position="relative"

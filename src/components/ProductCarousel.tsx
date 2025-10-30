@@ -76,9 +76,9 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
             key={product.id}
             as={NextLink}
             href={`/product/${product.slug || product.id}`}
-            minW="280px"
-            maxW="280px"
-            h="380px"
+            minW={{ base: "240px", sm: "260px", md: "280px" }}
+            maxW={{ base: "240px", sm: "260px", md: "280px" }}
+            h={{ base: "340px", sm: "360px", md: "380px" }}
             bg="#FFFFFF"
             border="2px solid"
             borderColor="gold.500"
@@ -92,7 +92,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
               borderColor: 'gold.400',
             }}
           >
-            <Box position="relative" height="220px" width="100%" overflow="hidden">
+            <Box position="relative" height={{ base: "180px", sm: "200px", md: "220px" }} width="100%" overflow="hidden">
               <NextImage
                 src={product.image || '/placeholder.jpg'}
                 alt={product.name}

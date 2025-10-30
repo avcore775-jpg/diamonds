@@ -476,7 +476,7 @@ export default function AdminOrdersPage() {
                   </Text>
                 </Box>
               ) : (
-                <TableContainer>
+                <TableContainer overflowX={{ base: "auto", md: "visible" }}>
                   <Table variant="simple">
                     <Thead>
                       <Tr>
@@ -568,7 +568,7 @@ export default function AdminOrdersPage() {
       </Container>
 
       {/* Order Details Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="4xl" scrollBehavior="inside">
+      <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", md: "3xl", lg: "4xl" }} scrollBehavior="inside">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>

@@ -530,7 +530,7 @@ export default function AdminProductsPage() {
                   )}
                 </Box>
               ) : (
-                <TableContainer>
+                <TableContainer overflowX={{ base: "auto", md: "visible" }}>
                   <Table variant="simple">
                     <Thead>
                       <Tr>
@@ -636,7 +636,7 @@ export default function AdminProductsPage() {
       </Container>
 
       {/* Add/Edit Product Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="2xl" scrollBehavior="inside">
+      <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", md: "2xl" }} scrollBehavior="inside">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
