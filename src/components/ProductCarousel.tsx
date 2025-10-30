@@ -23,7 +23,8 @@ interface ProductCarouselProps {
 export default function ProductCarousel({ products, isLoading }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [isUserInteracting, setIsUserInteracting] = useState(false)
-  const [scrollDirection, setScrollDirection] = useState<'right' | 'left'>('right')
+  const isAutoScrollingRef = useRef(false)
+  const interactionTimerRef = useRef<NodeJS.Timeout>()
 
   const formatPrice = (cents: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -37,25 +38,33 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
     const scrollContainer = scrollRef.current
     if (!scrollContainer || isUserInteracting || !products || products.length === 0) return
 
-    const scrollSpeed = 0.5 // pixels per frame (slow speed)
+    const scrollSpeed = 1 // pixels per frame (slow speed)
     let animationFrameId: number
+    let direction: 'right' | 'left' = 'right'
 
     const autoScroll = () => {
       if (!scrollContainer) return
 
+      isAutoScrollingRef.current = true
       const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth
 
-      if (scrollDirection === 'right') {
+      // Check if there's actually content to scroll
+      if (maxScroll <= 0) {
+        isAutoScrollingRef.current = false
+        return
+      }
+
+      if (direction === 'right') {
         scrollContainer.scrollLeft += scrollSpeed
         // When reaching the end, reverse direction
         if (scrollContainer.scrollLeft >= maxScroll - 1) {
-          setScrollDirection('left')
+          direction = 'left'
         }
       } else {
         scrollContainer.scrollLeft -= scrollSpeed
         // When reaching the start, reverse direction
         if (scrollContainer.scrollLeft <= 1) {
-          setScrollDirection('right')
+          direction = 'right'
         }
       }
 
@@ -68,40 +77,49 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId)
       }
+      isAutoScrollingRef.current = false
     }
-  }, [isUserInteracting, scrollDirection, products])
+  }, [isUserInteracting, products])
 
   // Handle user interaction
   useEffect(() => {
     const scrollContainer = scrollRef.current
     if (!scrollContainer) return
 
-    let interactionTimer: NodeJS.Timeout
-
     const handleInteractionStart = () => {
       setIsUserInteracting(true)
-      clearTimeout(interactionTimer)
+      if (interactionTimerRef.current) {
+        clearTimeout(interactionTimerRef.current)
+      }
     }
 
-    const handleInteractionEnd = () => {
-      clearTimeout(interactionTimer)
-      // Resume auto-scroll after 3 seconds of no interaction
-      interactionTimer = setTimeout(() => {
-        setIsUserInteracting(false)
-      }, 3000)
+    const handleScroll = () => {
+      // Only pause auto-scroll if this is a user-initiated scroll
+      if (!isAutoScrollingRef.current) {
+        setIsUserInteracting(true)
+        if (interactionTimerRef.current) {
+          clearTimeout(interactionTimerRef.current)
+        }
+        // Resume auto-scroll after 3 seconds of no interaction
+        interactionTimerRef.current = setTimeout(() => {
+          setIsUserInteracting(false)
+        }, 3000)
+      }
     }
 
-    scrollContainer.addEventListener('mousedown', handleInteractionStart)
-    scrollContainer.addEventListener('touchstart', handleInteractionStart)
-    scrollContainer.addEventListener('wheel', handleInteractionStart)
-    scrollContainer.addEventListener('scroll', handleInteractionEnd)
+    scrollContainer.addEventListener('mousedown', handleInteractionStart, { passive: true })
+    scrollContainer.addEventListener('touchstart', handleInteractionStart, { passive: true })
+    scrollContainer.addEventListener('wheel', handleInteractionStart, { passive: true })
+    scrollContainer.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => {
       scrollContainer.removeEventListener('mousedown', handleInteractionStart)
       scrollContainer.removeEventListener('touchstart', handleInteractionStart)
       scrollContainer.removeEventListener('wheel', handleInteractionStart)
-      scrollContainer.removeEventListener('scroll', handleInteractionEnd)
-      clearTimeout(interactionTimer)
+      scrollContainer.removeEventListener('scroll', handleScroll)
+      if (interactionTimerRef.current) {
+        clearTimeout(interactionTimerRef.current)
+      }
     }
   }, [])
 
