@@ -114,15 +114,15 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
         },
       }}
     >
-      <HStack spacing={6} align="stretch" pb={4}>
+      <HStack spacing={{ base: 3, sm: 4, md: 6 }} align="stretch" pb={4}>
         {products.map((product) => (
           <Card
             key={product.id}
             as={NextLink}
             href={`/product/${product.slug || product.id}`}
-            minW={{ base: "240px", sm: "260px", md: "280px" }}
-            maxW={{ base: "240px", sm: "260px", md: "280px" }}
-            h={{ base: "340px", sm: "360px", md: "380px" }}
+            minW={{ base: "180px", sm: "220px", md: "260px", lg: "280px" }}
+            maxW={{ base: "180px", sm: "220px", md: "260px", lg: "280px" }}
+            h={{ base: "280px", sm: "320px", md: "360px", lg: "380px" }}
             bg="#FFFFFF"
             border="2px solid"
             borderColor="gold.500"
@@ -136,7 +136,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
               borderColor: 'gold.400',
             }}
           >
-            <Box position="relative" height={{ base: "180px", sm: "200px", md: "220px" }} width="100%" overflow="hidden">
+            <Box position="relative" height={{ base: "120px", sm: "140px", md: "180px", lg: "220px" }} width="100%" overflow="hidden">
               <NextImage
                 src={product.image || '/placeholder.jpg'}
                 alt={product.name}
@@ -149,11 +149,11 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
             <CardBody>
               <VStack spacing={2} align="stretch">
                 <Text
-                  fontSize="md"
+                  fontSize={{ base: "sm", md: "md" }}
                   fontWeight="300"
                   color="#000000"
                   noOfLines={2}
-                  minH="48px"
+                  minH={{ base: "36px", md: "48px" }}
                 >
                   {product.name}
                 </Text>
@@ -164,7 +164,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
                   </Text>
                 )}
 
-                <Text fontSize="lg" fontWeight="300" color="black">
+                <Text fontSize={{ base: "md", md: "lg" }} fontWeight="300" color="black">
                   {formatPrice(product.price)}
                 </Text>
 

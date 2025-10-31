@@ -103,16 +103,17 @@ export default function CategoryTiles() {
               <MotionButton
                 as={NextLink}
                 href={category.link}
-                size="lg"
+                size={{ base: "md", md: "lg" }}
                 bg="white"
                 color="black"
-                px={{ base: 8, md: 12 }}
-                py={{ base: 4, md: 5 }}
-                fontSize={{ base: 'md', md: 'lg' }}
+                px={{ base: 4, sm: 6, md: 12 }}
+                py={{ base: 3, md: 5 }}
+                fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}
                 fontWeight="bold"
                 borderRadius="md"
                 textTransform="uppercase"
                 letterSpacing="wide"
+                minH="44px"
                 variants={getAnimationVariants(buttonPress)}
                 whileHover="hover"
                 whileTap="tap"

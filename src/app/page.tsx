@@ -526,7 +526,7 @@ export default function HomePage() {
               border="2px solid white"
               borderRadius="md"
               overflow="hidden"
-              h={{ base: '350px', sm: '400px', md: '400px', lg: '450px' }}
+              h={{ base: '280px', sm: '350px', md: '400px', lg: '450px' }}
               display="flex"
               alignItems="center"
               justifyContent="center"
@@ -576,7 +576,7 @@ export default function HomePage() {
                 px={{ base: 4, md: 8 }}
               >
                 <Heading
-                  fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
+                  fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '5xl' }}
                   fontWeight="bold"
                   color="white"
                   lineHeight="1.2"
@@ -627,8 +627,7 @@ export default function HomePage() {
               border="2px solid white"
               borderRadius="md"
               overflow="hidden"
-              h={{ base: '400px', sm: '450px', md: '400px', lg: '450px' }}
-              minH={{ base: '400px', md: 'auto' }}
+              h={{ base: '280px', sm: '350px', md: '400px', lg: '450px' }}
               display="flex"
               alignItems="center"
               justifyContent="center"
