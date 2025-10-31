@@ -240,13 +240,13 @@ export default function HomePage() {
           px={{ base: 8, md: 16, lg: 20 }}
           display="flex"
           alignItems={{ base: 'flex-start', md: 'center' }}
-          justifyContent="space-between"
+          justifyContent={{ base: 'flex-start', md: 'center' }}
           flexDirection={{ base: 'column', md: 'row' }}
-          gap={{ base: 4, md: 8 }}
+          gap={{ base: 4, md: 2, lg: 3 }}
           minH={{ base: '120px', md: '100px' }}
         >
           {/* Main Slogan - Left side */}
-          <Box maxW={{ base: '100%', md: '45%' }}>
+          <Box>
             <TypewriterText text="Crafted by Time" speed={50} delay={100}>
               {(displayText) => (
                 <Heading
@@ -255,6 +255,7 @@ export default function HomePage() {
                   color="white"
                   textAlign="left"
                   lineHeight="1.2"
+                  whiteSpace="nowrap"
                 >
                   {displayText}
                 </Heading>
@@ -263,14 +264,14 @@ export default function HomePage() {
           </Box>
 
           {/* Tagline - Right side */}
-          <Box maxW={{ base: '100%', md: '50%' }}>
+          <Box>
             <TypewriterText text="From a single spark to a timeless creation" speed={50} delay={100}>
               {(displayText) => (
                 <Text
                   fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
                   fontWeight="300"
                   color="white"
-                  textAlign={{ base: 'left', md: 'right' }}
+                  textAlign="left"
                   lineHeight="1.6"
                 >
                   {displayText}
