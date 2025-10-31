@@ -302,20 +302,21 @@ export default function HomePage() {
               left="50%"
               transform="translate(-50%, -50%)"
               zIndex={20}
+              padding={{ base: 4, md: 6 }}
             >
               <Button
                 as={NextLink}
                 href="/about"
-                size="sm"
+                size="xs"
                 bg="white"
                 color="black"
-                px={{ base: 4, md: 6 }}
-                py={{ base: 2, md: 3 }}
-                fontSize={{ base: 'xs', md: 'sm' }}
+                px={{ base: 3, md: 4 }}
+                py={{ base: 1.5, md: 2 }}
+                fontSize={{ base: '2xs', sm: 'xs', md: 'sm' }}
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wide"
-                minH="40px"
+                minH={{ base: '36px', md: '40px' }}
                 _hover={{
                   bg: 'gold.500',
                   color: 'white',
