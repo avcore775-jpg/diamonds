@@ -238,18 +238,19 @@ export default function HomePage() {
           pt={{ base: 4, md: 6, lg: 8 }}
           pb={{ base: 6, md: 8, lg: 12 }}
           px={{ base: 8, md: 16, lg: 20 }}
+          display="flex"
+          alignItems={{ base: 'flex-start', md: 'center' }}
+          justifyContent="space-between"
+          flexDirection={{ base: 'column', md: 'row' }}
+          gap={{ base: 4, md: 8 }}
+          minH={{ base: '120px', md: '100px' }}
         >
-          {/* Main Slogan - Top Left */}
-          <Box
-            position="absolute"
-            top={{ base: '5%', md: '8%', lg: '10%' }}
-            left={{ base: 8, md: 16, lg: 20 }}
-            maxW={{ base: '60%', md: '50%', lg: '40%' }}
-          >
+          {/* Main Slogan - Left side */}
+          <Box maxW={{ base: '100%', md: '45%' }}>
             <TypewriterText text="Crafted by Time" speed={50} delay={100}>
               {(displayText) => (
                 <Heading
-                  fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
+                  fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
                   fontWeight="300"
                   color="white"
                   textAlign="left"
@@ -262,20 +263,14 @@ export default function HomePage() {
           </Box>
 
           {/* Tagline - Right side */}
-          <Box
-            position="absolute"
-            top={{ base: '55%', md: '30%', lg: '28%' }}
-            right={{ base: 8, md: 16, lg: 20 }}
-            maxW={{ base: '80%', md: '60%', lg: '45%' }}
-            transform={{ base: 'none', md: 'translateY(-50%)' }}
-          >
+          <Box maxW={{ base: '100%', md: '50%' }}>
             <TypewriterText text="From a single spark to a timeless creation" speed={50} delay={100}>
               {(displayText) => (
                 <Text
-                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
+                  fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
                   fontWeight="300"
                   color="white"
-                  textAlign="right"
+                  textAlign={{ base: 'left', md: 'right' }}
                   lineHeight="1.6"
                 >
                   {displayText}
@@ -302,7 +297,7 @@ export default function HomePage() {
               left="50%"
               transform="translate(-50%, -50%)"
               zIndex={20}
-              padding={{ base: 4, md: 6 }}
+              padding={{ base: 6, md: 8 }}
             >
               <Button
                 as={NextLink}
@@ -310,13 +305,14 @@ export default function HomePage() {
                 size="xs"
                 bg="white"
                 color="black"
-                px={{ base: 3, md: 4 }}
-                py={{ base: 1.5, md: 2 }}
-                fontSize={{ base: '2xs', sm: 'xs', md: 'sm' }}
+                px={{ base: 2, md: 3 }}
+                py={{ base: 1, md: 1.5 }}
+                fontSize={{ base: '10px', sm: '11px', md: '12px' }}
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wide"
-                minH={{ base: '36px', md: '40px' }}
+                minH={{ base: '32px', md: '36px' }}
+                h={{ base: '32px', md: '36px' }}
                 _hover={{
                   bg: 'gold.500',
                   color: 'white',
