@@ -242,7 +242,7 @@ export default function HomePage() {
           {/* Main Slogan - Top Left */}
           <Box
             position="absolute"
-            top={{ base: '8%', md: '10%', lg: '12%' }}
+            top={{ base: '5%', md: '8%', lg: '10%' }}
             left={{ base: 8, md: 16, lg: 20 }}
             maxW={{ base: '60%', md: '50%', lg: '40%' }}
           >
@@ -264,15 +264,15 @@ export default function HomePage() {
           {/* Tagline - Right side */}
           <Box
             position="absolute"
-            top={{ base: '50%', md: '50%', lg: '50%' }}
+            top={{ base: '55%', md: '30%', lg: '28%' }}
             right={{ base: 8, md: 16, lg: 20 }}
-            maxW={{ base: '70%', md: '60%', lg: '45%' }}
-            transform="translateY(-50%)"
+            maxW={{ base: '80%', md: '60%', lg: '45%' }}
+            transform={{ base: 'none', md: 'translateY(-50%)' }}
           >
             <TypewriterText text="From a single spark to a timeless creation" speed={50} delay={100}>
               {(displayText) => (
                 <Text
-                  fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+                  fontSize={{ base: 'md', md: 'xl', lg: '2xl' }}
                   fontWeight="300"
                   color="white"
                   textAlign="right"
