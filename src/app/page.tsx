@@ -242,7 +242,7 @@ export default function HomePage() {
           alignItems={{ base: 'flex-start', md: 'center' }}
           justifyContent={{ base: 'flex-start', md: 'center' }}
           flexDirection={{ base: 'column', md: 'row' }}
-          gap={{ base: 4, md: 2, lg: 3 }}
+          gap={{ base: 4, md: '10rem', lg: '10rem' }}
           minH={{ base: '120px', md: '100px' }}
         >
           {/* Main Slogan - Left side */}
