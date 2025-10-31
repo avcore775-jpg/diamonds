@@ -306,15 +306,16 @@ export default function HomePage() {
               <Button
                 as={NextLink}
                 href="/about"
-                size="md"
+                size="sm"
                 bg="white"
                 color="black"
-                px={{ base: 6, md: 8 }}
-                py={{ base: 3, md: 4 }}
-                fontSize={{ base: 'sm', md: 'md' }}
+                px={{ base: 4, md: 6 }}
+                py={{ base: 2, md: 3 }}
+                fontSize={{ base: 'xs', md: 'sm' }}
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wide"
+                minH="40px"
                 _hover={{
                   bg: 'gold.500',
                   color: 'white',
