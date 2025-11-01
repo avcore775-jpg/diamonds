@@ -188,8 +188,8 @@ export default function AccountPage() {
               size="lg"
               onClick={() => setActiveTab('signin')}
               w="200px"
-              bg={activeTab === 'signin' ? 'gold.500' : 'transparent'}
-              color={activeTab === 'signin' ? 'black' : 'white'}
+              bg="black"
+              color="gold.500"
               border="2px solid"
               borderColor="gold.500"
               fontWeight="bold"
@@ -204,8 +204,8 @@ export default function AccountPage() {
               size="lg"
               onClick={() => setActiveTab('signup')}
               w="200px"
-              bg={activeTab === 'signup' ? 'gold.500' : 'transparent'}
-              color={activeTab === 'signup' ? 'black' : 'white'}
+              bg="black"
+              color="gold.500"
               border="2px solid"
               borderColor="gold.500"
               fontWeight="bold"
