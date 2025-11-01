@@ -31,6 +31,9 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
     }).format(cents / 100)
   }
 
+  // Duplicate products for seamless infinite loop
+  const duplicatedProducts = products ? [...products, ...products, ...products] : []
+
   // Infinite loop auto-scroll functionality
   useEffect(() => {
     const scrollContainer = scrollRef.current
@@ -39,26 +42,25 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
     const scrollSpeed = 0.5 // pixels per frame (slow, smooth speed)
     let animationFrameId: number
 
+    // Calculate the width of one set of products
+    const singleSetWidth = scrollContainer.scrollWidth / 3
+
     const autoScroll = () => {
       if (!scrollContainer) return
-
-      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth
-
-      // Check if there's actually content to scroll
-      if (maxScroll <= 0) {
-        return
-      }
 
       // Scroll to the right
       scrollContainer.scrollLeft += scrollSpeed
 
-      // When reaching the end, loop back to the beginning
-      if (scrollContainer.scrollLeft >= maxScroll) {
-        scrollContainer.scrollLeft = 0
+      // When we've scrolled past the first set, seamlessly loop back
+      if (scrollContainer.scrollLeft >= singleSetWidth * 2) {
+        scrollContainer.scrollLeft = singleSetWidth
       }
 
       animationFrameId = requestAnimationFrame(autoScroll)
     }
+
+    // Start scrolling from the middle set
+    scrollContainer.scrollLeft = singleSetWidth
 
     animationFrameId = requestAnimationFrame(autoScroll)
 
@@ -115,9 +117,9 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
       }}
     >
       <HStack spacing={{ base: 3, sm: 4, md: 6 }} align="stretch" pb={4}>
-        {products.map((product) => (
+        {duplicatedProducts.map((product, index) => (
           <Card
-            key={product.id}
+            key={`${product.id}-${index}`}
             as={NextLink}
             href={`/product/${product.slug || product.id}`}
             minW={{ base: "180px", sm: "220px", md: "260px", lg: "280px" }}
