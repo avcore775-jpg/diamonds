@@ -312,7 +312,7 @@ export default function Header() {
                     <Button as={NextLink} href="/account" variant="solid" colorScheme="brand" width="full">
                       Sign In
                     </Button>
-                    <Button as={NextLink} href="/account" variant="outline" colorScheme="brand" width="full">
+                    <Button as={NextLink} href="/account" variant="solid" colorScheme="brand" width="full">
                       Create Account
                     </Button>
                   </VStack>
