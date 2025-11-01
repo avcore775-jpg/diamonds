@@ -429,7 +429,11 @@ export default function AdminDashboard() {
                             <Text color="black">{formatDate(order.createdAt)}</Text>
                           </Td>
                           <Td borderColor="gold.500">
-                            <Badge colorScheme={getStatusColor(order.status)}>
+                            <Badge
+                              colorScheme={getStatusColor(order.status)}
+                              color={order.status === 'PENDING' ? 'black' : undefined}
+                              bg={order.status === 'PENDING' ? 'gray.300' : undefined}
+                            >
                               {order.status}
                             </Badge>
                           </Td>
