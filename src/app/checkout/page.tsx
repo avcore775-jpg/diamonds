@@ -223,7 +223,7 @@ export default function CheckoutPage() {
         <Header />
         <Container maxW="7xl" py={20}>
           <VStack spacing={4}>
-            <Heading>Your cart is empty</Heading>
+            <Heading color="white">Your cart is empty</Heading>
             <Button
               onClick={() => router.push('/catalog')}
               colorScheme="brand"
@@ -240,92 +240,139 @@ export default function CheckoutPage() {
   return (
     <Box minH="100vh" bg="transparent">
       <Header />
-      
+
       <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
-        <Heading mb={8}>Checkout</Heading>
-        
+        <Heading mb={8} color="white">Checkout</Heading>
+
         <Grid templateColumns={{ base: '1fr', lg: '2fr 1fr' }} gap={8}>
           {/* Checkout Form */}
           <VStack spacing={6} align="stretch">
             {/* Shipping Information */}
-            <Card>
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardHeader>
-                <Heading size="md">Shipping Information</Heading>
+                <Heading size="md" color="white">Shipping Information</Heading>
               </CardHeader>
               <CardBody>
                 <VStack spacing={4}>
                   <FormControl isRequired>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel color="white">Full Name</FormLabel>
                     <Input
                       value={shippingInfo.name}
                       onChange={(e) => setShippingInfo({ ...shippingInfo, name: e.target.value })}
+                      bg="rgba(255, 255, 255, 0.1)"
+                      color="white"
+                      borderColor="gold.500"
+                      _placeholder={{ color: 'gray.400' }}
+                      _hover={{ borderColor: 'gold.400' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     />
                   </FormControl>
-                  
+
                   <HStack spacing={4}>
                     <FormControl isRequired flex={1}>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel color="white">Email</FormLabel>
                       <Input
                         type="email"
                         value={shippingInfo.email}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, email: e.target.value })}
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
                     </FormControl>
-                    
+
                     <FormControl isRequired flex={1}>
-                      <FormLabel>Phone</FormLabel>
+                      <FormLabel color="white">Phone</FormLabel>
                       <Input
                         type="tel"
                         value={shippingInfo.phone}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, phone: e.target.value })}
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
                     </FormControl>
                   </HStack>
-                  
+
                   <FormControl isRequired>
-                    <FormLabel>Street Address</FormLabel>
+                    <FormLabel color="white">Street Address</FormLabel>
                     <Input
                       value={shippingInfo.street}
                       onChange={(e) => setShippingInfo({ ...shippingInfo, street: e.target.value })}
+                      bg="rgba(255, 255, 255, 0.1)"
+                      color="white"
+                      borderColor="gold.500"
+                      _placeholder={{ color: 'gray.400' }}
+                      _hover={{ borderColor: 'gold.400' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     />
                   </FormControl>
-                  
+
                   <HStack spacing={4}>
                     <FormControl isRequired flex={2}>
-                      <FormLabel>City</FormLabel>
+                      <FormLabel color="white">City</FormLabel>
                       <Input
                         value={shippingInfo.city}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, city: e.target.value })}
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
                     </FormControl>
-                    
+
                     <FormControl isRequired flex={1}>
-                      <FormLabel>State</FormLabel>
+                      <FormLabel color="white">State</FormLabel>
                       <Input
                         value={shippingInfo.state}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, state: e.target.value })}
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
                     </FormControl>
-                    
+
                     <FormControl isRequired flex={1}>
-                      <FormLabel>ZIP Code</FormLabel>
+                      <FormLabel color="white">ZIP Code</FormLabel>
                       <Input
                         value={shippingInfo.postalCode}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, postalCode: e.target.value })}
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
                     </FormControl>
                   </HStack>
-                  
+
                   <FormControl isRequired>
-                    <FormLabel>Country</FormLabel>
+                    <FormLabel color="white">Country</FormLabel>
                     <Select
                       value={shippingInfo.country}
                       onChange={(e) => setShippingInfo({ ...shippingInfo, country: e.target.value })}
+                      bg="rgba(255, 255, 255, 0.1)"
+                      color="white"
+                      borderColor="gold.500"
+                      _hover={{ borderColor: 'gold.400' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                     >
-                      <option value="US">United States</option>
-                      <option value="CA">Canada</option>
-                      <option value="UK">United Kingdom</option>
-                      <option value="AU">Australia</option>
+                      <option value="US" style={{ background: 'black' }}>United States</option>
+                      <option value="CA" style={{ background: 'black' }}>Canada</option>
+                      <option value="UK" style={{ background: 'black' }}>United Kingdom</option>
+                      <option value="AU" style={{ background: 'black' }}>Australia</option>
                     </Select>
                   </FormControl>
                 </VStack>
@@ -333,59 +380,91 @@ export default function CheckoutPage() {
             </Card>
 
             {/* Billing Information */}
-            <Card>
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardHeader>
-                <Heading size="md">Billing Information</Heading>
+                <Heading size="md" color="white">Billing Information</Heading>
               </CardHeader>
               <CardBody>
                 <VStack spacing={4}>
                   <Checkbox
                     isChecked={billingInfo.sameAsShipping}
                     onChange={(e) => setBillingInfo({ ...billingInfo, sameAsShipping: e.target.checked })}
+                    colorScheme="brand"
+                    color="white"
                   >
                     Same as shipping address
                   </Checkbox>
-                  
+
                   {!billingInfo.sameAsShipping && (
                     <>
                       <FormControl isRequired>
-                        <FormLabel>Full Name</FormLabel>
+                        <FormLabel color="white">Full Name</FormLabel>
                         <Input
                           value={billingInfo.name}
                           onChange={(e) => setBillingInfo({ ...billingInfo, name: e.target.value })}
+                          bg="rgba(255, 255, 255, 0.1)"
+                          color="white"
+                          borderColor="gold.500"
+                          _placeholder={{ color: 'gray.400' }}
+                          _hover={{ borderColor: 'gold.400' }}
+                          _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                         />
                       </FormControl>
-                      
+
                       <FormControl isRequired>
-                        <FormLabel>Street Address</FormLabel>
+                        <FormLabel color="white">Street Address</FormLabel>
                         <Input
                           value={billingInfo.street}
                           onChange={(e) => setBillingInfo({ ...billingInfo, street: e.target.value })}
+                          bg="rgba(255, 255, 255, 0.1)"
+                          color="white"
+                          borderColor="gold.500"
+                          _placeholder={{ color: 'gray.400' }}
+                          _hover={{ borderColor: 'gold.400' }}
+                          _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                         />
                       </FormControl>
-                      
+
                       <HStack spacing={4}>
                         <FormControl isRequired flex={2}>
-                          <FormLabel>City</FormLabel>
+                          <FormLabel color="white">City</FormLabel>
                           <Input
                             value={billingInfo.city}
                             onChange={(e) => setBillingInfo({ ...billingInfo, city: e.target.value })}
+                            bg="rgba(255, 255, 255, 0.1)"
+                            color="white"
+                            borderColor="gold.500"
+                            _placeholder={{ color: 'gray.400' }}
+                            _hover={{ borderColor: 'gold.400' }}
+                            _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                           />
                         </FormControl>
-                        
+
                         <FormControl isRequired flex={1}>
-                          <FormLabel>State</FormLabel>
+                          <FormLabel color="white">State</FormLabel>
                           <Input
                             value={billingInfo.state}
                             onChange={(e) => setBillingInfo({ ...billingInfo, state: e.target.value })}
+                            bg="rgba(255, 255, 255, 0.1)"
+                            color="white"
+                            borderColor="gold.500"
+                            _placeholder={{ color: 'gray.400' }}
+                            _hover={{ borderColor: 'gold.400' }}
+                            _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                           />
                         </FormControl>
-                        
+
                         <FormControl isRequired flex={1}>
-                          <FormLabel>ZIP Code</FormLabel>
+                          <FormLabel color="white">ZIP Code</FormLabel>
                           <Input
                             value={billingInfo.postalCode}
                             onChange={(e) => setBillingInfo({ ...billingInfo, postalCode: e.target.value })}
+                            bg="rgba(255, 255, 255, 0.1)"
+                            color="white"
+                            borderColor="gold.500"
+                            _placeholder={{ color: 'gray.400' }}
+                            _hover={{ borderColor: 'gold.400' }}
+                            _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                           />
                         </FormControl>
                       </HStack>
@@ -396,20 +475,20 @@ export default function CheckoutPage() {
             </Card>
 
             {/* Payment Method */}
-            <Card>
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardHeader>
-                <Heading size="md">Payment Method</Heading>
+                <Heading size="md" color="white">Payment Method</Heading>
               </CardHeader>
               <CardBody>
                 <RadioGroup value={paymentMethod} onChange={setPaymentMethod}>
                   <Stack spacing={3}>
-                    <Radio value="stripe">
+                    <Radio value="stripe" colorScheme="brand" color="white">
                       <HStack>
-                        <Text>Credit/Debit Card (Stripe)</Text>
+                        <Text color="white">Credit/Debit Card (Stripe)</Text>
                         <Badge colorScheme="yellow">Secure</Badge>
                       </HStack>
                     </Radio>
-                    <Radio value="paypal" isDisabled>
+                    <Radio value="paypal" isDisabled color="gray.400">
                       <Text color="gray.400">PayPal (Coming Soon)</Text>
                     </Radio>
                   </Stack>
@@ -419,9 +498,9 @@ export default function CheckoutPage() {
           </VStack>
 
           {/* Order Summary */}
-          <Card h="fit-content" position="sticky" top={4}>
+          <Card h="fit-content" position="sticky" top={4} bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
             <CardHeader>
-              <Heading size="md">Order Summary</Heading>
+              <Heading size="md" color="white">Order Summary</Heading>
             </CardHeader>
             <CardBody>
               <VStack spacing={4} align="stretch">
@@ -429,41 +508,41 @@ export default function CheckoutPage() {
                 <VStack spacing={2} align="stretch">
                   {cart.items.map((item: any) => (
                     <HStack key={item.id} justify="space-between" fontSize="sm">
-                      <Text noOfLines={1}>
+                      <Text noOfLines={1} color="white">
                         {item.product.name} x {item.quantity}
                       </Text>
-                      <Text fontWeight="300">
+                      <Text fontWeight="300" color="white">
                         {formatPrice(item.product.price * item.quantity)}
                       </Text>
                     </HStack>
                   ))}
                 </VStack>
 
-                <Divider />
+                <Divider borderColor="gold.500" />
 
                 {/* Price Breakdown */}
                 <VStack spacing={2} align="stretch">
                   <HStack justify="space-between">
-                    <Text>Subtotal</Text>
-                    <Text fontWeight="300">{formatPrice(subtotal)}</Text>
+                    <Text color="white">Subtotal</Text>
+                    <Text fontWeight="300" color="white">{formatPrice(subtotal)}</Text>
                   </HStack>
                   <HStack justify="space-between">
-                    <Text>Shipping</Text>
-                    <Text fontWeight="300">
+                    <Text color="white">Shipping</Text>
+                    <Text fontWeight="300" color="white">
                       {shipping === 0 ? 'Free' : formatPrice(shipping)}
                     </Text>
                   </HStack>
                   <HStack justify="space-between">
-                    <Text>Tax</Text>
-                    <Text fontWeight="300">{formatPrice(tax)}</Text>
+                    <Text color="white">Tax</Text>
+                    <Text fontWeight="300" color="white">{formatPrice(tax)}</Text>
                   </HStack>
                 </VStack>
 
-                <Divider />
+                <Divider borderColor="gold.500" />
 
                 <HStack justify="space-between">
-                  <Text fontSize="lg" fontWeight="300">Total</Text>
-                  <Text fontSize="xl" fontWeight="300" color="brand.600">
+                  <Text fontSize="lg" fontWeight="300" color="white">Total</Text>
+                  <Text fontSize="xl" fontWeight="300" color="gold.500">
                     {formatPrice(total)}
                   </Text>
                 </HStack>
@@ -479,7 +558,7 @@ export default function CheckoutPage() {
                   Place Order
                 </Button>
 
-                <Text fontSize="xs" color="gray.500" textAlign="center">
+                <Text fontSize="xs" color="gray.400" textAlign="center">
                   By placing your order, you agree to our terms and conditions
                 </Text>
               </VStack>
