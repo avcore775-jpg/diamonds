@@ -370,15 +370,16 @@ export default function ProductDetailPage() {
                   </MotionButton>
                   <MotionButton
                     leftIcon={<FaHeart />}
-                    variant="outline"
+                    colorScheme="brand"
                     size="lg"
+                    flex={1}
                     onClick={handleAddToWishlist}
                     isLoading={isAddingToWishlist}
                     variants={getAnimationVariants(buttonPress)}
                     whileHover="hover"
                     whileTap="tap"
                   >
-                    Wishlist
+                    Add to Wishlist
                   </MotionButton>
                 </HStack>
               </VStack>
