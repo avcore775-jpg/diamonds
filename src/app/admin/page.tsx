@@ -220,7 +220,7 @@ export default function AdminDashboard() {
 
           {/* Stats Cards */}
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
-            <Card bg="white" border="1px solid" borderColor="gold.500">
+            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
@@ -242,7 +242,7 @@ export default function AdminDashboard() {
               </CardBody>
             </Card>
 
-            <Card bg="white" border="1px solid" borderColor="gold.500">
+            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
@@ -264,7 +264,7 @@ export default function AdminDashboard() {
               </CardBody>
             </Card>
 
-            <Card bg="white" border="1px solid" borderColor="gold.500">
+            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
@@ -286,7 +286,7 @@ export default function AdminDashboard() {
               </CardBody>
             </Card>
 
-            <Card bg="white" border="1px solid" borderColor="gold.500">
+            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
@@ -310,7 +310,7 @@ export default function AdminDashboard() {
           </SimpleGrid>
 
           {/* Quick Actions */}
-          <Card bg="white" border="1px solid" borderColor="gold.500">
+          <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
             <CardHeader>
               <HStack justify="space-between">
                 <Heading size="md" color="black">Quick Actions</Heading>
@@ -383,7 +383,7 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Recent Orders */}
-          <Card bg="white" border="1px solid" borderColor="gold.500">
+          <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
             <CardHeader>
               <HStack justify="space-between">
                 <Heading size="md" color="black">Recent Orders</Heading>
@@ -459,7 +459,7 @@ export default function AdminDashboard() {
           </Card>
 
           {/* System Status */}
-          <Card bg="white" border="1px solid" borderColor="gold.500">
+          <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
             <CardHeader>
               <Heading size="md" color="black">System Status</Heading>
             </CardHeader>
