@@ -25,6 +25,7 @@ import NextLink from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { FaGoogle, FaEnvelope } from 'react-icons/fa'
+import Header from '@/components/layout/Header'
 
 function SignInContent() {
   const router = useRouter()
@@ -84,23 +85,24 @@ function SignInContent() {
   }
 
   return (
-    <Box minH="100vh" bg="transparent" py={20}>
-      <Container maxW="md">
+    <Box minH="100vh" bg="transparent">
+      <Header />
+      <Container maxW="md" pt={{ base: 24, md: 28 }} pb={20}>
         <VStack spacing={8}>
           <VStack spacing={2} textAlign="center">
-            <Heading size="xl">Welcome Back</Heading>
-            <Text color="gray.600">
+            <Heading size="xl" color="white" fontWeight="300">Welcome Back</Heading>
+            <Text color="white">
               Sign in to your account to continue shopping
             </Text>
           </VStack>
 
-          <Card w="full">
+          <Card w="full" bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
             <CardBody>
               <VStack spacing={6}>
                 <form onSubmit={handleEmailSignIn} style={{ width: '100%' }}>
                   <VStack spacing={4}>
                     <FormControl isInvalid={!!error}>
-                      <FormLabel>Email Address</FormLabel>
+                      <FormLabel color="white">Email Address</FormLabel>
                       <Input
                         type="email"
                         placeholder="Enter your email"
@@ -108,13 +110,19 @@ function SignInContent() {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         size="lg"
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
-                      {error && <FormErrorMessage>{error}</FormErrorMessage>}
+                      {error && <FormErrorMessage color="red.300">{error}</FormErrorMessage>}
                     </FormControl>
 
                     <Button
                       type="submit"
-                      colorScheme="brand"
+                      colorScheme="gold"
                       size="lg"
                       width="full"
                       isLoading={isLoading}
@@ -126,11 +134,11 @@ function SignInContent() {
                 </form>
 
                 <HStack w="full">
-                  <Divider />
-                  <Text fontSize="sm" color="gray.500" px={3}>
+                  <Divider borderColor="gold.500" />
+                  <Text fontSize="sm" color="white" px={3}>
                     OR
                   </Text>
-                  <Divider />
+                  <Divider borderColor="gold.500" />
                 </HStack>
 
                 <Button
@@ -140,17 +148,21 @@ function SignInContent() {
                   width="full"
                   isLoading={isLoading}
                   leftIcon={<FaGoogle />}
+                  borderColor="gold.500"
+                  color="white"
+                  _hover={{ bg: 'gold.500', color: 'black' }}
                 >
                   Sign in with Google
                 </Button>
 
-                <Text fontSize="sm" color="gray.600" textAlign="center">
+                <Text fontSize="sm" color="white" textAlign="center">
                   Don't have an account?{' '}
                   <Link
                     as={NextLink}
                     href={`/signup?redirect=${redirect}`}
-                    color="brand.500"
+                    color="gold.500"
                     fontWeight="300"
+                    _hover={{ color: 'gold.400' }}
                   >
                     Sign up
                   </Link>
@@ -159,7 +171,7 @@ function SignInContent() {
             </CardBody>
           </Card>
 
-          <Text fontSize="xs" color="gray.500" textAlign="center" maxW="md">
+          <Text fontSize="xs" color="gray.300" textAlign="center" maxW="md">
             By signing in, you agree to our Terms of Service and Privacy Policy.
             We'll occasionally send you account-related emails.
           </Text>
@@ -172,12 +184,13 @@ function SignInContent() {
 export default function SignInPage() {
   return (
     <Suspense fallback={
-      <Box minH="100vh" bg="transparent" py={20}>
-        <Container maxW="md">
+      <Box minH="100vh" bg="transparent">
+        <Header />
+        <Container maxW="md" pt={{ base: 24, md: 28 }} pb={20}>
           <Center h="50vh">
             <VStack spacing={4}>
-              <Spinner size="xl" color="brand.500" thickness="4px" />
-              <Text fontSize="lg" color="gray.600">Loading...</Text>
+              <Spinner size="xl" color="gold.500" thickness="4px" />
+              <Text fontSize="lg" color="white">Loading...</Text>
             </VStack>
           </Center>
         </Container>
