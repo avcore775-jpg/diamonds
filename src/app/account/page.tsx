@@ -189,9 +189,13 @@ export default function AccountPage() {
               variant={activeTab === 'signin' ? 'solid' : 'outline'}
               colorScheme="gold"
               onClick={() => setActiveTab('signin')}
-              minW="150px"
+              minW="180px"
               color={activeTab === 'signin' ? 'black' : 'white'}
               borderColor="gold.500"
+              _hover={{
+                bg: activeTab === 'signin' ? 'gold.600' : 'gold.500',
+                color: 'black'
+              }}
             >
               Sign In
             </Button>
@@ -200,9 +204,13 @@ export default function AccountPage() {
               variant={activeTab === 'signup' ? 'solid' : 'outline'}
               colorScheme="gold"
               onClick={() => setActiveTab('signup')}
-              minW="150px"
+              minW="180px"
               color={activeTab === 'signup' ? 'black' : 'white'}
               borderColor="gold.500"
+              _hover={{
+                bg: activeTab === 'signup' ? 'gold.600' : 'gold.500',
+                color: 'black'
+              }}
             >
               Create Account
             </Button>
