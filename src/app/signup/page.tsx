@@ -139,62 +139,76 @@ function SignUpContent() {
 
   return (
     <Box minH="100vh" bg="transparent">
-      <Container maxW="md">
+      <Header />
+      <Container maxW="md" pt={{ base: 24, md: 28 }} pb={20}>
         <VStack spacing={8}>
           <VStack spacing={2} textAlign="center">
-            <Heading size="xl">Create an Account</Heading>
+            <Heading size="xl" color="white" fontWeight="300">Create an Account</Heading>
             <Text color="white">
               Join RemySales to start shopping for exquisite jewelry
             </Text>
           </VStack>
 
-          <Card w="full">
+          <Card w="full" bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
             <CardBody>
               <VStack spacing={6}>
                 <form onSubmit={handleSignUp} style={{ width: '100%' }}>
                   <VStack spacing={4}>
                     <FormControl isInvalid={!!errors.name}>
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel color="white">Full Name</FormLabel>
                       <Input
                         type="text"
                         placeholder="Enter your full name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         size="lg"
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
-                      {errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
+                      {errors.name && <FormErrorMessage color="red.300">{errors.name}</FormErrorMessage>}
                     </FormControl>
 
                     <FormControl isInvalid={!!errors.email}>
-                      <FormLabel>Email Address</FormLabel>
+                      <FormLabel color="white">Email Address</FormLabel>
                       <Input
                         type="email"
                         placeholder="Enter your email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         size="lg"
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
                       />
-                      {errors.email && <FormErrorMessage>{errors.email}</FormErrorMessage>}
+                      {errors.email && <FormErrorMessage color="red.300">{errors.email}</FormErrorMessage>}
                     </FormControl>
 
                     <FormControl isInvalid={!!errors.acceptTerms}>
                       <Checkbox
                         isChecked={formData.acceptTerms}
                         onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked })}
+                        colorScheme="gold"
                       >
-                        <Text fontSize="sm">
+                        <Text fontSize="sm" color="white">
                           I agree to the{' '}
-                          <Link color="gold.500" href="/terms">
+                          <Link color="gold.500" href="/terms" _hover={{ color: 'gold.400' }}>
                             Terms of Service
                           </Link>{' '}
                           and{' '}
-                          <Link color="gold.500" href="/privacy">
+                          <Link color="gold.500" href="/privacy" _hover={{ color: 'gold.400' }}>
                             Privacy Policy
                           </Link>
                         </Text>
                       </Checkbox>
                       {errors.acceptTerms && (
-                        <Text fontSize="sm" color="red.500" mt={1}>
+                        <Text fontSize="sm" color="red.300" mt={1}>
                           {errors.acceptTerms}
                         </Text>
                       )}
@@ -214,11 +228,11 @@ function SignUpContent() {
                 </form>
 
                 <HStack w="full">
-                  <Divider />
+                  <Divider borderColor="gold.500" />
                   <Text fontSize="sm" color="white" px={3}>
                     OR
                   </Text>
-                  <Divider />
+                  <Divider borderColor="gold.500" />
                 </HStack>
 
                 <Button
@@ -228,6 +242,9 @@ function SignUpContent() {
                   width="full"
                   isLoading={isLoading}
                   leftIcon={<FaGoogle />}
+                  borderColor="gold.500"
+                  color="white"
+                  _hover={{ bg: 'gold.500', color: 'black' }}
                 >
                   Sign up with Google
                 </Button>
@@ -239,6 +256,7 @@ function SignUpContent() {
                     href={`/signin?redirect=${redirect}`}
                     color="gold.500"
                     fontWeight="300"
+                    _hover={{ color: 'gold.400' }}
                   >
                     Sign in
                   </Link>
@@ -247,17 +265,10 @@ function SignUpContent() {
             </CardBody>
           </Card>
 
-          <VStack spacing={4} textAlign="center">
-            <Text fontSize="sm" fontWeight="300" color="white">
-              Why Create an Account?
-            </Text>
-            <VStack spacing={2} fontSize="sm" color="white">
-              <Text>✓ Track your orders and shipping</Text>
-              <Text>✓ Save items to your wishlist</Text>
-              <Text>✓ Get exclusive member offers</Text>
-              <Text>✓ Faster checkout with saved addresses</Text>
-            </VStack>
-          </VStack>
+          <Text fontSize="xs" color="gray.300" textAlign="center" maxW="md">
+            By creating an account, you agree to our Terms of Service and Privacy Policy.
+            We'll occasionally send you account-related emails.
+          </Text>
         </VStack>
       </Container>
     </Box>
@@ -268,7 +279,8 @@ export default function SignUpPage() {
   return (
     <Suspense fallback={
       <Box minH="100vh" bg="transparent">
-        <Container maxW="md">
+        <Header />
+        <Container maxW="md" pt={{ base: 24, md: 28 }} pb={20}>
           <Center h="50vh">
             <VStack spacing={4}>
               <Spinner size="xl" color="gold.500" thickness="4px" />
