@@ -111,14 +111,15 @@ const theme = extendTheme({
     Card: {
       baseStyle: {
         container: {
-          bg: '#FFFFFF', // White background for product cards
+          bg: 'rgba(0, 0, 0, 0.6)', // Dark semi-transparent background
           backdropFilter: 'blur(10px)',
-          border: '2px solid',
+          border: '1px solid',
           borderColor: 'gold.500', // Gold border
           borderRadius: 'lg',
           overflow: 'hidden',
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(212, 175, 55, 0.15), inset 0 -2px 8px rgba(212, 175, 55, 0.1)',
+          color: 'white',
           _hover: {
             borderColor: 'gold.600',
             boxShadow: '0 16px 48px rgba(0, 0, 0, 0.5), 0 8px 32px rgba(212, 175, 55, 0.35), 0 0 60px rgba(212, 175, 55, 0.3), inset 0 -2px 12px rgba(212, 175, 55, 0.2)',
