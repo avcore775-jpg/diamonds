@@ -252,74 +252,15 @@ export default function Header() {
             </Button>
           )}
 
-          {/* Account Menu - Always visible */}
-          <Popover trigger="hover" placement="bottom-end">
-            <PopoverTrigger>
-              <IconButton
-                aria-label="Account"
-                icon={session ? <Avatar size={'sm'} name={session.user?.name || session.user?.email || ''} /> : <FaUser />}
-                variant="ghost"
-                rounded="full"
-              />
-            </PopoverTrigger>
-            <PopoverContent>
-              <Box p={2}>
-                {session ? (
-                  <VStack align="stretch" spacing={2}>
-                    <Text px={3} py={2} fontWeight="300">
-                      {session.user?.name || session.user?.email}
-                    </Text>
-                    {session.user.role === 'ADMIN' && (
-                      <Badge colorScheme="red" alignSelf="start" mx={3}>
-                        Administrator
-                      </Badge>
-                    )}
-                    <Divider />
-                    
-                    {/* Admin Panel Link for Mobile */}
-                    {session.user.role === 'ADMIN' && (
-                      <>
-                        <Button 
-                          as={NextLink} 
-                          href="/admin" 
-                          variant="ghost" 
-                          justifyContent="flex-start"
-                          leftIcon={<FaShieldAlt />}
-                          color="red.500"
-                        >
-                          Admin Panel
-                        </Button>
-                        <Divider />
-                      </>
-                    )}
-                    
-                    <Button as={NextLink} href="/account/profile" variant="ghost" justifyContent="flex-start">
-                      My Profile
-                    </Button>
-                    <Button as={NextLink} href="/account/orders" variant="ghost" justifyContent="flex-start">
-                      My Orders
-                    </Button>
-                    <Button as={NextLink} href="/account/addresses" variant="ghost" justifyContent="flex-start">
-                      My Addresses
-                    </Button>
-                    <Divider />
-                    <Button onClick={handleSignOut} variant="ghost" justifyContent="flex-start" width="full">
-                      Sign Out
-                    </Button>
-                  </VStack>
-                ) : (
-                  <VStack align="stretch" spacing={2}>
-                    <Button as={NextLink} href="/account" variant="solid" colorScheme="brand" width="full">
-                      Sign In
-                    </Button>
-                    <Button as={NextLink} href="/account" variant="solid" colorScheme="brand" width="full">
-                      Create Account
-                    </Button>
-                  </VStack>
-                )}
-              </Box>
-            </PopoverContent>
-          </Popover>
+          {/* Account Icon - Direct link to account page */}
+          <IconButton
+            as={NextLink}
+            href="/account"
+            aria-label="Account"
+            icon={session ? <Avatar size={'sm'} name={session.user?.name || session.user?.email || ''} /> : <FaUser />}
+            variant="ghost"
+            rounded="full"
+          />
         </Stack>
       </Flex>
 
