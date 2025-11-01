@@ -754,7 +754,7 @@ export default function HomePage() {
                     </Heading>
                   )}
                 </TypewriterText>
-                <TypewriterText text="Get exclusive offers and be the first to know about new collections" speed={50} delay={100}>
+                <TypewriterText text="Get exclusive offers and be the first to know about new collections" speed={50} delay={1600}>
                   {(displayText) => (
                     <Text
                       color="gray.300"
