@@ -93,7 +93,7 @@ export default function CollectionsPage() {
         />
       </Box>
 
-      <Container maxW="7xl" py={12} position="relative" zIndex={1}>
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={12} position="relative" zIndex={1}>
         {/* Page Header */}
         <VStack spacing={4} mb={12} textAlign="center">
           <Icon as={FaGem} boxSize={10} color="gold.500" />

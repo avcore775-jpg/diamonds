@@ -180,7 +180,7 @@ export default function OrdersPage() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="6xl" py={8}>
+        <Container maxW="6xl" pt={{ base: 24, md: 28 }} pb={8}>
           <VStack spacing={4}>
             <Spinner size="xl" />
             <Text>Loading orders...</Text>
@@ -198,7 +198,7 @@ export default function OrdersPage() {
     <Box minH="100vh" bg="transparent">
       <Header />
       
-      <Container maxW="6xl" py={8}>
+      <Container maxW="6xl" pt={{ base: 24, md: 28 }} pb={8}>
         <VStack spacing={6} align="stretch">
           {/* Page Header */}
           <Box>

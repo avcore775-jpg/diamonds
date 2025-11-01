@@ -150,7 +150,7 @@ export default function ProductDetailPage() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" py={8}>
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
           <Grid templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }} gap={8}>
             <Skeleton height="500px" />
             <VStack spacing={4} align="stretch">
@@ -169,7 +169,7 @@ export default function ProductDetailPage() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" py={8}>
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
           <VStack spacing={4} py={20}>
             <Heading>Product not found</Heading>
             <Button as={NextLink} href="/catalog" colorScheme="brand">
@@ -219,7 +219,7 @@ export default function ProductDetailPage() {
         </Container>
       </Box>
 
-      <Container maxW="7xl" py={8}>
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
         <Grid templateColumns={{ base: '1fr', lg: 'repeat(2, 1fr)' }} gap={12}>
           {/* Product Images */}
           <GridItem>

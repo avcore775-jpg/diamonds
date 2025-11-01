@@ -120,7 +120,7 @@ export default function CartPage() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" py={8}>
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
           <Heading mb={8}>Shopping Cart</Heading>
           <Grid templateColumns={{ base: '1fr', lg: '2fr 1fr' }} gap={8}>
             <VStack spacing={4} align="stretch">
@@ -144,7 +144,7 @@ export default function CartPage() {
     <Box minH="100vh" bg="transparent">
       <Header />
       
-      <Container maxW="7xl" py={8}>
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
         <Heading mb={8}>Shopping Cart</Heading>
 
         {!cart?.items || cart.items.length === 0 ? (

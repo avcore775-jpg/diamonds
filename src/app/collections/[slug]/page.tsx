@@ -69,7 +69,7 @@ export default function CollectionPage({ params }: { params: Promise<{ slug: str
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" py={12}>
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={12}>
           <Skeleton height="40px" width="300px" mb={4} />
           <SkeletonText noOfLines={2} mb={8} />
           <ProductGrid products={[]} isLoading={true} />
@@ -85,8 +85,8 @@ export default function CollectionPage({ params }: { params: Promise<{ slug: str
   return (
     <Box minH="100vh" bg="transparent">
       <Header />
-      
-      <Container maxW="7xl" py={12}>
+
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={12}>
         {/* Breadcrumb */}
         <Breadcrumb spacing="8px" separator={<Icon as={FaChevronRight} color="gold.500" boxSize={3} />} mb={8}>
           <BreadcrumbItem>

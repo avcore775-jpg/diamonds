@@ -174,7 +174,7 @@ export default function ProfilePage() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="4xl" py={8}>
+        <Container maxW="4xl" pt={{ base: 24, md: 28 }} pb={8}>
           <VStack spacing={4}>
             <Spinner size="xl" />
             <Text>Loading profile...</Text>
@@ -192,7 +192,7 @@ export default function ProfilePage() {
     <Box minH="100vh" bg="transparent">
       <Header />
       
-      <Container maxW="4xl" py={8}>
+      <Container maxW="4xl" pt={{ base: 24, md: 28 }} pb={8}>
         <VStack spacing={6} align="stretch">
           {/* Page Header */}
           <Box>

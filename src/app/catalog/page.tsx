@@ -160,7 +160,7 @@ function CatalogContent() {
         </Container>
       </Box>
 
-      <Container maxW="7xl" py={8}>
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
         {/* Page Header */}
         <Flex
           justify="space-between"
@@ -267,7 +267,7 @@ export default function CatalogPage() {
     <Suspense fallback={
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" py={8}>
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
           <Text textAlign="center">Loading...</Text>
         </Container>
       </Box>
