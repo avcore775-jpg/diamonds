@@ -93,9 +93,10 @@ export default function CartItem({ item, onUpdate, onRemove }: CartItemProps) {
   return (
     <Flex
       p={4}
-      bg="white"
+      bg="rgba(0, 0, 0, 0.6)"
+      border="1px solid"
+      borderColor="gold.500"
       borderRadius="lg"
-      shadow="sm"
       gap={4}
       opacity={isRemoving ? 0.5 : 1}
       transition="opacity 0.2s"
@@ -114,22 +115,22 @@ export default function CartItem({ item, onUpdate, onRemove }: CartItemProps) {
         <Link
           as={NextLink}
           href={`/product/${item.product.slug || item.product.id}`}
-          _hover={{ textDecoration: 'none' }}
+          _hover={{ textDecoration: 'none', color: 'gold.500' }}
         >
-          <Text fontSize="lg" fontWeight="300">
+          <Text fontSize="lg" fontWeight="300" color="white">
             {item.product.name}
           </Text>
         </Link>
-        
+
         {item.product.category && (
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize="sm" color="gray.400">
             {item.product.category.name}
           </Text>
         )}
 
         <HStack spacing={4}>
           <HStack>
-            <Text fontSize="sm" color="gray.600">
+            <Text fontSize="sm" color="white">
               Quantity:
             </Text>
             <NumberInput
@@ -141,10 +142,16 @@ export default function CartItem({ item, onUpdate, onRemove }: CartItemProps) {
               maxW={20}
               isDisabled={isUpdating}
             >
-              <NumberInputField />
+              <NumberInputField
+                bg="rgba(255, 255, 255, 0.1)"
+                color="white"
+                borderColor="gold.500"
+                _hover={{ borderColor: 'gold.400' }}
+                _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
+              />
               <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+                <NumberIncrementStepper borderColor="gold.500" color="white" />
+                <NumberDecrementStepper borderColor="gold.500" color="white" />
               </NumberInputStepper>
             </NumberInput>
           </HStack>
@@ -163,19 +170,19 @@ export default function CartItem({ item, onUpdate, onRemove }: CartItemProps) {
 
       <VStack align="flex-end" justify="space-between">
         <Box textAlign="right">
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize="sm" color="gray.400">
             Unit Price
           </Text>
-          <Text fontSize="md" fontWeight="300">
+          <Text fontSize="md" fontWeight="300" color="white">
             {formatPrice(item.product.price)}
           </Text>
         </Box>
-        
+
         <Box textAlign="right">
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize="sm" color="gray.400">
             Subtotal
           </Text>
-          <Text fontSize="lg" fontWeight="300" color="brand.600">
+          <Text fontSize="lg" fontWeight="300" color="gold.500">
             {formatPrice(item.product.price * quantity)}
           </Text>
         </Box>
