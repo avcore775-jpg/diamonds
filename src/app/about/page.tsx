@@ -117,14 +117,15 @@ export default function AboutPage() {
         {/* Text Content - Bottom Left - Positioned with 1cm gap from video */}
         <Box
           position="absolute"
-          bottom={{ base: '25%', md: '30%', lg: '35%' }}
+          bottom={{ base: '35%', md: '40%', lg: '45%' }}
           left={{ base: 6, md: 8, lg: 12 }}
           zIndex={2}
           pr="1cm"
+          maxW={{ base: '90%', md: '80%', lg: '70%' }}
         >
           <VStack spacing={4} align="flex-start">
             <Heading
-              fontSize={{ base: '5xl', md: '7xl', lg: '8xl' }}
+              fontSize={{ base: '4xl', md: '6xl', lg: '7xl' }}
               fontWeight="300"
               letterSpacing="wide"
               color="white"
@@ -133,7 +134,7 @@ export default function AboutPage() {
               Our Story
             </Heading>
             <Text
-              fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }}
+              fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
               maxW="2xl"
               color="white"
               fontWeight="300"
