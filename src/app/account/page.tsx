@@ -186,14 +186,15 @@ export default function AccountPage() {
           <HStack spacing={4}>
             <Button
               size="lg"
-              variant={activeTab === 'signin' ? 'solid' : 'outline'}
-              colorScheme="gold"
               onClick={() => setActiveTab('signin')}
-              minW="180px"
+              w="200px"
+              bg={activeTab === 'signin' ? 'gold.500' : 'transparent'}
               color={activeTab === 'signin' ? 'black' : 'white'}
+              border="2px solid"
               borderColor="gold.500"
+              fontWeight="bold"
               _hover={{
-                bg: activeTab === 'signin' ? 'gold.600' : 'gold.500',
+                bg: 'gold.500',
                 color: 'black'
               }}
             >
@@ -201,14 +202,15 @@ export default function AccountPage() {
             </Button>
             <Button
               size="lg"
-              variant={activeTab === 'signup' ? 'solid' : 'outline'}
-              colorScheme="gold"
               onClick={() => setActiveTab('signup')}
-              minW="180px"
+              w="200px"
+              bg={activeTab === 'signup' ? 'gold.500' : 'transparent'}
               color={activeTab === 'signup' ? 'black' : 'white'}
+              border="2px solid"
               borderColor="gold.500"
+              fontWeight="bold"
               _hover={{
-                bg: activeTab === 'signup' ? 'gold.600' : 'gold.500',
+                bg: 'gold.500',
                 color: 'black'
               }}
             >
