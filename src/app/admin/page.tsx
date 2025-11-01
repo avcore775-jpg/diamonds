@@ -78,7 +78,7 @@ interface RecentOrder {
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'PENDING':
-      return 'yellow'
+      return 'gray'
     case 'PAID':
     case 'CONFIRMED':
       return 'blue'
@@ -225,9 +225,9 @@ export default function AdminDashboard() {
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel color="gray.600">Total Revenue</StatLabel>
+                      <StatLabel color="black" fontWeight="500">Total Revenue</StatLabel>
                       <StatNumber color="black">{stats ? formatCurrency(stats.totalRevenue) : '$0'}</StatNumber>
-                      <StatHelpText color="gray.600">
+                      <StatHelpText color="black" fontWeight="400">
                         {stats && (
                           <>
                             <StatArrow type={stats.revenueChange >= 0 ? 'increase' : 'decrease'} />
@@ -247,9 +247,9 @@ export default function AdminDashboard() {
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel color="gray.600">Total Orders</StatLabel>
+                      <StatLabel color="black" fontWeight="500">Total Orders</StatLabel>
                       <StatNumber color="black">{stats?.totalOrders || 0}</StatNumber>
-                      <StatHelpText color="gray.600">
+                      <StatHelpText color="black" fontWeight="400">
                         {stats && (
                           <>
                             <StatArrow type={stats.ordersChange >= 0 ? 'increase' : 'decrease'} />
@@ -269,9 +269,9 @@ export default function AdminDashboard() {
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel color="gray.600">Total Products</StatLabel>
+                      <StatLabel color="black" fontWeight="500">Total Products</StatLabel>
                       <StatNumber color="black">{stats?.totalProducts || 0}</StatNumber>
-                      <StatHelpText color="gray.600">
+                      <StatHelpText color="black" fontWeight="400">
                         {stats && (
                           <>
                             <StatArrow type={stats.productsChange >= 0 ? 'increase' : 'decrease'} />
@@ -291,9 +291,9 @@ export default function AdminDashboard() {
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel color="gray.600">Total Users</StatLabel>
+                      <StatLabel color="black" fontWeight="500">Total Users</StatLabel>
                       <StatNumber color="black">{stats?.totalUsers || 0}</StatNumber>
-                      <StatHelpText color="gray.600">
+                      <StatHelpText color="black" fontWeight="400">
                         {stats && (
                           <>
                             <StatArrow type={stats.usersChange >= 0 ? 'increase' : 'decrease'} />
@@ -403,12 +403,12 @@ export default function AdminDashboard() {
                   <Table variant="simple">
                     <Thead>
                       <Tr>
-                        <Th color="gray.600" borderColor="gold.500">Order</Th>
-                        <Th color="gray.600" borderColor="gold.500">Customer</Th>
-                        <Th color="gray.600" borderColor="gold.500">Date</Th>
-                        <Th color="gray.600" borderColor="gold.500">Status</Th>
-                        <Th color="gray.600" borderColor="gold.500">Total</Th>
-                        <Th color="gray.600" borderColor="gold.500">Actions</Th>
+                        <Th color="black" borderColor="gold.500" fontWeight="600">Order</Th>
+                        <Th color="black" borderColor="gold.500" fontWeight="600">Customer</Th>
+                        <Th color="black" borderColor="gold.500" fontWeight="600">Date</Th>
+                        <Th color="black" borderColor="gold.500" fontWeight="600">Status</Th>
+                        <Th color="black" borderColor="gold.500" fontWeight="600">Total</Th>
+                        <Th color="black" borderColor="gold.500" fontWeight="600">Actions</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -419,8 +419,8 @@ export default function AdminDashboard() {
                           </Td>
                           <Td borderColor="gold.500">
                             <VStack align="start" spacing={0}>
-                              <Text color="black">{order.user.name || 'N/A'}</Text>
-                              <Text fontSize="sm" color="gray.600">
+                              <Text color="black" fontWeight="500">{order.user.name || 'N/A'}</Text>
+                              <Text fontSize="sm" color="black" fontWeight="400">
                                 {order.user.email}
                               </Text>
                             </VStack>
