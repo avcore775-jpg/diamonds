@@ -172,13 +172,13 @@ export default function AccountPage() {
   return (
     <Box minH="100vh" bg="transparent">
       <Header />
-      
-      <Container maxW="7xl" py={20}>
+
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={20}>
         <VStack spacing={8}>
           {/* Logo and Title */}
           <VStack spacing={4}>
-            <Icon as={FaGem} boxSize={12} color="brand.500" />
-            <Heading size="xl">Welcome to RemySales</Heading>
+            <Icon as={FaGem} boxSize={12} color="gold.500" />
+            <Heading size="xl" color="white" fontWeight="300">Welcome to RemySales</Heading>
             <Text color="white">Sign in to your account or create a new one</Text>
           </VStack>
 
@@ -187,33 +187,37 @@ export default function AccountPage() {
             <Button
               size="lg"
               variant={activeTab === 'signin' ? 'solid' : 'outline'}
-              colorScheme="brand"
+              colorScheme="gold"
               onClick={() => setActiveTab('signin')}
               minW="150px"
+              color={activeTab === 'signin' ? 'black' : 'white'}
+              borderColor="gold.500"
             >
               Sign In
             </Button>
             <Button
               size="lg"
               variant={activeTab === 'signup' ? 'solid' : 'outline'}
-              colorScheme="brand"
+              colorScheme="gold"
               onClick={() => setActiveTab('signup')}
               minW="150px"
+              color={activeTab === 'signup' ? 'black' : 'white'}
+              borderColor="gold.500"
             >
               Create Account
             </Button>
           </HStack>
 
           {/* Forms Container */}
-          <Card maxW="md" w="full">
+          <Card maxW="md" w="full" bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
             <CardBody>
               {activeTab === 'signin' ? (
                 // Sign In Form
                 <form onSubmit={handleSignIn}>
                   <VStack spacing={4}>
                     <FormControl isRequired>
-                      <FormLabel>Email</FormLabel>
-                      <Input
+                      <FormLabel color="white">Email</FormLabel>
+                      <Input bg="rgba(255, 255, 255, 0.1)" color="white" borderColor="gold.500" _placeholder={{ color: "gray.400" }} _hover={{ borderColor: "gold.400" }} _focus={{ borderColor: "gold.500", boxShadow: "0 0 0 1px gold.500" }}
                         type="email"
                         value={signInData.email}
                         onChange={(e) => setSignInData({ ...signInData, email: e.target.value })}
@@ -223,9 +227,9 @@ export default function AccountPage() {
                     </FormControl>
 
                     <FormControl isRequired>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel color="white">Password</FormLabel>
                       <InputGroup size="lg">
-                        <Input
+                        <Input bg="rgba(255, 255, 255, 0.1)" color="white" borderColor="gold.500" _placeholder={{ color: "gray.400" }} _hover={{ borderColor: "gold.400" }} _focus={{ borderColor: "gold.500", boxShadow: "0 0 0 1px gold.500" }}
                           type={showPassword ? 'text' : 'password'}
                           value={signInData.password}
                           onChange={(e) => setSignInData({ ...signInData, password: e.target.value })}
@@ -244,14 +248,14 @@ export default function AccountPage() {
                     </FormControl>
 
                     <HStack justify="space-between" w="full">
-                      <Link color="brand.500" fontSize="sm" href="/auth/reset-password">
+                      <Link color="gold.500" fontSize="sm" href="/auth/reset-password">
                         Forgot password?
                       </Link>
                     </HStack>
 
                     <Button
                       type="submit"
-                      colorScheme="brand"
+                      colorScheme="gold"
                       size="lg"
                       width="full"
                       isLoading={isLoading}
@@ -266,8 +270,8 @@ export default function AccountPage() {
                 <form onSubmit={handleSignUp}>
                   <VStack spacing={4}>
                     <FormControl isRequired isInvalid={errors.name}>
-                      <FormLabel>Full Name</FormLabel>
-                      <Input
+                      <FormLabel color="white">Full Name</FormLabel>
+                      <Input bg="rgba(255, 255, 255, 0.1)" color="white" borderColor="gold.500" _placeholder={{ color: "gray.400" }} _hover={{ borderColor: "gold.400" }} _focus={{ borderColor: "gold.500", boxShadow: "0 0 0 1px gold.500" }}
                         value={signUpData.name}
                         onChange={(e) => setSignUpData({ ...signUpData, name: e.target.value })}
                         placeholder="John Doe"
@@ -277,8 +281,8 @@ export default function AccountPage() {
                     </FormControl>
 
                     <FormControl isRequired isInvalid={errors.email}>
-                      <FormLabel>Email</FormLabel>
-                      <Input
+                      <FormLabel color="white">Email</FormLabel>
+                      <Input bg="rgba(255, 255, 255, 0.1)" color="white" borderColor="gold.500" _placeholder={{ color: "gray.400" }} _hover={{ borderColor: "gold.400" }} _focus={{ borderColor: "gold.500", boxShadow: "0 0 0 1px gold.500" }}
                         type="email"
                         value={signUpData.email}
                         onChange={(e) => setSignUpData({ ...signUpData, email: e.target.value })}
@@ -289,8 +293,8 @@ export default function AccountPage() {
                     </FormControl>
 
                     <FormControl>
-                      <FormLabel>Phone (optional)</FormLabel>
-                      <Input
+                      <FormLabel color="white">Phone (optional)</FormLabel>
+                      <Input bg="rgba(255, 255, 255, 0.1)" color="white" borderColor="gold.500" _placeholder={{ color: "gray.400" }} _hover={{ borderColor: "gold.400" }} _focus={{ borderColor: "gold.500", boxShadow: "0 0 0 1px gold.500" }}
                         type="tel"
                         value={signUpData.phone}
                         onChange={(e) => setSignUpData({ ...signUpData, phone: e.target.value })}
@@ -300,9 +304,9 @@ export default function AccountPage() {
                     </FormControl>
 
                     <FormControl isRequired isInvalid={errors.password}>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel color="white">Password</FormLabel>
                       <InputGroup size="lg">
-                        <Input
+                        <Input bg="rgba(255, 255, 255, 0.1)" color="white" borderColor="gold.500" _placeholder={{ color: "gray.400" }} _hover={{ borderColor: "gold.400" }} _focus={{ borderColor: "gold.500", boxShadow: "0 0 0 1px gold.500" }}
                           type={showPassword ? 'text' : 'password'}
                           value={signUpData.password}
                           onChange={(e) => setSignUpData({ ...signUpData, password: e.target.value })}
@@ -322,9 +326,9 @@ export default function AccountPage() {
                     </FormControl>
 
                     <FormControl isRequired isInvalid={errors.confirmPassword}>
-                      <FormLabel>Confirm Password</FormLabel>
+                      <FormLabel color="white">Confirm Password</FormLabel>
                       <InputGroup size="lg">
-                        <Input
+                        <Input bg="rgba(255, 255, 255, 0.1)" color="white" borderColor="gold.500" _placeholder={{ color: "gray.400" }} _hover={{ borderColor: "gold.400" }} _focus={{ borderColor: "gold.500", boxShadow: "0 0 0 1px gold.500" }}
                           type={showConfirmPassword ? 'text' : 'password'}
                           value={signUpData.confirmPassword}
                           onChange={(e) => setSignUpData({ ...signUpData, confirmPassword: e.target.value })}
@@ -345,7 +349,7 @@ export default function AccountPage() {
 
                     <Button
                       type="submit"
-                      colorScheme="brand"
+                      colorScheme="gold"
                       size="lg"
                       width="full"
                       isLoading={isLoading}
