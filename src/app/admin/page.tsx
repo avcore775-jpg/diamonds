@@ -182,10 +182,10 @@ export default function AdminDashboard() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" py={8}>
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
           <VStack spacing={4}>
-            <Spinner size="xl" />
-            <Text>Loading admin dashboard...</Text>
+            <Spinner size="xl" color="gold.500" />
+            <Text color="white">Loading admin dashboard...</Text>
           </VStack>
         </Container>
       </Box>
@@ -199,20 +199,20 @@ export default function AdminDashboard() {
   return (
     <Box minH="100vh" bg="transparent">
       <Header />
-      
-      <Container maxW="7xl" py={8}>
+
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
         <VStack spacing={8} align="stretch">
           {/* Page Header */}
-          <HStack justify="space-between" align="center">
+          <HStack justify="space-between" align="center" flexWrap="wrap" gap={4}>
             <Box>
-              <Heading size="lg" mb={2}>Admin Dashboard</Heading>
-              <Text color="gray.600">Welcome back! Here's what's happening with your store.</Text>
+              <Heading size="lg" mb={2} color="white">Admin Dashboard</Heading>
+              <Text color="gray.400">Welcome back! Here's what's happening with your store.</Text>
             </Box>
             <HStack spacing={4}>
               <Button as={Link} href="/admin/products" leftIcon={<FaBox />} colorScheme="brand">
                 Manage Products
               </Button>
-              <Button as={Link} href="/admin/orders" leftIcon={<FaShoppingCart />} variant="outline">
+              <Button as={Link} href="/admin/orders" leftIcon={<FaShoppingCart />} variant="outline" color="white" borderColor="gold.500" _hover={{ bg: 'gold.500', color: 'black' }}>
                 View Orders
               </Button>
             </HStack>
@@ -220,14 +220,14 @@ export default function AdminDashboard() {
 
           {/* Stats Cards */}
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
-            <Card>
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel>Total Revenue</StatLabel>
-                      <StatNumber>{stats ? formatCurrency(stats.totalRevenue) : '$0'}</StatNumber>
-                      <StatHelpText>
+                      <StatLabel color="gray.400">Total Revenue</StatLabel>
+                      <StatNumber color="white">{stats ? formatCurrency(stats.totalRevenue) : '$0'}</StatNumber>
+                      <StatHelpText color="gray.400">
                         {stats && (
                           <>
                             <StatArrow type={stats.revenueChange >= 0 ? 'increase' : 'decrease'} />
@@ -236,20 +236,20 @@ export default function AdminDashboard() {
                         )}
                       </StatHelpText>
                     </Box>
-                    <Icon as={FaDollarSign} w={8} h={8} color="green.500" />
+                    <Icon as={FaDollarSign} w={8} h={8} color="gold.500" />
                   </HStack>
                 </Stat>
               </CardBody>
             </Card>
 
-            <Card>
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel>Total Orders</StatLabel>
-                      <StatNumber>{stats?.totalOrders || 0}</StatNumber>
-                      <StatHelpText>
+                      <StatLabel color="gray.400">Total Orders</StatLabel>
+                      <StatNumber color="white">{stats?.totalOrders || 0}</StatNumber>
+                      <StatHelpText color="gray.400">
                         {stats && (
                           <>
                             <StatArrow type={stats.ordersChange >= 0 ? 'increase' : 'decrease'} />
@@ -258,20 +258,20 @@ export default function AdminDashboard() {
                         )}
                       </StatHelpText>
                     </Box>
-                    <Icon as={FaShoppingCart} w={8} h={8} color="blue.500" />
+                    <Icon as={FaShoppingCart} w={8} h={8} color="gold.500" />
                   </HStack>
                 </Stat>
               </CardBody>
             </Card>
 
-            <Card>
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel>Total Products</StatLabel>
-                      <StatNumber>{stats?.totalProducts || 0}</StatNumber>
-                      <StatHelpText>
+                      <StatLabel color="gray.400">Total Products</StatLabel>
+                      <StatNumber color="white">{stats?.totalProducts || 0}</StatNumber>
+                      <StatHelpText color="gray.400">
                         {stats && (
                           <>
                             <StatArrow type={stats.productsChange >= 0 ? 'increase' : 'decrease'} />
@@ -280,20 +280,20 @@ export default function AdminDashboard() {
                         )}
                       </StatHelpText>
                     </Box>
-                    <Icon as={FaBox} w={8} h={8} color="purple.500" />
+                    <Icon as={FaBox} w={8} h={8} color="gold.500" />
                   </HStack>
                 </Stat>
               </CardBody>
             </Card>
 
-            <Card>
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardBody>
                 <Stat>
                   <HStack justify="space-between" align="start">
                     <Box>
-                      <StatLabel>Total Users</StatLabel>
-                      <StatNumber>{stats?.totalUsers || 0}</StatNumber>
-                      <StatHelpText>
+                      <StatLabel color="gray.400">Total Users</StatLabel>
+                      <StatNumber color="white">{stats?.totalUsers || 0}</StatNumber>
+                      <StatHelpText color="gray.400">
                         {stats && (
                           <>
                             <StatArrow type={stats.usersChange >= 0 ? 'increase' : 'decrease'} />
@@ -302,7 +302,7 @@ export default function AdminDashboard() {
                         )}
                       </StatHelpText>
                     </Box>
-                    <Icon as={FaUsers} w={8} h={8} color="orange.500" />
+                    <Icon as={FaUsers} w={8} h={8} color="gold.500" />
                   </HStack>
                 </Stat>
               </CardBody>
@@ -310,11 +310,11 @@ export default function AdminDashboard() {
           </SimpleGrid>
 
           {/* Quick Actions */}
-          <Card>
+          <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
             <CardHeader>
               <HStack justify="space-between">
-                <Heading size="md">Quick Actions</Heading>
-                <Icon as={FaCog} color="gray.500" />
+                <Heading size="md" color="white">Quick Actions</Heading>
+                <Icon as={FaCog} color="gold.500" />
               </HStack>
             </CardHeader>
             <CardBody>
@@ -327,10 +327,13 @@ export default function AdminDashboard() {
                   height="80px"
                   flexDirection="column"
                   gap={2}
+                  color="white"
+                  borderColor="gold.500"
+                  _hover={{ bg: 'gold.500', color: 'black' }}
                 >
                   <Text>Add Product</Text>
                 </Button>
-                
+
                 <Button
                   as={Link}
                   href="/admin/orders"
@@ -339,10 +342,13 @@ export default function AdminDashboard() {
                   height="80px"
                   flexDirection="column"
                   gap={2}
+                  color="white"
+                  borderColor="gold.500"
+                  _hover={{ bg: 'gold.500', color: 'black' }}
                 >
                   <Text>View Orders</Text>
                 </Button>
-                
+
                 <Button
                   as={Link}
                   href="/admin/collections"
@@ -351,10 +357,13 @@ export default function AdminDashboard() {
                   height="80px"
                   flexDirection="column"
                   gap={2}
+                  color="white"
+                  borderColor="gold.500"
+                  _hover={{ bg: 'gold.500', color: 'black' }}
                 >
                   <Text>Manage Collections</Text>
                 </Button>
-                
+
                 <Button
                   as={Link}
                   href="/admin/analytics"
@@ -363,6 +372,9 @@ export default function AdminDashboard() {
                   height="80px"
                   flexDirection="column"
                   gap={2}
+                  color="white"
+                  borderColor="gold.500"
+                  _hover={{ bg: 'gold.500', color: 'black' }}
                 >
                   <Text>View Analytics</Text>
                 </Button>
@@ -371,11 +383,11 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Recent Orders */}
-          <Card>
+          <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
             <CardHeader>
               <HStack justify="space-between">
-                <Heading size="md">Recent Orders</Heading>
-                <Button as={Link} href="/admin/orders" size="sm" variant="outline">
+                <Heading size="md" color="white">Recent Orders</Heading>
+                <Button as={Link} href="/admin/orders" size="sm" variant="outline" color="white" borderColor="gold.500" _hover={{ bg: 'gold.500', color: 'black' }}>
                   View All
                 </Button>
               </HStack>
@@ -383,53 +395,56 @@ export default function AdminDashboard() {
             <CardBody>
               {recentOrders.length === 0 ? (
                 <Box textAlign="center" py={8}>
-                  <FaShoppingCart size="48" color="gray.300" />
-                  <Text color="gray.500" mt={4}>No recent orders</Text>
+                  <Icon as={FaShoppingCart} boxSize={12} color="gold.500" />
+                  <Text color="white" mt={4}>No recent orders</Text>
                 </Box>
               ) : (
                 <TableContainer>
                   <Table variant="simple">
                     <Thead>
                       <Tr>
-                        <Th>Order</Th>
-                        <Th>Customer</Th>
-                        <Th>Date</Th>
-                        <Th>Status</Th>
-                        <Th>Total</Th>
-                        <Th>Actions</Th>
+                        <Th color="gray.400" borderColor="gold.500">Order</Th>
+                        <Th color="gray.400" borderColor="gold.500">Customer</Th>
+                        <Th color="gray.400" borderColor="gold.500">Date</Th>
+                        <Th color="gray.400" borderColor="gold.500">Status</Th>
+                        <Th color="gray.400" borderColor="gold.500">Total</Th>
+                        <Th color="gray.400" borderColor="gold.500">Actions</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
                       {recentOrders.map((order) => (
                         <Tr key={order.id}>
-                          <Td>
-                            <Text fontWeight="300">#{order.orderNumber}</Text>
+                          <Td borderColor="gold.500">
+                            <Text fontWeight="300" color="white">#{order.orderNumber}</Text>
                           </Td>
-                          <Td>
+                          <Td borderColor="gold.500">
                             <VStack align="start" spacing={0}>
-                              <Text>{order.user.name || 'N/A'}</Text>
-                              <Text fontSize="sm" color="gray.500">
+                              <Text color="white">{order.user.name || 'N/A'}</Text>
+                              <Text fontSize="sm" color="gray.400">
                                 {order.user.email}
                               </Text>
                             </VStack>
                           </Td>
-                          <Td>{formatDate(order.createdAt)}</Td>
-                          <Td>
+                          <Td borderColor="gold.500">
+                            <Text color="white">{formatDate(order.createdAt)}</Text>
+                          </Td>
+                          <Td borderColor="gold.500">
                             <Badge colorScheme={getStatusColor(order.status)}>
                               {order.status}
                             </Badge>
                           </Td>
-                          <Td>
-                            <Text fontWeight="300">
+                          <Td borderColor="gold.500">
+                            <Text fontWeight="300" color="gold.500">
                               {formatCurrency(order.total)}
                             </Text>
                           </Td>
-                          <Td>
+                          <Td borderColor="gold.500">
                             <Button
                               as={Link}
                               href={`/admin/orders/${order.id}`}
                               size="sm"
                               leftIcon={<FaEye />}
+                              colorScheme="brand"
                             >
                               View
                             </Button>
@@ -444,34 +459,34 @@ export default function AdminDashboard() {
           </Card>
 
           {/* System Status */}
-          <Card>
+          <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
             <CardHeader>
-              <Heading size="md">System Status</Heading>
+              <Heading size="md" color="white">System Status</Heading>
             </CardHeader>
             <CardBody>
               <VStack spacing={4} align="stretch">
-                <Alert status="success">
-                  <AlertIcon />
+                <Alert status="success" bg="rgba(72, 187, 120, 0.2)" border="1px solid" borderColor="green.500">
+                  <AlertIcon color="green.500" />
                   <Box>
-                    <AlertTitle>All Systems Operational</AlertTitle>
-                    <AlertDescription>
+                    <AlertTitle color="white">All Systems Operational</AlertTitle>
+                    <AlertDescription color="gray.400">
                       Your store is running smoothly. Last check: {new Date().toLocaleTimeString()}
                     </AlertDescription>
                   </Box>
                 </Alert>
-                
+
                 <HStack justify="space-between">
-                  <Text>Database Connection</Text>
+                  <Text color="white">Database Connection</Text>
                   <Badge colorScheme="yellow">Connected</Badge>
                 </HStack>
-                
+
                 <HStack justify="space-between">
-                  <Text>Payment Gateway</Text>
+                  <Text color="white">Payment Gateway</Text>
                   <Badge colorScheme="yellow">Active</Badge>
                 </HStack>
-                
+
                 <HStack justify="space-between">
-                  <Text>Email Service</Text>
+                  <Text color="white">Email Service</Text>
                   <Badge colorScheme="yellow">Active</Badge>
                 </HStack>
               </VStack>
