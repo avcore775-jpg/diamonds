@@ -179,7 +179,7 @@ export default function AccountPage() {
           <VStack spacing={4}>
             <Icon as={FaGem} boxSize={12} color="brand.500" />
             <Heading size="xl">Welcome to RemySales</Heading>
-            <Text color="gray.600">Sign in to your account or create a new one</Text>
+            <Text color="white">Sign in to your account or create a new one</Text>
           </VStack>
 
           {/* Tab Buttons */}
@@ -354,7 +354,7 @@ export default function AccountPage() {
                       Create Account
                     </Button>
 
-                    <Text fontSize="xs" color="gray.500" textAlign="center">
+                    <Text fontSize="xs" color="gray.300" textAlign="center">
                       By creating an account, you agree to our Terms of Service and Privacy Policy
                     </Text>
                   </VStack>

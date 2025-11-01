@@ -26,6 +26,7 @@ import NextLink from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { FaGoogle, FaUserPlus } from 'react-icons/fa'
+import Header from '@/components/layout/Header'
 
 function SignUpContent() {
   const router = useRouter()
@@ -137,12 +138,12 @@ function SignUpContent() {
   }
 
   return (
-    <Box minH="100vh" bg="transparent" py={20}>
+    <Box minH="100vh" bg="transparent">
       <Container maxW="md">
         <VStack spacing={8}>
           <VStack spacing={2} textAlign="center">
             <Heading size="xl">Create an Account</Heading>
-            <Text color="gray.600">
+            <Text color="white">
               Join RemySales to start shopping for exquisite jewelry
             </Text>
           </VStack>
@@ -183,11 +184,11 @@ function SignUpContent() {
                       >
                         <Text fontSize="sm">
                           I agree to the{' '}
-                          <Link color="brand.500" href="/terms">
+                          <Link color="gold.500" href="/terms">
                             Terms of Service
                           </Link>{' '}
                           and{' '}
-                          <Link color="brand.500" href="/privacy">
+                          <Link color="gold.500" href="/privacy">
                             Privacy Policy
                           </Link>
                         </Text>
@@ -201,7 +202,7 @@ function SignUpContent() {
 
                     <Button
                       type="submit"
-                      colorScheme="brand"
+                      colorScheme="gold"
                       size="lg"
                       width="full"
                       isLoading={isLoading}
@@ -214,7 +215,7 @@ function SignUpContent() {
 
                 <HStack w="full">
                   <Divider />
-                  <Text fontSize="sm" color="gray.500" px={3}>
+                  <Text fontSize="sm" color="white" px={3}>
                     OR
                   </Text>
                   <Divider />
@@ -231,12 +232,12 @@ function SignUpContent() {
                   Sign up with Google
                 </Button>
 
-                <Text fontSize="sm" color="gray.600" textAlign="center">
+                <Text fontSize="sm" color="white" textAlign="center">
                   Already have an account?{' '}
                   <Link
                     as={NextLink}
                     href={`/signin?redirect=${redirect}`}
-                    color="brand.500"
+                    color="gold.500"
                     fontWeight="300"
                   >
                     Sign in
@@ -247,10 +248,10 @@ function SignUpContent() {
           </Card>
 
           <VStack spacing={4} textAlign="center">
-            <Text fontSize="sm" fontWeight="300" color="gray.700">
+            <Text fontSize="sm" fontWeight="300" color="white">
               Why Create an Account?
             </Text>
-            <VStack spacing={2} fontSize="sm" color="gray.600">
+            <VStack spacing={2} fontSize="sm" color="white">
               <Text>✓ Track your orders and shipping</Text>
               <Text>✓ Save items to your wishlist</Text>
               <Text>✓ Get exclusive member offers</Text>
@@ -266,12 +267,12 @@ function SignUpContent() {
 export default function SignUpPage() {
   return (
     <Suspense fallback={
-      <Box minH="100vh" bg="transparent" py={20}>
+      <Box minH="100vh" bg="transparent">
         <Container maxW="md">
           <Center h="50vh">
             <VStack spacing={4}>
-              <Spinner size="xl" color="brand.500" thickness="4px" />
-              <Text fontSize="lg" color="gray.600">Loading...</Text>
+              <Spinner size="xl" color="gold.500" thickness="4px" />
+              <Text fontSize="lg" color="white">Loading...</Text>
             </VStack>
           </Center>
         </Container>
