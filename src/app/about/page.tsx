@@ -54,19 +54,6 @@ export default function AboutPage() {
     <Box minH="100vh" bg="transparent">
       <Header />
 
-      {/* Black dividing bar between header and video */}
-      <Box
-        w="100vw"
-        position="relative"
-        left="50%"
-        right="50%"
-        ml="-50vw"
-        mr="-50vw"
-        h="80px"
-        bg="black"
-        mt="60px"
-      />
-
       {/* Hero Section with Video Background */}
       <Box
         position="relative"
