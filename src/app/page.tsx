@@ -743,7 +743,7 @@ export default function HomePage() {
               gap={{ base: 6, md: 8 }}
             >
               <VStack align={{ base: 'center', md: 'start' }} spacing={4} flex="1">
-                <TypewriterText text="Subscribe to Our Newsletter" speed={50} delay={100}>
+                <TypewriterText text="Subscribe to Our Newsletter" speed={30} delay={100}>
                   {(displayText) => (
                     <Heading
                       fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
@@ -754,7 +754,7 @@ export default function HomePage() {
                     </Heading>
                   )}
                 </TypewriterText>
-                <TypewriterText text="Get exclusive offers and be the first to know about new collections" speed={50} delay={1600}>
+                <TypewriterText text="Get exclusive offers and be the first to know about new collections" speed={30} delay={100}>
                   {(displayText) => (
                     <Text
                       color="gray.300"
