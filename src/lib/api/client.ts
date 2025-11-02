@@ -75,8 +75,8 @@ class ApiClient {
   async getCart() {
     try {
       const response = await this.client.get('/api/cart')
-      // Cart API returns array directly, wrap it for consistent interface
-      return { items: response.data }
+      // Cart API now returns { items: [...] } format
+      return response.data
     } catch (error) {
       return { items: [] }
     }

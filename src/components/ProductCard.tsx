@@ -23,12 +23,13 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { mutate } from 'swr'
 import { buttonPress, cartBounce, getAnimationVariants } from '@/lib/animations'
+import { addToGuestCart } from '@/lib/cart-storage'
 
 // Wrap Chakra components with motion
-const MotionCard = motion(Card)
-const MotionButton = motion(Button)
-const MotionIconButton = motion(IconButton)
-const MotionBox = motion(Box)
+const MotionCard = motion.create(Card)
+const MotionButton = motion.create(Button)
+const MotionIconButton = motion.create(IconButton)
+const MotionBox = motion.create(Box)
 
 interface ProductCardProps {
   product: Product
@@ -59,15 +60,17 @@ export default function ProductCard({
     e.preventDefault()
     e.stopPropagation()
 
-    if (!session) {
-      router.push('/signin')
-      return
-    }
-
     setIsAddingToCart(true)
     try {
-      await apiClient.addToCart(product.id, 1)
-      mutate('/api/cart')
+      if (session) {
+        // Logged-in user: add to database cart
+        await apiClient.addToCart(product.id, 1)
+        mutate('/api/cart')
+      } else {
+        // Guest user: add to localStorage cart
+        addToGuestCart(product.id, 1)
+      }
+
       // Trigger cart icon bounce animation
       setCartIconKey(prev => prev + 1)
       toast({

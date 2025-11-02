@@ -13,7 +13,7 @@ import {
   getAnimationVariants,
 } from '@/lib/animations'
 
-const MotionBox = motion(Box)
+const MotionBox = motion.create(Box)
 
 interface ScrollAnimationProps {
   children: ReactNode

@@ -6,10 +6,10 @@ import { authOptions } from '@/lib/auth'
 // GET /api/collections/[id] - Get collection by slug with products
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
     
     // Try to find by slug first (more user-friendly)
     const collection = await prisma.collection.findFirst({
@@ -65,20 +65,20 @@ export async function GET(
 // PATCH /api/collections/[id] - Update collection (Admin only)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check admin authentication
     const session = await getServerSession(authOptions)
-    
+
     if (!session?.user || (session.user.role !== 'ADMIN' && session.user.role !== 'MANAGER')) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       )
     }
-    
-    const { id } = params
+
+    const { id } = await params
     const body = await request.json()
     const { name, slug, description, image, featured, sortOrder, isActive } = body
     
@@ -148,20 +148,20 @@ export async function PATCH(
 // DELETE /api/collections/[id] - Delete collection (Admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check admin authentication
     const session = await getServerSession(authOptions)
-    
+
     if (!session?.user || session.user.role !== 'ADMIN') {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       )
     }
-    
-    const { id } = params
+
+    const { id } = await params
     
     // Check if collection exists
     const collection = await prisma.collection.findUnique({

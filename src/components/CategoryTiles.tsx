@@ -7,8 +7,8 @@ import { Box, Button } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { buttonPress, getAnimationVariants } from '@/lib/animations'
 
-const MotionBox = motion(Box)
-const MotionButton = motion(Button)
+const MotionBox = motion.create(Box)
+const MotionButton = motion.create(Button)
 
 interface CategoryTile {
   name: string

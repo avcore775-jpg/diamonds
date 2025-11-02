@@ -45,6 +45,11 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
     // Calculate the width of one set of products
     const singleSetWidth = scrollContainer.scrollWidth / 3
 
+    // Initialize scroll position only if it's at 0 (first load)
+    if (scrollContainer.scrollLeft === 0) {
+      scrollContainer.scrollLeft = singleSetWidth
+    }
+
     const autoScroll = () => {
       if (!scrollContainer) return
 
@@ -58,9 +63,6 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
 
       animationFrameId = requestAnimationFrame(autoScroll)
     }
-
-    // Start scrolling from the middle set
-    scrollContainer.scrollLeft = singleSetWidth
 
     animationFrameId = requestAnimationFrame(autoScroll)
 

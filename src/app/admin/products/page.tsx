@@ -453,10 +453,10 @@ export default function AdminProductsPage() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" py={8}>
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
           <VStack spacing={4}>
-            <Spinner size="xl" />
-            <Text>Loading products...</Text>
+            <Spinner size="xl" color="gold.500" />
+            <Text color="white">Loading products...</Text>
           </VStack>
         </Container>
       </Box>
@@ -470,14 +470,14 @@ export default function AdminProductsPage() {
   return (
     <Box minH="100vh" bg="transparent">
       <Header />
-      
-      <Container maxW="7xl" py={8}>
+
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
         <VStack spacing={6} align="stretch">
           {/* Page Header */}
           <Flex align="center">
             <Box>
-              <Heading size="lg" mb={2}>Product Management</Heading>
-              <Text color="gray.600">Manage your store's product catalog</Text>
+              <Heading size="lg" mb={2} color="white">Product Management</Heading>
+              <Text color="gray.400">Manage your store's product catalog</Text>
             </Box>
             <Spacer />
             <Button

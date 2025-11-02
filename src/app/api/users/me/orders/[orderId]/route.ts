@@ -6,20 +6,20 @@ import { authOptions } from '@/lib/auth';
 // GET /api/users/me/orders/:orderId - Get specific order details
 export async function GET(
   request: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
     // Get session
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       );
     }
-    
-    const { orderId } = params;
+
+    const { orderId } = await params;
     
     // Get order details (only if it belongs to the user)
     const order = await prisma.order.findFirst({

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import NextLink from 'next/link'
+import { getGuestCartCount } from '@/lib/cart-storage'
 import {
   Box,
   Flex,
@@ -42,8 +43,8 @@ import { apiClient } from '@/lib/api/client'
 import { cartBounce, getAnimationVariants, buttonPress } from '@/lib/animations'
 
 // Wrap Chakra components with motion
-const MotionBox = motion(Box)
-const MotionIconButton = motion(IconButton)
+const MotionBox = motion.create(Box)
+const MotionIconButton = motion.create(IconButton)
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure()
@@ -52,15 +53,42 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = React.useState('')
   const [cartIconKey, setCartIconKey] = React.useState(0)
   const prevCartCount = React.useRef(0)
+  const [guestCartCount, setGuestCartCount] = React.useState(0)
 
-  // Fetch cart data
+  const isGuest = !session?.user?.id
+
+  // Fetch cart data for logged-in users
   const { data: cart } = useSWR(
     session ? '/api/cart' : null,
     () => apiClient.getCart(),
     { refreshInterval: 5000 }
   )
 
-  const cartItemsCount = cart?.items?.reduce((acc: number, item: any) => acc + item.quantity, 0) || 0
+  // Update guest cart count from localStorage
+  React.useEffect(() => {
+    if (isGuest) {
+      const updateGuestCount = () => {
+        setGuestCartCount(getGuestCartCount())
+      }
+
+      updateGuestCount()
+
+      // Listen for storage events (cart updates from other tabs)
+      window.addEventListener('storage', updateGuestCount)
+
+      // Also check every 2 seconds for updates in same tab
+      const interval = setInterval(updateGuestCount, 2000)
+
+      return () => {
+        window.removeEventListener('storage', updateGuestCount)
+        clearInterval(interval)
+      }
+    }
+  }, [isGuest])
+
+  const cartItemsCount = isGuest
+    ? guestCartCount
+    : (cart?.items?.reduce((acc: number, item: any) => acc + item.quantity, 0) || 0)
 
   // Trigger bounce animation when cart count increases
   React.useEffect(() => {
@@ -114,58 +142,61 @@ export default function Header() {
         </Flex>
         
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }} align="center">
-          <Link
-            as={NextLink}
-            href="/"
-            position="relative"
-            _hover={{
-              textDecoration: 'none',
-              '& .brand-text': {
-                color: 'gold.500',
-                fontWeight: 'bold',
-                fontSize: '2xl',
-              },
-              _after: {
-                content: '""',
-                position: 'absolute',
-                bottom: '-2px',
-                left: 0,
-                right: 0,
-                height: '2px',
-                bg: 'gold.500',
-              },
-            }}
-            _after={{
+          {/* Navigation moved to left */}
+          <Flex display={{ base: 'none', md: 'flex' }}>
+            <DesktopNav />
+          </Flex>
+        </Flex>
+
+        {/* Logo centered */}
+        <Link
+          as={NextLink}
+          href="/"
+          position="relative"
+          marginRight={{ base: 0, md: "2rem", lg: "3rem", xl: "4rem" }}
+          _hover={{
+            textDecoration: 'none',
+            '& .brand-text': {
+              color: 'gold.500',
+              fontWeight: 'bold',
+              fontSize: '2xl',
+            },
+            _after: {
               content: '""',
               position: 'absolute',
               bottom: '-2px',
               left: 0,
               right: 0,
               height: '2px',
-              bg: 'transparent',
-              transition: 'background-color 0.3s ease',
-            }}
-          >
-            <HStack spacing={2}>
-              <Icon as={FaGem} color="brand.500" boxSize={6} />
-              <Text
-                className="brand-text"
-                textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-                fontFamily={'heading'}
-                fontWeight="300"
-                fontSize="xl"
-                color="white"
-                transition="all 0.3s ease"
-              >
-                Remy Sales
-              </Text>
-            </HStack>
-          </Link>
-
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
-          </Flex>
-        </Flex>
+              bg: 'gold.500',
+            },
+          }}
+          _after={{
+            content: '""',
+            position: 'absolute',
+            bottom: '-2px',
+            left: 0,
+            right: 0,
+            height: '2px',
+            bg: 'transparent',
+            transition: 'background-color 0.3s ease',
+          }}
+        >
+          <HStack spacing={2}>
+            <Icon as={FaGem} color="brand.500" boxSize={6} />
+            <Text
+              className="brand-text"
+              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+              fontFamily={'heading'}
+              fontWeight="300"
+              fontSize="3xl"
+              color="white"
+              transition="all 0.3s ease"
+            >
+              Remy Sales
+            </Text>
+          </HStack>
+        </Link>
 
         {/* Search Bar */}
         <Box flex="1" maxW="400px" display={{ base: 'none', md: 'block' }} mx={4}>
@@ -253,14 +284,33 @@ export default function Header() {
           )}
 
           {/* Account Icon - Direct link to account page */}
-          <IconButton
-            as={NextLink}
-            href="/account"
-            aria-label="Account"
-            icon={session ? <Avatar size={'sm'} name={session.user?.name || session.user?.email || ''} /> : <FaUser />}
-            variant="ghost"
-            rounded="full"
-          />
+          {session ? (
+            <Link
+              as={NextLink}
+              href="/account"
+              _hover={{ textDecoration: 'none' }}
+            >
+              <Avatar
+                size={'sm'}
+                name={session.user?.name || session.user?.email || ''}
+                cursor="pointer"
+                _hover={{
+                  transform: 'scale(1.1)',
+                  transition: 'all 0.2s',
+                  boxShadow: '0 0 10px rgba(212, 175, 55, 0.5)'
+                }}
+              />
+            </Link>
+          ) : (
+            <IconButton
+              as={NextLink}
+              href="/account"
+              aria-label="Account"
+              icon={<FaUser />}
+              variant="ghost"
+              rounded="full"
+            />
+          )}
         </Stack>
       </Flex>
 

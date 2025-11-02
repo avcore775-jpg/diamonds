@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { getOrderEmail, getOrderCustomerName } from '@/lib/order-utils'
 import {
   Box,
   Container,
@@ -34,6 +35,7 @@ import {
   AlertDescription,
   Icon,
   Divider,
+  Image,
 } from '@chakra-ui/react'
 import {
   FaDollarSign,
@@ -201,301 +203,420 @@ export default function AdminDashboard() {
       <Header />
 
       <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
-        <VStack spacing={8} align="stretch">
-          {/* Page Header */}
-          <HStack justify="space-between" align="center" flexWrap="wrap" gap={4}>
-            <Box>
-              <Heading size="lg" mb={2} color="white">Admin Dashboard</Heading>
-              <Text color="gray.400">Welcome back! Here's what's happening with your store.</Text>
+        <VStack spacing={1} align="stretch">
+          {/* Header Row: Title, Logo, Buttons - Responsive */}
+          <VStack spacing={4} align="stretch" mb={6}>
+            {/* Mobile: Logo at top center */}
+            <Box display={{ base: "flex", lg: "none" }} justifyContent="center">
+              <Image
+                src="/images/admin/rebbe-274x300.jpg"
+                alt="Admin Logo"
+                width="100px"
+                height="auto"
+                objectFit="contain"
+                rounded="md"
+              />
             </Box>
-            <HStack spacing={4}>
-              <Button as={Link} href="/admin/products" leftIcon={<FaBox />} colorScheme="brand">
+
+            {/* Desktop: Title, Logo, Buttons in row */}
+            <Box display={{ base: "none", lg: "block" }}>
+              <HStack spacing={4} align="center" justify="space-between">
+                <Box>
+                  <Heading size="xl" mb={0} color="white">Admin Dashboard</Heading>
+                  <Text color="gray.400" fontSize="md">Welcome back! Here's what's happening with your store.</Text>
+                </Box>
+
+                <Box display="flex" justifyContent="center">
+                  <Image
+                    src="/images/admin/rebbe-274x300.jpg"
+                    alt="Admin Logo"
+                    width="120px"
+                    height="auto"
+                    objectFit="contain"
+                    rounded="md"
+                  />
+                </Box>
+
+                <HStack spacing={4}>
+                  <Button as={Link} href="/admin/products" leftIcon={<FaBox />} colorScheme="brand">
+                    Manage Products
+                  </Button>
+                  <Button as={Link} href="/admin/orders" leftIcon={<FaShoppingCart />} colorScheme="brand">
+                    View Orders
+                  </Button>
+                </HStack>
+              </HStack>
+            </Box>
+
+            {/* Mobile: Title and description */}
+            <Box display={{ base: "block", lg: "none" }}>
+              <Heading size="lg" mb={2} color="white" textAlign="center">Admin Dashboard</Heading>
+              <Text color="gray.400" fontSize="sm" textAlign="center">Welcome back! Here's what's happening with your store.</Text>
+            </Box>
+
+            {/* Mobile: Buttons stacked */}
+            <VStack spacing={3} display={{ base: "flex", lg: "none" }}>
+              <Button
+                as={Link}
+                href="/admin/products"
+                leftIcon={<FaBox />}
+                colorScheme="brand"
+                width="full"
+                size="lg"
+                minH="48px"
+              >
                 Manage Products
               </Button>
-              <Button as={Link} href="/admin/orders" leftIcon={<FaShoppingCart />} variant="outline" color="white" borderColor="gold.500" _hover={{ bg: 'gold.500', color: 'black' }}>
+              <Button
+                as={Link}
+                href="/admin/orders"
+                leftIcon={<FaShoppingCart />}
+                colorScheme="brand"
+                width="full"
+                size="lg"
+                minH="48px"
+              >
                 View Orders
               </Button>
-            </HStack>
-          </HStack>
+            </VStack>
+          </VStack>
 
           {/* Stats Cards */}
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
-            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
-              <CardBody>
-                <Stat>
-                  <HStack justify="space-between" align="start">
-                    <Box>
-                      <StatLabel color="black" fontWeight="500">Total Revenue</StatLabel>
-                      <StatNumber color="black">{stats ? formatCurrency(stats.totalRevenue) : '$0'}</StatNumber>
-                      <StatHelpText color="black" fontWeight="400">
-                        {stats && (
-                          <>
-                            <StatArrow type={stats.revenueChange >= 0 ? 'increase' : 'decrease'} />
-                            {Math.abs(stats.revenueChange)}% vs last month
-                          </>
-                        )}
-                      </StatHelpText>
-                    </Box>
-                    <Icon as={FaDollarSign} w={8} h={8} color="gold.500" />
-                  </HStack>
-                </Stat>
-              </CardBody>
-            </Card>
+          <Box>
+            <VStack spacing={6} align="stretch">
+              <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
+                <Card>
+                  <CardBody>
+                    <Stat>
+                      <HStack justify="space-between" align="start">
+                        <Box>
+                          <StatLabel>Total Revenue</StatLabel>
+                          <StatNumber>{stats ? formatCurrency(stats.totalRevenue) : '$0'}</StatNumber>
+                          <StatHelpText>
+                            {stats && (
+                              <>
+                                <StatArrow type={stats.revenueChange >= 0 ? 'increase' : 'decrease'} />
+                                {Math.abs(stats.revenueChange)}% vs last month
+                              </>
+                            )}
+                          </StatHelpText>
+                        </Box>
+                        <Icon as={FaDollarSign} w={8} h={8} color="gold.500" />
+                      </HStack>
+                    </Stat>
+                  </CardBody>
+                </Card>
 
-            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
-              <CardBody>
-                <Stat>
-                  <HStack justify="space-between" align="start">
-                    <Box>
-                      <StatLabel color="black" fontWeight="500">Total Orders</StatLabel>
-                      <StatNumber color="black">{stats?.totalOrders || 0}</StatNumber>
-                      <StatHelpText color="black" fontWeight="400">
-                        {stats && (
-                          <>
-                            <StatArrow type={stats.ordersChange >= 0 ? 'increase' : 'decrease'} />
-                            {Math.abs(stats.ordersChange)}% vs last month
-                          </>
-                        )}
-                      </StatHelpText>
-                    </Box>
-                    <Icon as={FaShoppingCart} w={8} h={8} color="gold.500" />
-                  </HStack>
-                </Stat>
-              </CardBody>
-            </Card>
+                <Card>
+                  <CardBody>
+                    <Stat>
+                      <HStack justify="space-between" align="start">
+                        <Box>
+                          <StatLabel>Total Orders</StatLabel>
+                          <StatNumber>{stats?.totalOrders || 0}</StatNumber>
+                          <StatHelpText>
+                            {stats && (
+                              <>
+                                <StatArrow type={stats.ordersChange >= 0 ? 'increase' : 'decrease'} />
+                                {Math.abs(stats.ordersChange)}% vs last month
+                              </>
+                            )}
+                          </StatHelpText>
+                        </Box>
+                        <Icon as={FaShoppingCart} w={8} h={8} color="gold.500" />
+                      </HStack>
+                    </Stat>
+                  </CardBody>
+                </Card>
 
-            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
-              <CardBody>
-                <Stat>
-                  <HStack justify="space-between" align="start">
-                    <Box>
-                      <StatLabel color="black" fontWeight="500">Total Products</StatLabel>
-                      <StatNumber color="black">{stats?.totalProducts || 0}</StatNumber>
-                      <StatHelpText color="black" fontWeight="400">
-                        {stats && (
-                          <>
-                            <StatArrow type={stats.productsChange >= 0 ? 'increase' : 'decrease'} />
-                            {Math.abs(stats.productsChange)}% vs last month
-                          </>
-                        )}
-                      </StatHelpText>
-                    </Box>
-                    <Icon as={FaBox} w={8} h={8} color="gold.500" />
-                  </HStack>
-                </Stat>
-              </CardBody>
-            </Card>
+                <Card>
+                  <CardBody>
+                    <Stat>
+                      <HStack justify="space-between" align="start">
+                        <Box>
+                          <StatLabel>Total Products</StatLabel>
+                          <StatNumber>{stats?.totalProducts || 0}</StatNumber>
+                          <StatHelpText>
+                            {stats && (
+                              <>
+                                <StatArrow type={stats.productsChange >= 0 ? 'increase' : 'decrease'} />
+                                {Math.abs(stats.productsChange)}% vs last month
+                              </>
+                            )}
+                          </StatHelpText>
+                        </Box>
+                        <Icon as={FaBox} w={8} h={8} color="gold.500" />
+                      </HStack>
+                    </Stat>
+                  </CardBody>
+                </Card>
 
-            <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
-              <CardBody>
-                <Stat>
-                  <HStack justify="space-between" align="start">
-                    <Box>
-                      <StatLabel color="black" fontWeight="500">Total Users</StatLabel>
-                      <StatNumber color="black">{stats?.totalUsers || 0}</StatNumber>
-                      <StatHelpText color="black" fontWeight="400">
-                        {stats && (
-                          <>
-                            <StatArrow type={stats.usersChange >= 0 ? 'increase' : 'decrease'} />
-                            {Math.abs(stats.usersChange)}% vs last month
-                          </>
-                        )}
-                      </StatHelpText>
-                    </Box>
-                    <Icon as={FaUsers} w={8} h={8} color="gold.500" />
-                  </HStack>
-                </Stat>
-              </CardBody>
-            </Card>
-          </SimpleGrid>
-
-          {/* Quick Actions */}
-          <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
-            <CardHeader>
-              <HStack justify="space-between">
-                <Heading size="md" color="black">Quick Actions</Heading>
-                <Icon as={FaCog} color="gold.500" />
-              </HStack>
-            </CardHeader>
-            <CardBody>
-              <SimpleGrid columns={{ base: 2, md: 4 }} spacing={4}>
-                <Button
-                  as={Link}
-                  href="/admin/products"
-                  leftIcon={<FaPlus />}
-                  variant="outline"
-                  height="80px"
-                  flexDirection="column"
-                  gap={2}
-                  color="black"
-                  borderColor="gold.500"
-                  _hover={{ bg: 'gold.500', color: 'black' }}
-                >
-                  <Text>Add Product</Text>
-                </Button>
-
-                <Button
-                  as={Link}
-                  href="/admin/orders"
-                  leftIcon={<FaEye />}
-                  variant="outline"
-                  height="80px"
-                  flexDirection="column"
-                  gap={2}
-                  color="black"
-                  borderColor="gold.500"
-                  _hover={{ bg: 'gold.500', color: 'black' }}
-                >
-                  <Text>View Orders</Text>
-                </Button>
-
-                <Button
-                  as={Link}
-                  href="/admin/collections"
-                  leftIcon={<FaBox />}
-                  variant="outline"
-                  height="80px"
-                  flexDirection="column"
-                  gap={2}
-                  color="black"
-                  borderColor="gold.500"
-                  _hover={{ bg: 'gold.500', color: 'black' }}
-                >
-                  <Text>Manage Collections</Text>
-                </Button>
-
-                <Button
-                  as={Link}
-                  href="/admin/analytics"
-                  leftIcon={<FaChartLine />}
-                  variant="outline"
-                  height="80px"
-                  flexDirection="column"
-                  gap={2}
-                  color="black"
-                  borderColor="gold.500"
-                  _hover={{ bg: 'gold.500', color: 'black' }}
-                >
-                  <Text>View Analytics</Text>
-                </Button>
+                <Card>
+                  <CardBody>
+                    <Stat>
+                      <HStack justify="space-between" align="start">
+                        <Box>
+                          <StatLabel>Total Users</StatLabel>
+                          <StatNumber>{stats?.totalUsers || 0}</StatNumber>
+                          <StatHelpText>
+                            {stats && (
+                              <>
+                                <StatArrow type={stats.usersChange >= 0 ? 'increase' : 'decrease'} />
+                                {Math.abs(stats.usersChange)}% vs last month
+                              </>
+                            )}
+                          </StatHelpText>
+                        </Box>
+                        <Icon as={FaUsers} w={8} h={8} color="gold.500" />
+                      </HStack>
+                    </Stat>
+                  </CardBody>
+                </Card>
               </SimpleGrid>
-            </CardBody>
-          </Card>
 
-          {/* Recent Orders */}
-          <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
-            <CardHeader>
-              <HStack justify="space-between">
-                <Heading size="md" color="black">Recent Orders</Heading>
-                <Button as={Link} href="/admin/orders" size="sm" variant="outline" color="black" borderColor="gold.500" _hover={{ bg: 'gold.500', color: 'black' }}>
-                  View All
-                </Button>
-              </HStack>
-            </CardHeader>
-            <CardBody>
-              {recentOrders.length === 0 ? (
-                <Box textAlign="center" py={8}>
-                  <Icon as={FaShoppingCart} boxSize={12} color="gold.500" />
-                  <Text color="black" mt={4}>No recent orders</Text>
-                </Box>
-              ) : (
-                <TableContainer>
-                  <Table variant="simple">
-                    <Thead>
-                      <Tr>
-                        <Th color="black" borderColor="gold.500" fontWeight="600">Order</Th>
-                        <Th color="black" borderColor="gold.500" fontWeight="600">Customer</Th>
-                        <Th color="black" borderColor="gold.500" fontWeight="600">Date</Th>
-                        <Th color="black" borderColor="gold.500" fontWeight="600">Status</Th>
-                        <Th color="black" borderColor="gold.500" fontWeight="600">Total</Th>
-                        <Th color="black" borderColor="gold.500" fontWeight="600">Actions</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {recentOrders.map((order) => (
-                        <Tr key={order.id}>
-                          <Td borderColor="gold.500">
-                            <Text fontWeight="300" color="black">#{order.orderNumber}</Text>
-                          </Td>
-                          <Td borderColor="gold.500">
-                            <VStack align="start" spacing={0}>
-                              <Text color="black" fontWeight="500">{order.user.name || 'N/A'}</Text>
-                              <Text fontSize="sm" color="black" fontWeight="400">
-                                {order.user.email}
-                              </Text>
-                            </VStack>
-                          </Td>
-                          <Td borderColor="gold.500">
-                            <Text color="black">{formatDate(order.createdAt)}</Text>
-                          </Td>
-                          <Td borderColor="gold.500">
-                            <Badge
-                              colorScheme={getStatusColor(order.status)}
-                              color={order.status === 'PENDING' ? 'black' : undefined}
-                              bg={order.status === 'PENDING' ? 'gray.300' : undefined}
-                            >
-                              {order.status}
-                            </Badge>
-                          </Td>
-                          <Td borderColor="gold.500">
-                            <Text fontWeight="300" color="black">
-                              {formatCurrency(order.total)}
-                            </Text>
-                          </Td>
-                          <Td borderColor="gold.500">
-                            <Button
-                              as={Link}
-                              href={`/admin/orders/${order.id}`}
-                              size="sm"
-                              leftIcon={<FaEye />}
-                              colorScheme="brand"
-                            >
-                              View
-                            </Button>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              )}
-            </CardBody>
-          </Card>
+              {/* Quick Actions */}
+              <Card>
+                <CardHeader>
+                  <HStack justify="space-between">
+                    <Heading size="md">Quick Actions</Heading>
+                    <Icon as={FaCog} color="gold.500" />
+                  </HStack>
+                </CardHeader>
+                <CardBody>
+                  <SimpleGrid columns={{ base: 1, md: 3, lg: 5 }} spacing={4}>
+                    <Button
+                      as={Link}
+                      href="/admin/products"
+                      leftIcon={<FaPlus />}
+                      variant="outline"
+                      height={{ base: "56px", md: "80px" }}
+                      flexDirection={{ base: "row", md: "column" }}
+                      gap={2}
+                      minH="48px"
+                      justifyContent={{ base: "flex-start", md: "center" }}
+                    >
+                      <Text>Add Product</Text>
+                    </Button>
 
-          {/* System Status */}
-          <Card bg="#F5F5F5" border="1px solid" borderColor="gold.500">
-            <CardHeader>
-              <Heading size="md" color="black">System Status</Heading>
-            </CardHeader>
-            <CardBody>
-              <VStack spacing={4} align="stretch">
-                <Alert status="success" bg="rgba(72, 187, 120, 0.1)" border="1px solid" borderColor="green.500">
-                  <AlertIcon color="green.500" />
-                  <Box>
-                    <AlertTitle color="black">All Systems Operational</AlertTitle>
-                    <AlertDescription color="gray.600">
-                      Your store is running smoothly. Last check: {new Date().toLocaleTimeString()}
-                    </AlertDescription>
-                  </Box>
-                </Alert>
+                    <Button
+                      as={Link}
+                      href="/admin/orders"
+                      leftIcon={<FaEye />}
+                      variant="outline"
+                      height={{ base: "56px", md: "80px" }}
+                      flexDirection={{ base: "row", md: "column" }}
+                      gap={2}
+                      minH="48px"
+                      justifyContent={{ base: "flex-start", md: "center" }}
+                    >
+                      <Text>View Orders</Text>
+                    </Button>
 
-                <HStack justify="space-between">
-                  <Text color="black">Database Connection</Text>
-                  <Badge colorScheme="yellow">Connected</Badge>
-                </HStack>
+                    <Button
+                      as={Link}
+                      href="/admin/collections"
+                      leftIcon={<FaBox />}
+                      variant="outline"
+                      height={{ base: "56px", md: "80px" }}
+                      flexDirection={{ base: "row", md: "column" }}
+                      gap={2}
+                      minH="48px"
+                      justifyContent={{ base: "flex-start", md: "center" }}
+                    >
+                      <Text>Manage Collections</Text>
+                    </Button>
 
-                <HStack justify="space-between">
-                  <Text color="black">Payment Gateway</Text>
-                  <Badge colorScheme="yellow">Active</Badge>
-                </HStack>
+                    <Button
+                      as={Link}
+                      href="/admin/analytics"
+                      leftIcon={<FaChartLine />}
+                      variant="outline"
+                      height={{ base: "56px", md: "80px" }}
+                      flexDirection={{ base: "row", md: "column" }}
+                      gap={2}
+                      minH="48px"
+                      justifyContent={{ base: "flex-start", md: "center" }}
+                    >
+                      <Text>View Analytics</Text>
+                    </Button>
 
-                <HStack justify="space-between">
-                  <Text color="black">Email Service</Text>
-                  <Badge colorScheme="yellow">Active</Badge>
-                </HStack>
-              </VStack>
-            </CardBody>
-          </Card>
+                    <Button
+                      as={Link}
+                      href="/admin/users"
+                      leftIcon={<FaUsers />}
+                      variant="outline"
+                      height={{ base: "56px", md: "80px" }}
+                      flexDirection={{ base: "row", md: "column" }}
+                      gap={2}
+                      minH="48px"
+                      justifyContent={{ base: "flex-start", md: "center" }}
+                    >
+                      <Text>Manage Users</Text>
+                    </Button>
+                  </SimpleGrid>
+                </CardBody>
+              </Card>
+
+              {/* Recent Orders */}
+              <Card>
+                <CardHeader>
+                  <HStack justify="space-between">
+                    <Heading size="md">Recent Orders</Heading>
+                    <Button as={Link} href="/admin/orders" size="sm" variant="outline">
+                      View All
+                    </Button>
+                  </HStack>
+                </CardHeader>
+                <CardBody>
+                  {recentOrders.length === 0 ? (
+                    <Box textAlign="center" py={8}>
+                      <Icon as={FaShoppingCart} boxSize={12} color="gold.500" />
+                      <Text mt={4}>No recent orders</Text>
+                    </Box>
+                  ) : (
+                    <>
+                      {/* Desktop Table */}
+                      <TableContainer display={{ base: "none", lg: "block" }}>
+                        <Table variant="simple">
+                          <Thead>
+                            <Tr>
+                              <Th>Order</Th>
+                              <Th>Customer</Th>
+                              <Th>Date</Th>
+                              <Th>Status</Th>
+                              <Th>Total</Th>
+                              <Th>Actions</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {recentOrders.map((order) => (
+                              <Tr key={order.id}>
+                                <Td>
+                                  <Text fontWeight="300">#{order.orderNumber}</Text>
+                                </Td>
+                                <Td>
+                                  <VStack align="start" spacing={0}>
+                                    <Text>{getOrderCustomerName(order)}</Text>
+                                    <Text fontSize="sm" color="gray.500">
+                                      {getOrderEmail(order)}
+                                    </Text>
+                                  </VStack>
+                                </Td>
+                                <Td>{formatDate(order.createdAt)}</Td>
+                                <Td>
+                                  <Badge colorScheme={getStatusColor(order.status)}>
+                                    {order.status}
+                                  </Badge>
+                                </Td>
+                                <Td>
+                                  <Text fontWeight="300">
+                                    {formatCurrency(order.total)}
+                                  </Text>
+                                </Td>
+                                <Td>
+                                  <Button
+                                    as={Link}
+                                    href={`/admin/orders/${order.id}`}
+                                    size="sm"
+                                    leftIcon={<FaEye />}
+                                    colorScheme="brand"
+                                  >
+                                    View
+                                  </Button>
+                                </Td>
+                              </Tr>
+                            ))}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
+
+                      {/* Mobile Cards */}
+                      <VStack spacing={4} display={{ base: "flex", lg: "none" }}>
+                        {recentOrders.map((order) => (
+                          <Card key={order.id} width="100%" variant="outline">
+                            <CardBody>
+                              <VStack align="stretch" spacing={3}>
+                                <HStack justify="space-between">
+                                  <Text fontWeight="bold" fontSize="lg">#{order.orderNumber}</Text>
+                                  <Badge colorScheme={getStatusColor(order.status)}>
+                                    {order.status}
+                                  </Badge>
+                                </HStack>
+                                <Divider />
+                                <Box>
+                                  <Text fontSize="sm" color="gray.500">Customer</Text>
+                                  <Text fontWeight="500">{getOrderCustomerName(order)}</Text>
+                                  <Text fontSize="sm" color="gray.400">{getOrderEmail(order)}</Text>
+                                </Box>
+                                <HStack justify="space-between">
+                                  <Box>
+                                    <Text fontSize="sm" color="gray.500">Date</Text>
+                                    <Text>{formatDate(order.createdAt)}</Text>
+                                  </Box>
+                                  <Box>
+                                    <Text fontSize="sm" color="gray.500" textAlign="right">Total</Text>
+                                    <Text fontWeight="bold" textAlign="right">
+                                      {formatCurrency(order.total)}
+                                    </Text>
+                                  </Box>
+                                </HStack>
+                                <Button
+                                  as={Link}
+                                  href={`/admin/orders/${order.id}`}
+                                  leftIcon={<FaEye />}
+                                  colorScheme="brand"
+                                  width="full"
+                                  size="md"
+                                  minH="44px"
+                                >
+                                  View Order
+                                </Button>
+                              </VStack>
+                            </CardBody>
+                          </Card>
+                        ))}
+                      </VStack>
+                    </>
+                  )}
+                </CardBody>
+              </Card>
+
+              {/* System Status */}
+              <Card>
+                <CardHeader>
+                  <Heading size="md">System Status</Heading>
+                </CardHeader>
+                <CardBody>
+                  <VStack spacing={4} align="stretch">
+                    <Alert status="success" bg="rgba(72, 187, 120, 0.1)" border="1px solid" borderColor="green.500">
+                      <AlertIcon color="green.500" />
+                      <Box>
+                        <AlertTitle color="white">All Systems Operational</AlertTitle>
+                        <AlertDescription color="white">
+                          Your store is running smoothly. Last check: {new Date().toLocaleTimeString()}
+                        </AlertDescription>
+                      </Box>
+                    </Alert>
+
+                    <HStack justify="space-between">
+                      <Text>Database Connection</Text>
+                      <Badge colorScheme="green">Connected</Badge>
+                    </HStack>
+
+                    <HStack justify="space-between">
+                      <Text>Payment Gateway</Text>
+                      <Badge colorScheme="green">Active</Badge>
+                    </HStack>
+
+                    <HStack justify="space-between">
+                      <Text>Email Service</Text>
+                      <Badge colorScheme="green">Active</Badge>
+                    </HStack>
+                  </VStack>
+                </CardBody>
+              </Card>
+            </VStack>
+          </Box>
         </VStack>
       </Container>
     </Box>

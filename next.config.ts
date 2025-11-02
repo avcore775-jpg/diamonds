@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.apple.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'media.tiffany.com',
+      },
     ],
   },
 };

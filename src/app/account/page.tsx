@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Container,
@@ -24,15 +24,21 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  Avatar,
+  Badge,
+  Spinner,
+  Center,
 } from '@chakra-ui/react'
-import { FaGem, FaEye, FaEyeSlash } from 'react-icons/fa'
-import { signIn } from 'next-auth/react'
+import { FaGem, FaEye, FaEyeSlash, FaShoppingBag, FaHeart, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import NextLink from 'next/link'
 import Header from '@/components/layout/Header'
 
 export default function AccountPage() {
   const router = useRouter()
   const toast = useToast()
+  const { data: session, status } = useSession()
   const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin')
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -169,6 +175,159 @@ export default function AccountPage() {
     }
   }
 
+  const handleSignOut = async () => {
+    await signOut({ redirect: false })
+    toast({
+      title: 'Signed out',
+      description: 'You have been signed out successfully',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    })
+    router.push('/')
+  }
+
+  // Show loading spinner while checking session
+  if (status === 'loading') {
+    return (
+      <Box minH="100vh" bg="transparent">
+        <Header />
+        <Center h="calc(100vh - 100px)">
+          <Spinner size="xl" color="gold.500" thickness="4px" />
+        </Center>
+      </Box>
+    )
+  }
+
+  // If user is logged in, show account dashboard
+  if (session) {
+    return (
+      <Box minH="100vh" bg="transparent">
+        <Header />
+
+        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={20}>
+          <VStack spacing={8}>
+            {/* User Profile Header */}
+            <HStack spacing={4} w="full" justify="center">
+              <Avatar
+                size="xl"
+                name={session.user?.name || session.user?.email || ''}
+                src={session.user?.image || ''}
+              />
+              <VStack align="start" spacing={1}>
+                <Heading size="lg" color="white" fontWeight="300">
+                  {session.user?.name || 'User'}
+                </Heading>
+                <Text color="gray.300">{session.user?.email}</Text>
+                {session.user?.role === 'ADMIN' && (
+                  <Badge colorScheme="red" fontSize="sm">ADMIN</Badge>
+                )}
+              </VStack>
+            </HStack>
+
+            {/* Account Actions Grid */}
+            <Flex
+              direction={{ base: 'column', md: 'row' }}
+              gap={4}
+              w="full"
+              maxW="4xl"
+            >
+              <Card
+                flex="1"
+                bg="rgba(0, 0, 0, 0.6)"
+                border="1px solid"
+                borderColor="gold.500"
+                cursor="pointer"
+                onClick={() => router.push('/account/orders')}
+                _hover={{
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 8px 16px rgba(212, 175, 55, 0.3)',
+                  transition: 'all 0.3s'
+                }}
+              >
+                <CardBody>
+                  <VStack spacing={4}>
+                    <Icon as={FaShoppingBag} boxSize={10} color="gold.500" />
+                    <Heading size="md" color="white" fontWeight="300">
+                      My Orders
+                    </Heading>
+                    <Text color="gray.300" textAlign="center" fontSize="sm">
+                      View and track your orders
+                    </Text>
+                  </VStack>
+                </CardBody>
+              </Card>
+
+              <Card
+                flex="1"
+                bg="rgba(0, 0, 0, 0.6)"
+                border="1px solid"
+                borderColor="gold.500"
+                cursor="pointer"
+                onClick={() => router.push('/wishlist')}
+                _hover={{
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 8px 16px rgba(212, 175, 55, 0.3)',
+                  transition: 'all 0.3s'
+                }}
+              >
+                <CardBody>
+                  <VStack spacing={4}>
+                    <Icon as={FaHeart} boxSize={10} color="gold.500" />
+                    <Heading size="md" color="white" fontWeight="300">
+                      Wishlist
+                    </Heading>
+                    <Text color="gray.300" textAlign="center" fontSize="sm">
+                      Manage your favorite items
+                    </Text>
+                  </VStack>
+                </CardBody>
+              </Card>
+
+              <Card
+                flex="1"
+                bg="rgba(0, 0, 0, 0.6)"
+                border="1px solid"
+                borderColor="gold.500"
+                cursor="pointer"
+                onClick={() => router.push('/account/profile')}
+                _hover={{
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 8px 16px rgba(212, 175, 55, 0.3)',
+                  transition: 'all 0.3s'
+                }}
+              >
+                <CardBody>
+                  <VStack spacing={4}>
+                    <Icon as={FaUser} boxSize={10} color="gold.500" />
+                    <Heading size="md" color="white" fontWeight="300">
+                      Profile
+                    </Heading>
+                    <Text color="gray.300" textAlign="center" fontSize="sm">
+                      Update your information
+                    </Text>
+                  </VStack>
+                </CardBody>
+              </Card>
+            </Flex>
+
+            {/* Sign Out Button */}
+            <Button
+              leftIcon={<FaSignOutAlt />}
+              variant="outline"
+              colorScheme="red"
+              size="lg"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </Button>
+          </VStack>
+        </Container>
+      </Box>
+    )
+  }
+
+  // If not logged in, show sign in / sign up forms
   return (
     <Box minH="100vh" bg="transparent">
       <Header />

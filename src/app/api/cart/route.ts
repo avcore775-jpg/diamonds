@@ -15,11 +15,23 @@ export async function GET() {
     const cartItems = await prisma.cartItem.findMany({
       where: { userId: session.user.id },
       include: {
-        product: true
+        product: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            price: true,
+            comparePrice: true,
+            image: true,
+            stock: true,
+            isActive: true,
+          }
+        }
       }
     })
 
-    return NextResponse.json(cartItems, { status: 200 })
+    // Return in the same format as frontend expects: { items: [...] }
+    return NextResponse.json({ items: cartItems }, { status: 200 })
   } catch (error) {
     console.error('Cart GET error:', error)
     return NextResponse.json([], { status: 200 })
@@ -70,39 +82,43 @@ export async function POST(req: Request) {
       )
     }
 
-    // Check if item already in cart
-    const existingItem = await prisma.cartItem.findUnique({
-      where: {
-        userId_productId: {
-          userId: session.user.id,
-          productId
+    // Use transaction to prevent race conditions
+    const result = await prisma.$transaction(async (tx) => {
+      // Check if item already in cart
+      const existingItem = await tx.cartItem.findUnique({
+        where: {
+          userId_productId: {
+            userId: session.user.id,
+            productId
+          }
         }
-      }
-    })
+      })
 
-    if (existingItem) {
-      // Update quantity
-      const updatedItem = await prisma.cartItem.update({
-        where: { id: existingItem.id },
-        data: { 
-          quantity: existingItem.quantity + quantity 
+      if (existingItem) {
+        // Update quantity atomically
+        const updatedItem = await tx.cartItem.update({
+          where: { id: existingItem.id },
+          data: {
+            quantity: existingItem.quantity + quantity
+          },
+          include: { product: true }
+        })
+        return { item: updatedItem, isNew: false }
+      }
+
+      // Add new item
+      const newItem = await tx.cartItem.create({
+        data: {
+          userId: session.user.id,
+          productId,
+          quantity
         },
         include: { product: true }
       })
-      return NextResponse.json(updatedItem, { status: 200 })
-    }
-
-    // Add new item
-    const newItem = await prisma.cartItem.create({
-      data: {
-        userId: session.user.id,
-        productId,
-        quantity
-      },
-      include: { product: true }
+      return { item: newItem, isNew: true }
     })
 
-    return NextResponse.json(newItem, { status: 201 })
+    return NextResponse.json(result.item, { status: result.isNew ? 201 : 200 })
   } catch (error) {
     console.error('Cart POST error:', error)
     return NextResponse.json(

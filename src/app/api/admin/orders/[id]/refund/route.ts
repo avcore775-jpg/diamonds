@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { withAdminAuth } from '@/lib/auth/admin'
 
-async function handler(req: NextRequest, { params }: { params: { id: string } }) {
+async function handler(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     if (req.method !== 'POST') {
       return NextResponse.json(
@@ -12,7 +12,7 @@ async function handler(req: NextRequest, { params }: { params: { id: string } })
       )
     }
 
-    const { id } = params
+    const { id } = await params
     const body = await req.json()
     const { reason } = body
 

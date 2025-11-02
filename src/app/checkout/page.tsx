@@ -5,7 +5,6 @@ import {
   Box,
   Container,
   Grid,
-  GridItem,
   VStack,
   HStack,
   Heading,
@@ -26,6 +25,7 @@ import {
   Stack,
   Badge,
   Skeleton,
+  FormErrorMessage,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/layout/Header'
@@ -33,6 +33,7 @@ import { apiClient } from '@/lib/api/client'
 import { useSession } from 'next-auth/react'
 import useSWR from 'swr'
 import { loadStripe } from '@stripe/stripe-js'
+import { getGuestCart } from '@/lib/cart-storage'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -42,10 +43,14 @@ export default function CheckoutPage() {
   const { data: session } = useSession()
   const [isProcessing, setIsProcessing] = React.useState(false)
   const [paymentMethod, setPaymentMethod] = React.useState('stripe')
-  
+  const [guestCart, setGuestCart] = React.useState<any[]>([])
+  const [guestCartProducts, setGuestCartProducts] = React.useState<any[]>([])
+  const [emailError, setEmailError] = React.useState('')
+
   const [shippingInfo, setShippingInfo] = React.useState({
     name: '',
     email: '',
+    emailConfirm: '',
     phone: '',
     street: '',
     city: '',
@@ -53,7 +58,7 @@ export default function CheckoutPage() {
     postalCode: '',
     country: 'US',
   })
-  
+
   const [billingInfo, setBillingInfo] = React.useState({
     sameAsShipping: true,
     name: '',
@@ -64,23 +69,64 @@ export default function CheckoutPage() {
     country: 'US',
   })
 
-  // Fetch cart data
-  const { data: cart, isLoading: cartLoading } = useSWR(
+  const isGuest = !session?.user?.id
+
+  // Fetch cart data for logged-in users
+  const { data: userCart, isLoading: cartLoading } = useSWR(
     session ? '/api/cart' : null,
     () => apiClient.getCart()
   )
 
-  // Fetch saved addresses
-  const { data: savedAddresses } = useSWR(
-    session ? '/api/user/addresses' : null,
-    () => apiClient.getAddresses()
-  )
-
+  // Load guest cart from localStorage
   React.useEffect(() => {
-    if (!session) {
-      router.push('/signin?redirect=/checkout')
+    if (isGuest) {
+      const cart = getGuestCart()
+      setGuestCart(cart)
+
+      // Fetch product details for guest cart items
+      if (cart.length > 0) {
+        Promise.all(
+          cart.map(item =>
+            fetch(`/api/products/${item.productId}`)
+              .then(res => {
+                if (!res.ok) return null
+                return res.json()
+              })
+              .catch(() => null)
+          )
+        ).then(products => {
+          // Filter out null products (deleted or not found)
+          const cartWithProducts = cart
+            .map((item, idx) => ({
+              productId: item.productId,
+              quantity: item.quantity,
+              product: products[idx]
+            }))
+            .filter(item => item.product !== null)
+
+          setGuestCartProducts(cartWithProducts)
+
+          // If some products were removed, update localStorage
+          if (cartWithProducts.length < cart.length) {
+            const validProductIds = cartWithProducts.map(item => item.productId)
+            const updatedCart = cart.filter(item => validProductIds.includes(item.productId))
+            localStorage.setItem('guest_cart', JSON.stringify(updatedCart))
+
+            toast({
+              title: 'Cart Updated',
+              description: 'Some products in your cart are no longer available',
+              status: 'warning',
+              duration: 5000,
+              isClosable: true,
+            })
+          }
+        }).catch(error => {
+          console.error('Error fetching guest cart products:', error)
+          setGuestCartProducts([])
+        })
+      }
     }
-  }, [session, router])
+  }, [isGuest, toast])
 
   React.useEffect(() => {
     if (session?.user) {
@@ -88,6 +134,7 @@ export default function CheckoutPage() {
         ...prev,
         name: session.user?.name || '',
         email: session.user?.email || '',
+        emailConfirm: session.user?.email || '',
       }))
     }
   }, [session])
@@ -100,20 +147,73 @@ export default function CheckoutPage() {
   }
 
   const calculateSubtotal = () => {
-    if (!cart?.items) return 0
-    return cart.items.reduce((acc: number, item: any) => 
+    if (isGuest) {
+      return guestCartProducts.reduce((acc, item) =>
+        acc + (item.product.price * item.quantity), 0
+      )
+    }
+    if (!userCart?.items) return 0
+    return userCart.items.reduce((acc: number, item: any) =>
       acc + (item.product.price * item.quantity), 0
     )
   }
 
+  const cart = isGuest ? { items: guestCartProducts } : userCart
   const subtotal = calculateSubtotal()
   const shipping = subtotal > 100000 ? 0 : 1500
   const tax = Math.round(subtotal * 0.08)
   const total = subtotal + shipping + tax
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const validateEmailMatch = () => {
+    if (isGuest) {
+      // Check email format
+      if (!validateEmail(shippingInfo.email)) {
+        setEmailError('Please enter a valid email address')
+        return false
+      }
+
+      // Check emails match
+      if (shippingInfo.email !== shippingInfo.emailConfirm) {
+        setEmailError('Emails do not match')
+        return false
+      }
+      setEmailError('')
+    }
+    return true
+  }
+
   const validateForm = () => {
+    // Validate email match for guests
+    if (!validateEmailMatch()) {
+      toast({
+        title: 'Invalid Email',
+        description: emailError || 'Please make sure both email addresses match',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return false
+    }
+
+    // Validate email format for all users
+    if (!validateEmail(shippingInfo.email)) {
+      toast({
+        title: 'Invalid Email',
+        description: 'Please enter a valid email address',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return false
+    }
+
     const required = ['name', 'email', 'phone', 'street', 'city', 'state', 'postalCode']
-    
+
     for (const field of required) {
       if (!shippingInfo[field as keyof typeof shippingInfo]) {
         toast({
@@ -126,18 +226,30 @@ export default function CheckoutPage() {
         return false
       }
     }
-    
+
     return true
   }
 
   const handleStripeCheckout = async () => {
     if (!validateForm()) return
-    
+
     setIsProcessing(true)
-    
+
     try {
       const stripe = await stripePromise
       if (!stripe) throw new Error('Stripe failed to load')
+
+      // For guests: validate stock availability before checkout
+      if (isGuest && guestCartProducts.length > 0) {
+        for (const item of guestCartProducts) {
+          if (!item.product.isActive) {
+            throw new Error(`${item.product.name} is no longer available`)
+          }
+          if (item.product.stock < item.quantity) {
+            throw new Error(`Insufficient stock for ${item.product.name}. Only ${item.product.stock} available`)
+          }
+        }
+      }
 
       // Prepare shipping address
       const shippingAddress = {
@@ -150,34 +262,36 @@ export default function CheckoutPage() {
         phone: shippingInfo.phone,
       }
 
-      const checkoutData = {
-        items: cart.items.map((item: any) => ({
-          productId: item.productId,
-          quantity: item.quantity,
-        })),
+      const checkoutData: any = {
         shippingAddress,
-        successUrl: `${window.location.origin}/account/orders?success=true`,
-        cancelUrl: `${window.location.origin}/checkout`,
       }
 
-      const response = await apiClient.createCheckoutSession(checkoutData)
-      
-      // Check if we got a Stripe URL or sessionId
-      if (response.url) {
-        // Redirect directly to Stripe checkout
-        window.location.href = response.url
+      // For guests: include cart items and email
+      if (isGuest) {
+        checkoutData.cartItems = guestCart
+        checkoutData.guestEmail = shippingInfo.email
+      }
+
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(checkoutData),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Checkout failed')
+      }
+
+      const data = await response.json()
+
+      // Redirect to Stripe checkout
+      if (data.url) {
+        window.location.href = data.url
         return
       }
-      
-      const session = response
-      
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: session.sessionId || session.id,
-      })
-      
-      if (error) {
-        throw error
-      }
+
+      throw new Error('No checkout URL received')
     } catch (error: any) {
       toast({
         title: 'Checkout Failed',
@@ -195,7 +309,6 @@ export default function CheckoutPage() {
     if (paymentMethod === 'stripe') {
       await handleStripeCheckout()
     } else {
-      // Handle other payment methods
       toast({
         title: 'Payment method not available',
         description: 'Please select Stripe as payment method',
@@ -206,7 +319,7 @@ export default function CheckoutPage() {
     }
   }
 
-  if (!session || cartLoading) {
+  if (!isGuest && cartLoading) {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
@@ -217,7 +330,9 @@ export default function CheckoutPage() {
     )
   }
 
-  if (!cart?.items || cart.items.length === 0) {
+  const cartItems = isGuest ? guestCartProducts : (userCart?.items || [])
+
+  if (!cartItems || cartItems.length === 0) {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
@@ -247,6 +362,66 @@ export default function CheckoutPage() {
         <Grid templateColumns={{ base: '1fr', lg: '2fr 1fr' }} gap={8}>
           {/* Checkout Form */}
           <VStack spacing={6} align="stretch">
+            {/* Guest Email Section - ONLY for guests */}
+            {isGuest && (
+              <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
+                <CardHeader>
+                  <Heading size="md" color="white">Contact Information</Heading>
+                  <Text fontSize="sm" color="gray.400" mt={2}>
+                    Please provide your email address to receive order confirmation
+                  </Text>
+                </CardHeader>
+                <CardBody>
+                  <VStack spacing={4}>
+                    <FormControl isRequired isInvalid={!!emailError}>
+                      <FormLabel color="white">Email Address</FormLabel>
+                      <Input
+                        type="email"
+                        value={shippingInfo.email}
+                        onChange={(e) => {
+                          setShippingInfo({ ...shippingInfo, email: e.target.value })
+                          setEmailError('')
+                        }}
+                        onBlur={validateEmailMatch}
+                        placeholder="your@email.com"
+                        autoComplete="email"
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
+                      />
+                    </FormControl>
+
+                    <FormControl isRequired isInvalid={!!emailError}>
+                      <FormLabel color="white">Confirm Email Address</FormLabel>
+                      <Input
+                        type="email"
+                        value={shippingInfo.emailConfirm}
+                        onChange={(e) => {
+                          setShippingInfo({ ...shippingInfo, emailConfirm: e.target.value })
+                          setEmailError('')
+                        }}
+                        onBlur={validateEmailMatch}
+                        placeholder="your@email.com"
+                        autoComplete="email"
+                        bg="rgba(255, 255, 255, 0.1)"
+                        color="white"
+                        borderColor="gold.500"
+                        _placeholder={{ color: 'gray.400' }}
+                        _hover={{ borderColor: 'gold.400' }}
+                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
+                      />
+                      {emailError && (
+                        <FormErrorMessage color="red.400">{emailError}</FormErrorMessage>
+                      )}
+                    </FormControl>
+                  </VStack>
+                </CardBody>
+              </Card>
+            )}
+
             {/* Shipping Information */}
             <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
               <CardHeader>
@@ -259,6 +434,7 @@ export default function CheckoutPage() {
                     <Input
                       value={shippingInfo.name}
                       onChange={(e) => setShippingInfo({ ...shippingInfo, name: e.target.value })}
+                      autoComplete="name"
                       bg="rgba(255, 255, 255, 0.1)"
                       color="white"
                       borderColor="gold.500"
@@ -268,43 +444,28 @@ export default function CheckoutPage() {
                     />
                   </FormControl>
 
-                  <HStack spacing={4}>
-                    <FormControl isRequired flex={1}>
-                      <FormLabel color="white">Email</FormLabel>
-                      <Input
-                        type="email"
-                        value={shippingInfo.email}
-                        onChange={(e) => setShippingInfo({ ...shippingInfo, email: e.target.value })}
-                        bg="rgba(255, 255, 255, 0.1)"
-                        color="white"
-                        borderColor="gold.500"
-                        _placeholder={{ color: 'gray.400' }}
-                        _hover={{ borderColor: 'gold.400' }}
-                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
-                      />
-                    </FormControl>
-
-                    <FormControl isRequired flex={1}>
-                      <FormLabel color="white">Phone</FormLabel>
-                      <Input
-                        type="tel"
-                        value={shippingInfo.phone}
-                        onChange={(e) => setShippingInfo({ ...shippingInfo, phone: e.target.value })}
-                        bg="rgba(255, 255, 255, 0.1)"
-                        color="white"
-                        borderColor="gold.500"
-                        _placeholder={{ color: 'gray.400' }}
-                        _hover={{ borderColor: 'gold.400' }}
-                        _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
-                      />
-                    </FormControl>
-                  </HStack>
+                  <FormControl isRequired>
+                    <FormLabel color="white">Phone</FormLabel>
+                    <Input
+                      type="tel"
+                      value={shippingInfo.phone}
+                      onChange={(e) => setShippingInfo({ ...shippingInfo, phone: e.target.value })}
+                      autoComplete="tel"
+                      bg="rgba(255, 255, 255, 0.1)"
+                      color="white"
+                      borderColor="gold.500"
+                      _placeholder={{ color: 'gray.400' }}
+                      _hover={{ borderColor: 'gold.400' }}
+                      _focus={{ borderColor: 'gold.500', boxShadow: '0 0 0 1px gold.500' }}
+                    />
+                  </FormControl>
 
                   <FormControl isRequired>
                     <FormLabel color="white">Street Address</FormLabel>
                     <Input
                       value={shippingInfo.street}
                       onChange={(e) => setShippingInfo({ ...shippingInfo, street: e.target.value })}
+                      autoComplete="street-address"
                       bg="rgba(255, 255, 255, 0.1)"
                       color="white"
                       borderColor="gold.500"
@@ -320,6 +481,7 @@ export default function CheckoutPage() {
                       <Input
                         value={shippingInfo.city}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, city: e.target.value })}
+                        autoComplete="address-level2"
                         bg="rgba(255, 255, 255, 0.1)"
                         color="white"
                         borderColor="gold.500"
@@ -334,6 +496,7 @@ export default function CheckoutPage() {
                       <Input
                         value={shippingInfo.state}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, state: e.target.value })}
+                        autoComplete="address-level1"
                         bg="rgba(255, 255, 255, 0.1)"
                         color="white"
                         borderColor="gold.500"
@@ -348,6 +511,7 @@ export default function CheckoutPage() {
                       <Input
                         value={shippingInfo.postalCode}
                         onChange={(e) => setShippingInfo({ ...shippingInfo, postalCode: e.target.value })}
+                        autoComplete="postal-code"
                         bg="rgba(255, 255, 255, 0.1)"
                         color="white"
                         borderColor="gold.500"
@@ -363,6 +527,7 @@ export default function CheckoutPage() {
                     <Select
                       value={shippingInfo.country}
                       onChange={(e) => setShippingInfo({ ...shippingInfo, country: e.target.value })}
+                      autoComplete="country"
                       bg="rgba(255, 255, 255, 0.1)"
                       color="white"
                       borderColor="gold.500"
@@ -506,8 +671,8 @@ export default function CheckoutPage() {
               <VStack spacing={4} align="stretch">
                 {/* Cart Items Summary */}
                 <VStack spacing={2} align="stretch">
-                  {cart.items.map((item: any) => (
-                    <HStack key={item.id} justify="space-between" fontSize="sm">
+                  {cartItems.map((item: any, idx: number) => (
+                    <HStack key={item.id || idx} justify="space-between" fontSize="sm">
                       <Text noOfLines={1} color="white">
                         {item.product.name} x {item.quantity}
                       </Text>
@@ -555,7 +720,7 @@ export default function CheckoutPage() {
                   isLoading={isProcessing}
                   loadingText="Processing..."
                 >
-                  Place Order
+                  Proceed to Payment
                 </Button>
 
                 <Text fontSize="xs" color="gray.400" textAlign="center">

@@ -3,32 +3,35 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { stripe } from "@/lib/stripe"
+import { z } from "zod"
+import { rateLimit } from "@/lib/middleware/rateLimiter"
+
+// Validation schemas
+const guestCartItemSchema = z.object({
+  productId: z.string().uuid("Invalid product ID format"),
+  quantity: z.number().int().min(1, "Quantity must be at least 1").max(10, "Quantity cannot exceed 10")
+})
+
+const guestCartSchema = z.array(guestCartItemSchema).min(1, "Cart cannot be empty").max(20, "Too many items in cart")
+
+const emailSchema = z.string().email("Invalid email format").min(5, "Email too short").max(255, "Email too long")
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limiting - 10 requests per 15 minutes
+    const rateLimitResult = await rateLimit(req)
+    if (rateLimitResult) {
+      console.log("Rate limit exceeded for checkout")
+      return rateLimitResult
+    }
+
     const session = await getServerSession(authOptions)
-
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "You must be logged in to checkout" },
-        { status: 401 }
-      )
-    }
-
-    // Check if email is verified
-    if (!session.user.emailVerified) {
-      console.log("Email not verified for user:", session.user.email)
-      return NextResponse.json(
-        { error: "Please verify your email before making a purchase" },
-        { status: 403 }
-      )
-    }
-
     const body = await req.json()
-    const { shippingAddress } = body
+    const { shippingAddress, cartItems: clientCartItems, guestEmail } = body
 
     console.log("Checkout request body:", JSON.stringify(body, null, 2))
 
+    // Validate shipping address
     if (!shippingAddress) {
       console.log("Missing shipping address")
       return NextResponse.json(
@@ -37,16 +40,88 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Get user's cart items
-    const cartItems = await prisma.cartItem.findMany({
-      where: { userId: session.user.id },
-      include: { product: true },
-    })
+    // Determine if this is a guest or registered user checkout
+    const isGuest = !session?.user?.id
+    let customerEmail: string
+    let userId: string | undefined
+    let cartItems: any[]
+
+    if (isGuest) {
+      // Guest checkout
+      if (!guestEmail) {
+        return NextResponse.json(
+          { error: "Email is required for guest checkout" },
+          { status: 400 }
+        )
+      }
+
+      // Validate email format with Zod
+      try {
+        emailSchema.parse(guestEmail)
+      } catch (error) {
+        return NextResponse.json(
+          { error: "Invalid email format" },
+          { status: 400 }
+        )
+      }
+
+      if (!clientCartItems || !Array.isArray(clientCartItems) || clientCartItems.length === 0) {
+        return NextResponse.json(
+          { error: "Cart items are required for guest checkout" },
+          { status: 400 }
+        )
+      }
+
+      // Validate guest cart items with Zod
+      try {
+        const validatedCart = guestCartSchema.parse(clientCartItems)
+        customerEmail = guestEmail
+        userId = undefined
+
+        // For guests, get cart items from request body (localStorage)
+        // Fetch fresh product data to validate
+        cartItems = await Promise.all(
+          validatedCart.map(async (item) => {
+            const product = await prisma.product.findUnique({
+              where: { id: item.productId }
+            })
+
+            if (!product) {
+              throw new Error(`Product not found: ${item.productId}`)
+            }
+
+            return {
+              productId: item.productId,
+              quantity: item.quantity,
+              product
+            }
+          })
+        )
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          return NextResponse.json(
+            { error: "Invalid cart data", details: error.errors },
+            { status: 400 }
+          )
+        }
+        throw error
+      }
+    } else {
+      // Registered user checkout
+      customerEmail = session.user.email!
+      userId = session.user.id
+
+      // Get user's cart items from database
+      cartItems = await prisma.cartItem.findMany({
+        where: { userId: session.user.id },
+        include: { product: true },
+      })
+    }
 
     console.log("Cart items found:", cartItems.length)
 
     if (cartItems.length === 0) {
-      console.log("Cart is empty for user:", session.user.id)
+      console.log("Cart is empty")
       return NextResponse.json(
         { error: "Your cart is empty" },
         { status: 400 }
@@ -115,32 +190,65 @@ export async function POST(req: NextRequest) {
     // Generate unique order number
     const orderNumber = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`
 
-    // Create order in database
-    const order = await prisma.order.create({
-      data: {
-        userId: session.user.id,
-        orderNumber,
-        subtotal,
-        shipping,
-        tax,
-        total,
-        shippingAddress,
-        status: "PENDING",
-        paymentStatus: "PENDING",
-        orderItems: {
-          create: validatedItems.map((item) => ({
-            productId: item.productId,
-            quantity: item.quantity,
-            price: item.verifiedPrice, // Use server-verified price
-            discount: 0,
-          })),
+    // Create order AND reserve stock in atomic transaction
+    // This prevents race conditions where multiple users buy the last item
+    const order = await prisma.$transaction(async (tx) => {
+      // First, reserve stock for all products
+      for (const item of validatedItems) {
+        const product = await tx.product.findUnique({
+          where: { id: item.productId }
+        })
+
+        if (!product) {
+          throw new Error(`Product ${item.product.name} not found`)
+        }
+
+        const availableStock = product.stock - product.reserved
+
+        if (availableStock < item.quantity) {
+          throw new Error(`Insufficient stock for ${product.name}. Only ${availableStock} available`)
+        }
+
+        // Reserve the stock atomically
+        await tx.product.update({
+          where: { id: item.productId },
+          data: {
+            reserved: {
+              increment: item.quantity
+            }
+          }
+        })
+      }
+
+      // Then create the order
+      const newOrder = await tx.order.create({
+        data: {
+          ...(userId ? { userId } : { guestEmail: customerEmail }),
+          orderNumber,
+          subtotal,
+          shipping,
+          tax,
+          total,
+          shippingAddress,
+          status: "PENDING",
+          paymentStatus: "PENDING",
+          orderItems: {
+            create: validatedItems.map((item) => ({
+              productId: item.productId,
+              quantity: item.quantity,
+              price: item.verifiedPrice, // Use server-verified price
+              discount: 0,
+            })),
+          },
         },
-      },
-      include: {
-        orderItems: {
-          include: { product: true },
+        include: {
+          orderItems: {
+            include: { product: true },
+          },
         },
-      },
+      })
+
+      return newOrder
     })
 
     // Create Stripe checkout session
@@ -164,10 +272,10 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       success_url: `${process.env.NEXTAUTH_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
-      customer_email: session.user.email,
+      customer_email: customerEmail,
       metadata: {
         orderId: order.id,
-        userId: session.user.id,
+        ...(userId ? { userId } : { guestEmail: customerEmail }),
       },
     })
 

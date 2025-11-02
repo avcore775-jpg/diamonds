@@ -129,16 +129,18 @@ export default function OrdersPage() {
   useEffect(() => {
     const fetchOrders = async () => {
       if (!session?.user?.id) return
-      
+
       try {
         const response = await fetch('/api/users/me/orders')
         if (response.ok) {
           const data = await response.json()
-          setOrders(data)
+          // API returns { orders: [...], pagination: {...} }
+          setOrders(data.orders || [])
         } else {
           throw new Error('Failed to fetch orders')
         }
       } catch (error) {
+        console.error('Error fetching orders:', error)
         toast({
           title: 'Error',
           description: 'Failed to load orders',
@@ -146,6 +148,7 @@ export default function OrdersPage() {
           duration: 5000,
           isClosable: true,
         })
+        setOrders([])
       } finally {
         setLoading(false)
       }

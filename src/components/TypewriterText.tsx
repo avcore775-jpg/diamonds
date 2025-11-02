@@ -10,7 +10,7 @@ interface TypewriterTextProps {
   children: (displayText: string, isComplete: boolean) => React.ReactNode
 }
 
-export default function TypewriterText({
+const TypewriterText = React.memo(function TypewriterText({
   text,
   speed = 50,
   delay = 0,
@@ -66,4 +66,6 @@ export default function TypewriterText({
   }, [inView, text, speed, delay])
 
   return <div ref={ref}>{children(displayText, isComplete)}</div>
-}
+})
+
+export default TypewriterText

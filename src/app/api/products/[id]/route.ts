@@ -6,11 +6,13 @@ import { prisma } from "@/lib/prisma"
 // GET /api/products/[id] - Get single product (public)
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
+
     const product = await prisma.product.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         category: {
           select: {
@@ -49,7 +51,7 @@ export async function GET(
 // PUT /api/products/[id] - Update product (admin only)
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -61,11 +63,13 @@ export async function PUT(
       )
     }
 
+    const { id } = await params
+
     const body = await req.json()
     const { name, slug, description, price, carat, weight, image, stock, isActive, categoryId, collectionId } = body
 
     const product = await prisma.product.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...(name && { name }),
         ...(slug && { slug }),
@@ -99,7 +103,7 @@ export async function PUT(
 // DELETE /api/products/[id] - Delete product (admin only)
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -111,8 +115,10 @@ export async function DELETE(
       )
     }
 
+    const { id } = await params
+
     await prisma.product.delete({
-      where: { id: params.id },
+      where: { id },
     })
 
     return NextResponse.json({ message: "Product deleted successfully" })

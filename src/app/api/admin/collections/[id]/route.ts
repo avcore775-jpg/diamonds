@@ -18,20 +18,22 @@ const updateCollectionSchema = z.object({
 // GET /api/admin/collections/[id] - Get collection details
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session?.user || (session.user.role !== 'ADMIN' && session.user.role !== 'MANAGER')) {
       return NextResponse.json(
         { error: 'Admin access required' },
         { status: 403 }
       )
     }
-    
+
+    const { id } = await params
+
     const collection = await prisma.collection.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         products: {
           select: {
@@ -65,30 +67,32 @@ export async function GET(
 // PUT /api/admin/collections/[id] - Update collection
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session?.user || (session.user.role !== 'ADMIN' && session.user.role !== 'MANAGER')) {
       return NextResponse.json(
         { error: 'Admin access required' },
         { status: 403 }
       )
     }
-    
+
+    const { id } = await params
+
     const body = await request.json()
     const validatedData = updateCollectionSchema.parse(body)
-    
+
     // If updating slug, check if it's unique
     if (validatedData.slug) {
       const existingCollection = await prisma.collection.findFirst({
         where: {
           slug: validatedData.slug,
-          id: { not: params.id }
+          id: { not: id }
         }
       })
-      
+
       if (existingCollection) {
         return NextResponse.json(
           { error: 'Collection with this slug already exists' },
@@ -96,9 +100,9 @@ export async function PUT(
         )
       }
     }
-    
+
     const collection = await prisma.collection.update({
-      where: { id: params.id },
+      where: { id },
       data: validatedData,
     })
     
@@ -122,21 +126,23 @@ export async function PUT(
 // DELETE /api/admin/collections/[id] - Delete collection
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session?.user || session.user.role !== 'ADMIN') {
       return NextResponse.json(
         { error: 'Admin access required' },
         { status: 403 }
       )
     }
-    
+
+    const { id } = await params
+
     // Check if collection has products
     const collection = await prisma.collection.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         _count: {
           select: { products: true }
@@ -159,7 +165,7 @@ export async function DELETE(
     }
     
     await prisma.collection.delete({
-      where: { id: params.id }
+      where: { id }
     })
     
     return NextResponse.json({ message: 'Collection deleted successfully' })

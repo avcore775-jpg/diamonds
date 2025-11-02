@@ -12,7 +12,6 @@ import {
   Divider,
   useToast,
   Grid,
-  GridItem,
   Card,
   CardBody,
   CardHeader,
@@ -22,15 +21,21 @@ import {
   Skeleton,
   Center,
   Icon,
+  Image,
+  IconButton,
 } from '@chakra-ui/react'
-import { FaShoppingCart, FaArrowLeft } from 'react-icons/fa'
+import { FaShoppingCart, FaArrowLeft, FaTrash, FaMinus, FaPlus } from 'react-icons/fa'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/layout/Header'
-import CartItem from '@/components/CartItem'
 import { apiClient } from '@/lib/api/client'
 import { useSession } from 'next-auth/react'
 import useSWR from 'swr'
+import {
+  getGuestCart,
+  updateGuestCartQuantity,
+  removeFromGuestCart,
+} from '@/lib/cart-storage'
 
 export default function CartPage() {
   const router = useRouter()
@@ -38,12 +43,67 @@ export default function CartPage() {
   const { data: session } = useSession()
   const [couponCode, setCouponCode] = React.useState('')
   const [isApplyingCoupon, setIsApplyingCoupon] = React.useState(false)
+  const [guestCart, setGuestCart] = React.useState<any[]>([])
+  const [guestCartProducts, setGuestCartProducts] = React.useState<any[]>([])
+  const [refreshTrigger, setRefreshTrigger] = React.useState(0)
+  const [isLoadingGuestCart, setIsLoadingGuestCart] = React.useState(true)
 
-  // Fetch cart data
-  const { data: cart, isLoading, mutate: mutateCart } = useSWR(
+  const isGuest = !session?.user?.id
+
+  // Fetch cart data for logged-in users
+  const { data: userCart, isLoading: userCartLoading, mutate: mutateCart } = useSWR(
     session ? '/api/cart' : null,
     () => apiClient.getCart()
   )
+
+  // Load guest cart from localStorage
+  React.useEffect(() => {
+    if (isGuest) {
+      setIsLoadingGuestCart(true)
+      const cart = getGuestCart()
+      setGuestCart(cart)
+
+      // Fetch product details for guest cart items
+      if (cart.length > 0) {
+        Promise.all(
+          cart.map(item =>
+            fetch(`/api/products/${item.productId}`)
+              .then(res => {
+                if (!res.ok) return null
+                return res.json()
+              })
+              .catch(() => null)
+          )
+        ).then(products => {
+          // Filter out null products (deleted or not found)
+          const cartWithProducts = cart
+            .map((item, idx) => ({
+              productId: item.productId,
+              quantity: item.quantity,
+              product: products[idx]
+            }))
+            .filter(item => item.product !== null)
+
+          setGuestCartProducts(cartWithProducts)
+
+          // If some products were removed, update localStorage
+          if (cartWithProducts.length < cart.length) {
+            const validProductIds = cartWithProducts.map(item => item.productId)
+            const updatedCart = cart.filter(item => validProductIds.includes(item.productId))
+            localStorage.setItem('guest_cart', JSON.stringify(updatedCart))
+          }
+          setIsLoadingGuestCart(false)
+        }).catch(error => {
+          console.error('Error fetching guest cart products:', error)
+          setGuestCartProducts([])
+          setIsLoadingGuestCart(false)
+        })
+      } else {
+        setGuestCartProducts([])
+        setIsLoadingGuestCart(false)
+      }
+    }
+  }, [isGuest, refreshTrigger])
 
   const formatPrice = (cents: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -53,17 +113,18 @@ export default function CartPage() {
   }
 
   const calculateSubtotal = () => {
-    if (!cart?.items) return 0
-    return cart.items.reduce((acc: number, item: any) => 
+    if (isGuest) {
+      return guestCartProducts.reduce((acc, item) =>
+        acc + (item.product.price * item.quantity), 0
+      )
+    }
+    if (!userCart?.items) return 0
+    return userCart.items.reduce((acc: number, item: any) =>
       acc + (item.product.price * item.quantity), 0
     )
   }
 
   const handleCheckout = () => {
-    if (!session) {
-      router.push('/signin?redirect=/checkout')
-      return
-    }
     router.push('/checkout')
   }
 
@@ -93,28 +154,75 @@ export default function CartPage() {
     }
   }
 
-  if (!session) {
-    return (
-      <Box minH="100vh" bg="transparent">
-        <Header />
-        <Container maxW="7xl" py={20}>
-          <Center>
-            <VStack spacing={4}>
-              <Heading color="white">Please sign in to view your cart</Heading>
-              <Button
-                as={NextLink}
-                href="/signin?redirect=/cart"
-                colorScheme="brand"
-                size="lg"
-              >
-                Sign In
-              </Button>
-            </VStack>
-          </Center>
-        </Container>
-      </Box>
-    )
+  const handleGuestUpdateQuantity = (productId: string, newQuantity: number) => {
+    updateGuestCartQuantity(productId, newQuantity)
+    setRefreshTrigger(prev => prev + 1)
+    toast({
+      title: 'Cart updated',
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    })
   }
+
+  const handleGuestRemove = (productId: string) => {
+    removeFromGuestCart(productId)
+    setRefreshTrigger(prev => prev + 1)
+    toast({
+      title: 'Item removed from cart',
+      status: 'info',
+      duration: 2000,
+      isClosable: true,
+    })
+  }
+
+  const handleUserUpdateQuantity = async (itemId: string, newQuantity: number) => {
+    try {
+      await fetch(`/api/cart?itemId=${itemId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity: newQuantity }),
+      })
+      mutateCart()
+      toast({
+        title: 'Cart updated',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      })
+    } catch (error) {
+      toast({
+        title: 'Error updating cart',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+    }
+  }
+
+  const handleUserRemove = async (itemId: string) => {
+    try {
+      await fetch(`/api/cart?itemId=${itemId}`, {
+        method: 'DELETE',
+      })
+      mutateCart()
+      toast({
+        title: 'Item removed from cart',
+        status: 'info',
+        duration: 2000,
+        isClosable: true,
+      })
+    } catch (error) {
+      toast({
+        title: 'Error removing item',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+    }
+  }
+
+  const isLoading = isGuest ? isLoadingGuestCart : userCartLoading
 
   if (isLoading) {
     return (
@@ -135,6 +243,7 @@ export default function CartPage() {
     )
   }
 
+  const cartItems = isGuest ? guestCartProducts : (userCart?.items || [])
   const subtotal = calculateSubtotal()
   const shipping = subtotal > 100000 ? 0 : 1500 // Free shipping over $1000
   const tax = Math.round(subtotal * 0.08) // 8% tax
@@ -147,7 +256,7 @@ export default function CartPage() {
       <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
         <Heading mb={8} color="white">Shopping Cart</Heading>
 
-        {!cart?.items || cart.items.length === 0 ? (
+        {!cartItems || cartItems.length === 0 ? (
           <VStack spacing={6} py={20}>
             <Icon as={FaShoppingCart} boxSize={20} color="gold.500" />
             <Heading size="lg" color="white">Your cart is empty</Heading>
@@ -168,7 +277,7 @@ export default function CartPage() {
             <VStack spacing={4} align="stretch">
               <HStack justify="space-between" mb={4}>
                 <Text fontSize="lg" fontWeight="300" color="white">
-                  {cart.items.length} item{cart.items.length > 1 ? 's' : ''} in cart
+                  {cartItems.length} item{cartItems.length > 1 ? 's' : ''} in cart
                 </Text>
                 <Button
                   as={NextLink}
@@ -181,18 +290,98 @@ export default function CartPage() {
                 </Button>
               </HStack>
 
-              {cart.items.map((item: any) => (
-                <CartItem
-                  key={item.id}
-                  item={item}
-                  onUpdate={mutateCart}
-                  onRemove={mutateCart}
-                />
+              {cartItems.map((item: any, idx: number) => (
+                <Card
+                  key={item.id || item.productId || idx}
+                  bg="rgba(0, 0, 0, 0.6)"
+                  border="1px solid"
+                  borderColor="gold.500"
+                >
+                  <CardBody>
+                    <HStack spacing={4} align="start">
+                      <Image
+                        src={item.product.image || '/placeholder.jpg'}
+                        alt={item.product.name}
+                        boxSize="100px"
+                        objectFit="cover"
+                        borderRadius="md"
+                      />
+
+                      <VStack flex={1} align="start" spacing={2}>
+                        <Heading size="sm" color="white">{item.product.name}</Heading>
+                        <Text fontSize="sm" color="gray.400" noOfLines={2}>
+                          {item.product.description}
+                        </Text>
+                        <Text fontSize="lg" fontWeight="300" color="gold.500">
+                          {formatPrice(item.product.price)}
+                        </Text>
+
+                        <HStack spacing={4} mt={2}>
+                          <HStack>
+                            <IconButton
+                              aria-label="Decrease quantity"
+                              icon={<FaMinus />}
+                              size="sm"
+                              onClick={() => {
+                                const newQuantity = item.quantity - 1
+                                if (isGuest) {
+                                  handleGuestUpdateQuantity(item.productId, newQuantity)
+                                } else {
+                                  handleUserUpdateQuantity(item.id, newQuantity)
+                                }
+                              }}
+                              isDisabled={item.quantity <= 1}
+                              colorScheme="brand"
+                              variant="outline"
+                            />
+                            <Text color="white" minW="40px" textAlign="center">
+                              {item.quantity}
+                            </Text>
+                            <IconButton
+                              aria-label="Increase quantity"
+                              icon={<FaPlus />}
+                              size="sm"
+                              onClick={() => {
+                                const newQuantity = item.quantity + 1
+                                if (isGuest) {
+                                  handleGuestUpdateQuantity(item.productId, newQuantity)
+                                } else {
+                                  handleUserUpdateQuantity(item.id, newQuantity)
+                                }
+                              }}
+                              colorScheme="brand"
+                              variant="outline"
+                            />
+                          </HStack>
+
+                          <IconButton
+                            aria-label="Remove item"
+                            icon={<FaTrash />}
+                            size="sm"
+                            colorScheme="red"
+                            variant="ghost"
+                            onClick={() => {
+                              if (isGuest) {
+                                handleGuestRemove(item.productId)
+                              } else {
+                                handleUserRemove(item.id)
+                              }
+                            }}
+                          />
+                        </HStack>
+                      </VStack>
+
+                      <Text fontSize="lg" fontWeight="300" color="white">
+                        {formatPrice(item.product.price * item.quantity)}
+                      </Text>
+                    </HStack>
+                  </CardBody>
+                </Card>
               ))}
             </VStack>
 
             {/* Order Summary */}
-            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500">
+            <Card bg="rgba(0, 0, 0, 0.6)" border="1px solid" borderColor="gold.500" h="fit-content" position="sticky" top={4}>
               <CardHeader>
                 <Heading size="md" color="white">Order Summary</Heading>
               </CardHeader>
@@ -258,7 +447,7 @@ export default function CartPage() {
                     </Text>
                   </HStack>
 
-                  {shipping > 0 && (
+                  {shipping > 0 && subtotal < 100000 && (
                     <Box p={3} bg="rgba(212, 175, 55, 0.2)" borderRadius="md" border="1px solid" borderColor="gold.500">
                       <Text fontSize="sm" color="white">
                         Add {formatPrice(100000 - subtotal)} more for free shipping!

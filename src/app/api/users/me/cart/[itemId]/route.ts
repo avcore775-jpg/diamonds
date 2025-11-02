@@ -11,20 +11,20 @@ const updateQuantitySchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   try {
     // Get session
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       );
     }
-    
-    const { itemId } = params;
+
+    const { itemId } = await params;
     const body = await request.json();
     
     // Validate input
@@ -110,20 +110,20 @@ export async function PATCH(
 // DELETE /api/users/me/cart/:itemId - Remove item from cart
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { itemId: string } }
+  { params }: { params: Promise<{ itemId: string }> }
 ) {
   try {
     // Get session
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       );
     }
-    
-    const { itemId } = params;
+
+    const { itemId } = await params;
     
     // Check if cart item belongs to user
     const cartItem = await prisma.cartItem.findFirst({

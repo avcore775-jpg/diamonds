@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { getOrderEmail, getOrderCustomerName } from '@/lib/order-utils'
 import {
   Box,
   Container,
@@ -384,13 +385,16 @@ export default function AdminOrdersPage() {
   }
 
   const filteredOrders = orders.filter(order => {
-    const matchesSearch = 
+    const orderEmail = getOrderEmail(order)
+    const orderName = getOrderCustomerName(order)
+
+    const matchesSearch =
       order.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.user.name?.toLowerCase().includes(searchQuery.toLowerCase())
-    
+      orderEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      orderName.toLowerCase().includes(searchQuery.toLowerCase())
+
     const matchesStatus = !statusFilter || order.status === statusFilter
-    
+
     return matchesSearch && matchesStatus
   })
 
@@ -415,13 +419,13 @@ export default function AdminOrdersPage() {
   return (
     <Box minH="100vh" bg="transparent">
       <Header />
-      
-      <Container maxW="7xl" py={8}>
+
+      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
         <VStack spacing={6} align="stretch">
           {/* Page Header */}
           <Box>
-            <Heading size="lg" mb={2}>Order Management</Heading>
-            <Text color="gray.600">View and manage customer orders</Text>
+            <Heading size="lg" mb={2} color="white">Order Management</Heading>
+            <Text color="gray.400">View and manage customer orders</Text>
           </Box>
 
           {/* Search and Filters */}
@@ -502,9 +506,9 @@ export default function AdminOrdersPage() {
                           </Td>
                           <Td>
                             <VStack align="start" spacing={0}>
-                              <Text>{order.user.name || 'N/A'}</Text>
+                              <Text>{getOrderCustomerName(order)}</Text>
                               <Text fontSize="sm" color="gray.500">
-                                {order.user.email}
+                                {getOrderEmail(order)}
                               </Text>
                             </VStack>
                           </Td>

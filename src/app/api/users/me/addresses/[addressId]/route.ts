@@ -19,20 +19,20 @@ const updateAddressSchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { addressId: string } }
+  { params }: { params: Promise<{ addressId: string }> }
 ) {
   try {
     // Get session
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       );
     }
-    
-    const { addressId } = params;
+
+    const { addressId } = await params;
     const body = await request.json();
     
     // Validate input
@@ -97,20 +97,20 @@ export async function PATCH(
 // DELETE /api/users/me/addresses/:addressId - Delete address
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { addressId: string } }
+  { params }: { params: Promise<{ addressId: string }> }
 ) {
   try {
     // Get session
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       );
     }
-    
-    const { addressId } = params;
+
+    const { addressId } = await params;
     
     // Check if address belongs to user
     const address = await prisma.address.findFirst({

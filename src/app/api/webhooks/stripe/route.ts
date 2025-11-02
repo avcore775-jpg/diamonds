@@ -3,6 +3,7 @@ import { headers } from "next/headers"
 import Stripe from "stripe"
 import { stripe } from "@/lib/stripe"
 import { prisma } from "@/lib/prisma"
+import { getOrderEmail } from "@/lib/order-utils"
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -25,62 +26,153 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // ✅ VULN-005 FIX: Idempotency check to prevent duplicate processing
+    const webhookEvent = await prisma.webhookEvent.findUnique({
+      where: { eventId: event.id }
+    })
+
+    if (webhookEvent?.processed) {
+      console.log(`Event ${event.id} already processed, skipping`)
+      return NextResponse.json({ received: true, message: "Already processed" })
+    }
+
+    // Create webhook event record
+    await prisma.webhookEvent.create({
+      data: {
+        eventId: event.id,
+        eventType: event.type,
+        processed: false
+      }
+    })
+
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session
 
         // Get order from metadata
         const orderId = session.metadata?.orderId
-        const userId = session.metadata?.userId
+        const userId = session.metadata?.userId // Optional for guest orders
+        const guestEmail = session.metadata?.guestEmail // For guest orders
 
-        if (!orderId || !userId) {
-          console.error("Missing metadata in Stripe session")
+        if (!orderId) {
+          console.error("Missing orderId in Stripe session metadata")
           return NextResponse.json(
-            { error: "Missing metadata" },
+            { error: "Missing orderId in metadata" },
             { status: 400 }
           )
         }
 
-        // Update order status to CONFIRMED and payment status to PAID
-        const order = await prisma.order.update({
+        // Validate that we have either userId OR guestEmail
+        if (!userId && !guestEmail) {
+          console.error("Missing both userId and guestEmail in Stripe session metadata")
+          return NextResponse.json(
+            { error: "Missing user identification" },
+            { status: 400 }
+          )
+        }
+
+        // First, fetch the order to verify ownership and amount
+        const existingOrder = await prisma.order.findUnique({
           where: { id: orderId },
-          data: {
-            status: "CONFIRMED",
-            paymentStatus: "PAID",
-            stripePaymentIntentId: session.payment_intent as string,
-          },
           include: {
             orderItems: true,
             user: true,
           },
         })
 
-        // Update product stock
-        for (const item: any of order.orderItems) {
-          await prisma.product.update({
-            where: { id: item.productId },
-            data: {
-              stock: {
-                decrement: item.quantity,
-              },
-            },
-          })
+        if (!existingOrder) {
+          console.error(`Order not found: ${orderId}`)
+          return NextResponse.json(
+            { error: "Order not found" },
+            { status: 404 }
+          )
         }
 
-        // Clear user's cart
-        await prisma.cartItem.deleteMany({
-          where: { userId },
+        // Verify order ownership matches metadata
+        if (userId && existingOrder.userId !== userId) {
+          console.error(`Order ownership mismatch: order userId=${existingOrder.userId}, metadata userId=${userId}`)
+          return NextResponse.json(
+            { error: "Order ownership mismatch" },
+            { status: 403 }
+          )
+        }
+
+        if (guestEmail && existingOrder.guestEmail !== guestEmail) {
+          console.error(`Guest order email mismatch: order email=${existingOrder.guestEmail}, metadata email=${guestEmail}`)
+          return NextResponse.json(
+            { error: "Order email mismatch" },
+            { status: 403 }
+          )
+        }
+
+        // Verify order amount matches payment amount
+        if (existingOrder.total !== session.amount_total) {
+          console.error(`Amount mismatch: order total=${existingOrder.total}, payment amount=${session.amount_total}`)
+          return NextResponse.json(
+            { error: "Amount mismatch" },
+            { status: 400 }
+          )
+        }
+
+        // Prevent double processing
+        if (existingOrder.paymentStatus === "PAID") {
+          console.log(`Order ${orderId} already paid, skipping`)
+          return NextResponse.json({ received: true, message: "Already processed" })
+        }
+
+        // ✅ VULN-002 & VULN-009 FIX: Atomic transaction with proper stock management and error handling
+        const order = await prisma.$transaction(async (tx) => {
+          // Update order status
+          const updatedOrder = await tx.order.update({
+            where: { id: orderId },
+            data: {
+              status: "CONFIRMED",
+              paymentStatus: "PAID",
+              stripePaymentIntentId: session.payment_intent as string,
+              stripeSessionId: session.id,
+            },
+            include: {
+              orderItems: true,
+              user: true,
+            },
+          })
+
+          // Convert reserved stock to actual sale (reserved → stock decrement)
+          for (const item: any of updatedOrder.orderItems) {
+            await tx.product.update({
+              where: { id: item.productId },
+              data: {
+                stock: {
+                  decrement: item.quantity,
+                },
+                reserved: {
+                  decrement: item.quantity,
+                },
+              },
+            })
+          }
+
+          // Clear user's cart (only for registered users)
+          if (userId) {
+            await tx.cartItem.deleteMany({
+              where: { userId },
+            })
+          }
+
+          return updatedOrder
         })
 
-        // Send order confirmation email
-        if (order.user.email) {
-          const { Resend } = await import("resend")
-          const resend = new Resend(process.env.RESEND_API_KEY!)
-          
-          await resend.emails.send({
+        // ✅ VULN-009 FIX: Email error handling - don't fail webhook if email fails
+        const customerEmail = getOrderEmail(order)
+        if (customerEmail && customerEmail !== 'No email') {
+          try {
+            const { Resend } = await import("resend")
+            const resend = new Resend(process.env.RESEND_API_KEY!)
+
+            await resend.emails.send({
             from: process.env.RESEND_FROM_EMAIL!,
-            to: order.user.email,
-            subject: `Order Confirmation #${order.id.slice(-8).toUpperCase()}`,
+            to: customerEmail,
+            subject: `Order Confirmation #${order.orderNumber}`,
             html: `
               <!DOCTYPE html>
               <html>
@@ -120,8 +212,19 @@ export async function POST(req: NextRequest) {
                 </body>
               </html>
             `,
-          })
+            })
+          } catch (emailError) {
+            // ✅ VULN-009: Don't fail webhook if email fails - log and continue
+            console.error('Email send failed for order:', order.id, emailError)
+            // TODO: Implement retry queue for failed emails
+          }
         }
+
+        // Mark webhook event as processed
+        await prisma.webhookEvent.update({
+          where: { eventId: event.id },
+          data: { processed: true }
+        })
 
         break
       }

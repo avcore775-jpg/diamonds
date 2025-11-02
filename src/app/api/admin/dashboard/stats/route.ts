@@ -36,10 +36,11 @@ async function getDashboardStats() {
       where: { isActive: true }
     }),
     
-    // Users this month
+    // Active and verified users (all time)
     prisma.user.count({
       where: {
-        createdAt: { gte: thisMonth }
+        isActive: true,
+        emailVerified: { not: null }
       }
     })
   ])
@@ -48,7 +49,8 @@ async function getDashboardStats() {
   const [
     previousRevenue,
     previousOrders,
-    previousUsers,
+    newUsersThisMonth,
+    newUsersLastMonth,
   ] = await Promise.all([
     // Revenue last month
     prisma.order.aggregate({
@@ -58,18 +60,29 @@ async function getDashboardStats() {
         status: { in: ['PAID', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED'] }
       }
     }),
-    
+
     // Orders last month
     prisma.order.count({
       where: {
         createdAt: { gte: previousMonth, lt: lastMonth }
       }
     }),
-    
-    // Users last month
+
+    // New users this month
     prisma.user.count({
       where: {
-        createdAt: { gte: previousMonth, lt: lastMonth }
+        createdAt: { gte: thisMonth },
+        isActive: true,
+        emailVerified: { not: null }
+      }
+    }),
+
+    // New users last month
+    prisma.user.count({
+      where: {
+        createdAt: { gte: previousMonth, lt: lastMonth },
+        isActive: true,
+        emailVerified: { not: null }
       }
     })
   ])
@@ -91,7 +104,7 @@ async function getDashboardStats() {
     totalProducts: currentProducts,
     productsChange: 0, // Products don't change month-to-month in this context
     totalUsers: currentUsers,
-    usersChange: calculateChange(currentUsers, previousUsers),
+    usersChange: calculateChange(newUsersThisMonth, newUsersLastMonth),
   }
 }
 

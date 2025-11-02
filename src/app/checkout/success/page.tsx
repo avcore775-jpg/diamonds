@@ -19,6 +19,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import { useSession } from 'next-auth/react'
 import NextLink from 'next/link'
+import { clearGuestCart } from '@/lib/cart-storage'
 
 function CheckoutSuccessContent() {
   const router = useRouter()
@@ -26,17 +27,18 @@ function CheckoutSuccessContent() {
   const { data: session } = useSession()
   const toast = useToast()
   const [isLoading, setIsLoading] = React.useState(true)
-  const [orderDetails, setOrderDetails] = React.useState<any>(null)
-  
+
+  const isGuest = !session?.user?.id
+
   React.useEffect(() => {
     const sessionId = searchParams.get('session_id')
-    
-    if (!session) {
-      router.push('/signin')
-      return
+
+    // Clear guest cart after successful payment
+    if (isGuest && sessionId) {
+      clearGuestCart()
     }
-    
-    // Simulate fetching order details
+
+    // Show success toast
     setTimeout(() => {
       setIsLoading(false)
       if (sessionId) {
@@ -49,8 +51,8 @@ function CheckoutSuccessContent() {
         })
       }
     }, 1500)
-  }, [session, searchParams, router, toast])
-  
+  }, [isGuest, searchParams, toast])
+
   if (isLoading) {
     return (
       <Box minH="100vh" bg="transparent">
@@ -59,89 +61,118 @@ function CheckoutSuccessContent() {
           <Center>
             <VStack spacing={4}>
               <Spinner size="xl" color="brand.500" thickness="4px" />
-              <Text fontSize="lg" color="gray.600">Processing your order...</Text>
+              <Text fontSize="lg" color="white">Processing your order...</Text>
             </VStack>
           </Center>
         </Container>
       </Box>
     )
   }
-  
+
   return (
     <Box minH="100vh" bg="transparent">
       <Header />
-      
-      <Container maxW="4xl" py={20}>
+
+      <Container maxW="4xl" pt={{ base: 24, md: 28 }} pb={8}>
         <VStack spacing={8}>
           {/* Success Icon */}
           <Icon as={FaCheckCircle} boxSize={20} color="green.500" />
-          
+
           {/* Success Message */}
           <VStack spacing={4} textAlign="center">
-            <Heading size="2xl">Thank You for Your Order!</Heading>
-            <Text fontSize="lg" color="gray.600">
+            <Heading size="2xl" color="white">Thank You for Your Order!</Heading>
+            <Text fontSize="lg" color="gray.300">
               Your payment has been successfully processed.
             </Text>
-            <Text fontSize="md" color="gray.500">
+            <Text fontSize="md" color="gray.400">
               We've sent a confirmation email with your order details.
             </Text>
           </VStack>
-          
+
           {/* Order Summary Box */}
-          <Box 
-            w="full" 
-            p={8} 
-            bg="transparent" 
-            borderRadius="lg" 
+          <Box
+            w="full"
+            p={8}
+            bg="rgba(0, 0, 0, 0.6)"
+            border="1px solid"
+            borderColor="gold.500"
+            borderRadius="lg"
             boxShadow="md"
             borderTop="4px solid"
             borderTopColor="brand.500"
           >
             <VStack spacing={4} align="stretch">
-              <Text fontSize="lg" fontWeight="300">What's Next?</Text>
-              
+              <Text fontSize="lg" fontWeight="300" color="white">What's Next?</Text>
+
               <VStack align="start" spacing={3}>
                 <HStack>
-                  <Text fontWeight="300">1.</Text>
-                  <Text>You'll receive an order confirmation email shortly</Text>
+                  <Text fontWeight="300" color="gold.500">1.</Text>
+                  <Text color="white">You'll receive an order confirmation email shortly</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="300">2.</Text>
-                  <Text>We'll prepare your items for shipping</Text>
+                  <Text fontWeight="300" color="gold.500">2.</Text>
+                  <Text color="white">We'll prepare your items for shipping</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="300">3.</Text>
-                  <Text>You'll get a shipping notification with tracking info</Text>
+                  <Text fontWeight="300" color="gold.500">3.</Text>
+                  <Text color="white">You'll get a shipping notification with tracking info</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="300">4.</Text>
-                  <Text>Your beautiful jewelry will arrive in 3-5 business days</Text>
+                  <Text fontWeight="300" color="gold.500">4.</Text>
+                  <Text color="white">Your beautiful jewelry will arrive in 3-5 business days</Text>
                 </HStack>
               </VStack>
             </VStack>
           </Box>
-          
+
           {/* Action Buttons */}
-          <HStack spacing={4}>
+          <HStack spacing={4} flexWrap="wrap" justify="center">
+            {!isGuest && (
+              <Button
+                as={NextLink}
+                href="/account/orders"
+                leftIcon={<FaShoppingBag />}
+                colorScheme="brand"
+                size="lg"
+              >
+                View Orders
+              </Button>
+            )}
             <Button
               as={NextLink}
-              href="/account/orders"
-              leftIcon={<FaShoppingBag />}
-              colorScheme="brand"
-              size="lg"
-            >
-              View Orders
-            </Button>
-            <Button
-              as={NextLink}
-              href="/"
+              href="/catalog"
               leftIcon={<FaHome />}
+              colorScheme="brand"
               variant="outline"
               size="lg"
             >
               Continue Shopping
             </Button>
           </HStack>
+
+          {isGuest && (
+            <Box
+              p={4}
+              bg="rgba(212, 175, 55, 0.2)"
+              borderRadius="md"
+              border="1px solid"
+              borderColor="gold.500"
+              textAlign="center"
+            >
+              <Text color="white" fontSize="sm">
+                Want to track your order?
+                <Button
+                  as={NextLink}
+                  href="/signin?redirect=/account/orders"
+                  variant="link"
+                  color="gold.500"
+                  ml={2}
+                >
+                  Sign in to your account
+                </Button>
+              </Text>
+            </Box>
+          )}
         </VStack>
       </Container>
     </Box>
@@ -157,7 +188,7 @@ export default function CheckoutSuccessPage() {
           <Center>
             <VStack spacing={4}>
               <Spinner size="xl" color="brand.500" thickness="4px" />
-              <Text fontSize="lg" color="gray.600">Loading...</Text>
+              <Text fontSize="lg" color="white">Loading...</Text>
             </VStack>
           </Center>
         </Container>

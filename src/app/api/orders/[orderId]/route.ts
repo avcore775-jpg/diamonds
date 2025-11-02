@@ -10,7 +10,7 @@ import { z } from 'zod'
 // GET /api/orders/[orderId] - Get order details
 export async function GET(
   req: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
     // Rate limiting
@@ -22,8 +22,9 @@ export async function GET(
       throw new AppError('Unauthorized', 401)
     }
 
+    const { orderId } = await params
     const order = await prisma.order.findUnique({
-      where: { id: params.orderId },
+      where: { id: orderId },
       include: {
         orderItems: {
           include: {
@@ -78,7 +79,7 @@ export async function GET(
 // PATCH /api/orders/[orderId] - Update order (admin only)
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
     // Rate limiting
@@ -100,6 +101,7 @@ export async function PATCH(
       throw new AppError('Forbidden - Admin access required', 403)
     }
 
+    const { orderId } = await params
     const body = await req.json()
 
     // Validate input
@@ -150,7 +152,7 @@ export async function PATCH(
     const updatedOrder = await prisma.$transaction(async (tx) => {
       // Get current order
       const currentOrder = await tx.order.findUnique({
-        where: { id: params.orderId },
+        where: { id: orderId },
         include: {
           orderItems: true
         }
@@ -187,7 +189,7 @@ export async function PATCH(
 
       // Update order
       const updated = await tx.order.update({
-        where: { id: params.orderId },
+        where: { id: orderId },
         data: updateData,
         include: {
           orderItems: {
@@ -215,7 +217,7 @@ export async function PATCH(
 // DELETE /api/orders/[orderId] - Cancel order
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
     // Rate limiting
@@ -227,8 +229,9 @@ export async function DELETE(
       throw new AppError('Unauthorized', 401)
     }
 
+    const { orderId } = await params
     const order = await prisma.order.findUnique({
-      where: { id: params.orderId },
+      where: { id: orderId },
       include: {
         orderItems: true
       }
@@ -270,7 +273,7 @@ export async function DELETE(
 
       // Update order status
       const updated = await tx.order.update({
-        where: { id: params.orderId },
+        where: { id: orderId },
         data: {
           status: 'CANCELLED',
           cancelledAt: new Date(),

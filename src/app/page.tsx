@@ -27,10 +27,10 @@ import useSWR from 'swr'
 import { heroTitle, heroSubtitle, buttonPress, getAnimationVariants } from '@/lib/animations'
 
 // Wrap Chakra components with motion
-const MotionButton = motion(Button)
-const MotionHeading = motion(Heading)
-const MotionText = motion(Text)
-const MotionHStack = motion(HStack)
+const MotionButton = motion.create(Button)
+const MotionHeading = motion.create(Heading)
+const MotionText = motion.create(Text)
+const MotionHStack = motion.create(HStack)
 
 export default function HomePage() {
   // Fetch all products and split them into sections
@@ -135,68 +135,66 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
             >
-              <NextLink href="/collections" passHref legacyBehavior>
-                <MotionButton
-                  as="a"
-                  size="lg"
-                  width={{ base: 'full', sm: 'auto' }}
-                  minH="48px"
-                  bg="transparent"
-                  color="white"
-                  border="2px solid"
-                  borderColor="gold.500"
-                  variants={getAnimationVariants(buttonPress)}
-                  whileHover="hover"
-                  whileTap="tap"
-                  sx={{
-                    transition: 'all 0.3s ease-in-out',
-                  }}
-                  _hover={{
-                    bg: 'gold.500',
-                    color: 'black',
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
-                  }}
-                  _active={{
-                    bg: 'gold.500',
-                    color: 'black',
-                    transform: 'translateY(0)',
-                  }}
-                >
-                  Shop Collection
-                </MotionButton>
-              </NextLink>
-              <NextLink href="/catalog" passHref legacyBehavior>
-                <MotionButton
-                  as="a"
-                  size="lg"
-                  width={{ base: 'full', sm: 'auto' }}
-                  minH="48px"
-                  bg="transparent"
-                  color="white"
-                  border="2px solid"
-                  borderColor="gold.500"
-                  variants={getAnimationVariants(buttonPress)}
-                  whileHover="hover"
-                  whileTap="tap"
-                  sx={{
-                    transition: 'all 0.3s ease-in-out',
-                  }}
-                  _hover={{
-                    bg: 'gold.500',
-                    color: 'black',
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
-                  }}
-                  _active={{
-                    bg: 'gold.500',
-                    color: 'black',
-                    transform: 'translateY(0)',
-                  }}
-                >
-                  Catalog
-                </MotionButton>
-              </NextLink>
+              <MotionButton
+                as={NextLink}
+                href="/collections"
+                size="lg"
+                width={{ base: 'full', sm: 'auto' }}
+                minH="48px"
+                bg="transparent"
+                color="white"
+                border="2px solid"
+                borderColor="gold.500"
+                variants={getAnimationVariants(buttonPress)}
+                whileHover="hover"
+                whileTap="tap"
+                sx={{
+                  transition: 'all 0.3s ease-in-out',
+                }}
+                _hover={{
+                  bg: 'gold.500',
+                  color: 'black',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                }}
+                _active={{
+                  bg: 'gold.500',
+                  color: 'black',
+                  transform: 'translateY(0)',
+                }}
+              >
+                Shop Collection
+              </MotionButton>
+              <MotionButton
+                as={NextLink}
+                href="/catalog"
+                size="lg"
+                width={{ base: 'full', sm: 'auto' }}
+                minH="48px"
+                bg="transparent"
+                color="white"
+                border="2px solid"
+                borderColor="gold.500"
+                variants={getAnimationVariants(buttonPress)}
+                whileHover="hover"
+                whileTap="tap"
+                sx={{
+                  transition: 'all 0.3s ease-in-out',
+                }}
+                _hover={{
+                  bg: 'gold.500',
+                  color: 'black',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                }}
+                _active={{
+                  bg: 'gold.500',
+                  color: 'black',
+                  transform: 'translateY(0)',
+                }}
+              >
+                Catalog
+              </MotionButton>
             </MotionHStack>
           </VStack>
         </Container>
@@ -255,7 +253,7 @@ export default function HomePage() {
                   color="white"
                   textAlign="left"
                   lineHeight="1.2"
-                  whiteSpace="nowrap"
+                  whiteSpace={{ base: "normal", md: "nowrap" }}
                 >
                   {displayText}
                 </Heading>
@@ -285,14 +283,14 @@ export default function HomePage() {
         <Container maxW="7xl" flex="1">
           <Box
             display="grid"
-            gridTemplateColumns="repeat(2, 1fr)"
-            gridTemplateRows="repeat(2, 1fr)"
-            gap={8}
-            h="80vh"
+            gridTemplateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
+            gridTemplateRows={{ base: "auto", md: "repeat(2, 1fr)" }}
+            gap={{ base: 4, md: 8 }}
+            h={{ base: "auto", md: "80vh" }}
             position="relative"
           >
             {/* BrandStory Button - Center between four elements */}
-            <Box
+            {/* <Box
               position="absolute"
               top="50%"
               left="50%"
@@ -303,17 +301,17 @@ export default function HomePage() {
               <Button
                 as={NextLink}
                 href="/about"
-                size="xs"
+                size={{ base: "sm", md: "xs" }}
                 bg="white"
                 color="black"
-                px={{ base: 2, md: 3 }}
-                py={{ base: 1, md: 1.5 }}
-                fontSize={{ base: '10px', sm: '11px', md: '12px' }}
+                px={{ base: 3, md: 3 }}
+                py={{ base: 2, md: 1.5 }}
+                fontSize={{ base: 'sm', md: 'xs' }}
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wide"
-                minH={{ base: '32px', md: '36px' }}
-                h={{ base: '32px', md: '36px' }}
+                minH="44px"
+                h={{ base: '44px', md: '36px' }}
                 _hover={{
                   bg: 'gold.500',
                   color: 'white',
@@ -323,16 +321,17 @@ export default function HomePage() {
               >
                 Brand Story
               </Button>
-            </Box>
+            </Box> */}
 
             {/* Top Left - Left1 Video */}
             <Box
-              gridColumn="1"
-              gridRow="1"
+              gridColumn={{ base: "1", md: "1" }}
+              gridRow={{ base: "1", md: "1" }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              minH={{ base: "300px", md: "auto" }}
             >
               <video
                 autoPlay
@@ -352,12 +351,13 @@ export default function HomePage() {
 
             {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
             <Box
-              gridColumn="1"
-              gridRow="2"
+              gridColumn={{ base: "1", md: "1" }}
+              gridRow={{ base: "2", md: "2" }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              minH={{ base: "300px", md: "auto" }}
             >
               <Box
                 as="img"
@@ -372,12 +372,13 @@ export default function HomePage() {
 
             {/* Top Right - Right1 Image */}
             <Box
-              gridColumn="2"
-              gridRow="1"
+              gridColumn={{ base: "1", md: "2" }}
+              gridRow={{ base: "3", md: "1" }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              minH={{ base: "300px", md: "auto" }}
             >
               <Box
                 as="img"
@@ -392,12 +393,13 @@ export default function HomePage() {
 
             {/* Bottom Right - Right2 Video */}
             <Box
-              gridColumn="2"
-              gridRow="2"
+              gridColumn={{ base: "1", md: "2" }}
+              gridRow={{ base: "4", md: "2" }}
               position="relative"
               overflow="hidden"
               borderRadius="lg"
               boxShadow="2xl"
+              minH={{ base: "300px", md: "auto" }}
             >
               <video
                 autoPlay
@@ -665,11 +667,12 @@ export default function HomePage() {
                 zIndex={1}
               />
 
-              {/* Top Left - Remy Sales */}
+              {/* Top Center - Remy Sales */}
               <Text
                 position="absolute"
                 top={{ base: 4, md: 6 }}
-                left={{ base: 4, md: 6 }}
+                left="50%"
+                transform="translateX(-50%)"
                 fontSize={{ base: 'xl', sm: '2xl', md: '2xl', lg: '3xl' }}
                 fontWeight="bold"
                 color="black"

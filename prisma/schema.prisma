@@ -274,7 +274,8 @@ model Review {
 
 model Order {
   id                    String        @id @default(cuid())
-  userId                String
+  userId                String?
+  guestEmail            String?
   stripeSessionId       String?       @unique
   stripePaymentIntentId String?       @unique
   status                OrderStatus   @default(PENDING)
@@ -297,13 +298,14 @@ model Order {
   tax                   Int           @default(0)
   trackingNumber        String?
   coupon                Coupon?       @relation(fields: [couponId], references: [id])
-  user                  User          @relation(fields: [userId], references: [id])
+  user                  User?         @relation(fields: [userId], references: [id])
   orderItems            OrderItem[]
 
   @@index([stripeSessionId])
   @@index([status])
   @@index([orderNumber])
   @@index([userId])
+  @@index([guestEmail])
 }
 
 model OrderItem {
@@ -353,4 +355,17 @@ enum AddressType {
 enum CouponType {
   PERCENTAGE
   FIXED
+}
+
+model WebhookEvent {
+  id              String   @id @default(cuid())
+  eventId         String   @unique // Stripe event ID or signature
+  eventType       String
+  processed       Boolean  @default(false)
+  processingError String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([eventId])
+  @@index([processed])
 }

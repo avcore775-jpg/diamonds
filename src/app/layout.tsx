@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   description: "Discover our collection of exquisite diamonds and fine jewelry",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: {
