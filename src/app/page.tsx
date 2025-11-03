@@ -292,10 +292,10 @@ export default function HomePage() {
           <Box
             display="grid"
             gridTemplateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
-            gridTemplateRows={{ base: "auto", md: "repeat(2, 1fr)" }}
+            gridTemplateRows={{ base: "auto", md: "auto" }}
             gap={{ base: 4, md: 8 }}
-            h={{ base: "auto", md: "80vh" }}
             position="relative"
+            mb={{ base: 8, md: 16 }}
           >
             {/* BrandStory Button - Commented out */}
             {/* <Box
@@ -332,79 +332,67 @@ export default function HomePage() {
             </Box> */}
 
             {/* Top Left - Left1 Video */}
-            <Box
-              gridColumn={{ base: "1", md: "1" }}
-              gridRow={{ base: "1", md: "1" }}
-              position="relative"
-              overflow="hidden"
-              borderRadius="lg"
-              boxShadow="2xl"
-            >
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              >
-                <source src="/images/brandstoryhome/left1.mp4" type="video/mp4" />
-              </video>
+            <Box gridColumn={{ base: "1", md: "1" }} gridRow={{ base: "1", md: "1" }}>
+              <AspectRatio ratio={1}>
+                <Box position="relative" overflow="hidden" borderRadius="lg" boxShadow="2xl">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                  >
+                    <source src="/images/brandstoryhome/left1.mp4" type="video/mp4" />
+                  </video>
+                </Box>
+              </AspectRatio>
             </Box>
 
             {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
-            <Box
-              gridColumn={{ base: "1", md: "1" }}
-              gridRow={{ base: "2", md: "2" }}
-              as="img"
-              src="/images/brandstoryhome/left2.jpg"
-              alt="Brand Story"
-              objectFit="cover"
-              objectPosition="center"
-              borderRadius="lg"
-              boxShadow="2xl"
-            />
+            <Box gridColumn={{ base: "1", md: "1" }} gridRow={{ base: "2", md: "2" }}>
+              <AspectRatio ratio={1}>
+                <Box
+                  as="img"
+                  src="/images/brandstoryhome/left2.jpg"
+                  alt="Brand Story"
+                  objectFit="cover"
+                  objectPosition="center"
+                  borderRadius="lg"
+                  boxShadow="2xl"
+                />
+              </AspectRatio>
+            </Box>
 
             {/* Top Right - Right1 Image */}
-            <Box
-              gridColumn={{ base: "1", md: "2" }}
-              gridRow={{ base: "3", md: "1" }}
-              as="img"
-              src="/images/brandstoryhome/right1.jpg"
-              alt="Craftsmanship"
-              objectFit="cover"
-              objectPosition="center"
-              borderRadius="lg"
-              boxShadow="2xl"
-            />
+            <Box gridColumn={{ base: "1", md: "2" }} gridRow={{ base: "3", md: "1" }}>
+              <AspectRatio ratio={1}>
+                <Box
+                  as="img"
+                  src="/images/brandstoryhome/right1.jpg"
+                  alt="Craftsmanship"
+                  objectFit="cover"
+                  objectPosition="center"
+                  borderRadius="lg"
+                  boxShadow="2xl"
+                />
+              </AspectRatio>
+            </Box>
 
             {/* Bottom Right - Right2 Video */}
-            <Box
-              gridColumn={{ base: "1", md: "2" }}
-              gridRow={{ base: "4", md: "2" }}
-              position="relative"
-              overflow="hidden"
-              borderRadius="lg"
-              boxShadow="2xl"
-            >
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              >
-                <source src="/images/brandstoryhome/right2.mp4" type="video/mp4" />
-              </video>
+            <Box gridColumn={{ base: "1", md: "2" }} gridRow={{ base: "4", md: "2" }}>
+              <AspectRatio ratio={1}>
+                <Box position="relative" overflow="hidden" borderRadius="lg" boxShadow="2xl">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                  >
+                    <source src="/images/brandstoryhome/right2.mp4" type="video/mp4" />
+                  </video>
+                </Box>
+              </AspectRatio>
             </Box>
           </Box>
         </Container>
