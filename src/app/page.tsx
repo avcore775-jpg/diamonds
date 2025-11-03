@@ -405,7 +405,7 @@ export default function HomePage() {
       <CategoryTiles />
 
       {/* Featured Collection */}
-      <Box pt={7} pb={16} bg="transparent">
+      <Box py={16} bg="transparent">
         <Container maxW="7xl">
           <VStack spacing={8} align="stretch">
             <VStack spacing={2} align="start">
@@ -492,7 +492,7 @@ export default function HomePage() {
       </Box>
 
       {/* Come Say Hi Section */}
-      <Box minH={{ base: 'auto', md: '50vh' }} bg="transparent" display="flex" alignItems="center" py={{ base: 8, md: 12 }}>
+      <Box minH={{ base: 'auto', md: '50vh' }} bg="transparent" display="flex" alignItems="center" py={16}>
         <Container maxW="7xl" px={{ base: 4, md: 8 }}>
           <Flex
             direction={{ base: 'column', md: 'row' }}
