@@ -615,7 +615,7 @@ export default function HomePage() {
             >
               {/* Background Image */}
               <img
-                src="http://172.20.10.2:3001/images/brandstoryhome/br2.jpg"
+                src="/images/directionsHome/misfit_boat_1920x794_crop_center.jpg"
                 alt="Store Location"
                 style={{
                   position: 'absolute',
