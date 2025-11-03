@@ -292,10 +292,10 @@ export default function HomePage() {
           <Box
             display="grid"
             gridTemplateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
-            gridTemplateRows={{ base: "auto", md: "auto" }}
+            gridTemplateRows={{ base: "auto", md: "repeat(2, 1fr)" }}
             gap={{ base: 4, md: 8 }}
+            h={{ base: "auto", md: "80vh" }}
             position="relative"
-            mb={{ base: 8, md: 16 }}
           >
             {/* BrandStory Button - Commented out */}
             {/* <Box
@@ -333,8 +333,8 @@ export default function HomePage() {
 
             {/* Top Left - Left1 Video */}
             <Box gridColumn={{ base: "1", md: "1" }} gridRow={{ base: "1", md: "1" }}>
-              <AspectRatio ratio={1}>
-                <Box position="relative" overflow="hidden" borderRadius="lg" boxShadow="2xl">
+              <AspectRatio ratio={{ base: 1, md: 16/9 }} maxH={{ base: "250px", md: "none" }}>
+                <Box position="relative" overflow="hidden" borderRadius="lg" boxShadow="2xl" h="100%">
                   <video
                     autoPlay
                     loop
@@ -350,7 +350,7 @@ export default function HomePage() {
 
             {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
             <Box gridColumn={{ base: "1", md: "1" }} gridRow={{ base: "2", md: "2" }}>
-              <AspectRatio ratio={1}>
+              <AspectRatio ratio={{ base: 1, md: 16/9 }} maxH={{ base: "250px", md: "none" }}>
                 <Box
                   as="img"
                   src="/images/brandstoryhome/left2.jpg"
@@ -359,13 +359,14 @@ export default function HomePage() {
                   objectPosition="center"
                   borderRadius="lg"
                   boxShadow="2xl"
+                  h="100%"
                 />
               </AspectRatio>
             </Box>
 
             {/* Top Right - Right1 Image */}
             <Box gridColumn={{ base: "1", md: "2" }} gridRow={{ base: "3", md: "1" }}>
-              <AspectRatio ratio={1}>
+              <AspectRatio ratio={{ base: 1, md: 16/9 }} maxH={{ base: "250px", md: "none" }}>
                 <Box
                   as="img"
                   src="/images/brandstoryhome/right1.jpg"
@@ -374,14 +375,15 @@ export default function HomePage() {
                   objectPosition="center"
                   borderRadius="lg"
                   boxShadow="2xl"
+                  h="100%"
                 />
               </AspectRatio>
             </Box>
 
             {/* Bottom Right - Right2 Video */}
             <Box gridColumn={{ base: "1", md: "2" }} gridRow={{ base: "4", md: "2" }}>
-              <AspectRatio ratio={1}>
-                <Box position="relative" overflow="hidden" borderRadius="lg" boxShadow="2xl">
+              <AspectRatio ratio={{ base: 1, md: 16/9 }} maxH={{ base: "250px", md: "none" }}>
+                <Box position="relative" overflow="hidden" borderRadius="lg" boxShadow="2xl" h="100%">
                   <video
                     autoPlay
                     loop
