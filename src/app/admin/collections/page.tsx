@@ -429,8 +429,8 @@ export default function AdminCollectionsPage() {
                   </Button>
                 </Box>
               ) : (
-                <TableContainer>
-                  <Table variant="simple">
+                <TableContainer overflowX="auto" overflowY="visible">
+                  <Table variant="simple" minW="800px">
                     <Thead>
                       <Tr>
                         <Th>Image</Th>

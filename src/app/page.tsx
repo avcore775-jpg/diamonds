@@ -2,6 +2,7 @@
 
 import React from 'react'
 import NextLink from 'next/link'
+import NextImage from 'next/image'
 import {
   Box,
   Container,
@@ -13,6 +14,7 @@ import {
   HStack,
   Icon,
   Flex,
+  AspectRatio,
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { FaGem, FaTruck, FaShieldAlt, FaCertificate } from 'react-icons/fa'
@@ -33,6 +35,12 @@ const MotionText = motion.create(Text)
 const MotionHStack = motion.create(HStack)
 
 export default function HomePage() {
+  // Get base URL for images on client side
+  const [baseURL, setBaseURL] = React.useState('')
+  React.useEffect(() => {
+    setBaseURL(window.location.origin)
+  }, [])
+
   // Fetch all products and split them into sections
   const { data: allProducts, isLoading } = useSWR(
     '/api/products',
@@ -327,94 +335,96 @@ export default function HomePage() {
             <Box
               gridColumn={{ base: "1", md: "1" }}
               gridRow={{ base: "1", md: "1" }}
-              position="relative"
-              overflow="hidden"
-              borderRadius="lg"
-              boxShadow="2xl"
-              minH={{ base: "300px", md: "auto" }}
             >
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              >
-                <source src="/images/brandstoryhome/left1.mp4" type="video/mp4" />
-              </video>
+              <AspectRatio ratio={1}>
+                <Box
+                  position="relative"
+                  overflow="hidden"
+                  borderRadius="lg"
+                  boxShadow="2xl"
+                >
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                  >
+                    <source src="/images/brandstoryhome/left1.mp4" type="video/mp4" />
+                  </video>
+                </Box>
+              </AspectRatio>
             </Box>
 
             {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
             <Box
               gridColumn={{ base: "1", md: "1" }}
               gridRow={{ base: "2", md: "2" }}
-              position="relative"
-              overflow="hidden"
-              borderRadius="lg"
-              boxShadow="2xl"
-              minH={{ base: "300px", md: "auto" }}
             >
-              <Box
-                as="img"
-                src="/images/brandstoryhome/left2.jpg"
-                alt="Brand Story"
-                width="100%"
-                height="100%"
-                objectFit="cover"
-                objectPosition="center"
-              />
+              <AspectRatio ratio={1}>
+                <Box
+                  as="img"
+                  src="/images/brandstoryhome/left2.jpg"
+                  alt="Brand Story"
+                  objectFit="cover"
+                  objectPosition="center"
+                  borderRadius="lg"
+                  boxShadow="2xl"
+                />
+              </AspectRatio>
             </Box>
 
             {/* Top Right - Right1 Image */}
             <Box
               gridColumn={{ base: "1", md: "2" }}
               gridRow={{ base: "3", md: "1" }}
-              position="relative"
-              overflow="hidden"
-              borderRadius="lg"
-              boxShadow="2xl"
-              minH={{ base: "300px", md: "auto" }}
             >
-              <Box
-                as="img"
-                src="/images/brandstoryhome/right1.jpg"
-                alt="Craftsmanship"
-                width="100%"
-                height="100%"
-                objectFit="cover"
-                objectPosition="center"
-              />
+              <AspectRatio ratio={1}>
+                <Box
+                  as="img"
+                  src="/images/brandstoryhome/right1.jpg"
+                  alt="Craftsmanship"
+                  objectFit="cover"
+                  objectPosition="center"
+                  borderRadius="lg"
+                  boxShadow="2xl"
+                />
+              </AspectRatio>
             </Box>
 
             {/* Bottom Right - Right2 Video */}
             <Box
               gridColumn={{ base: "1", md: "2" }}
               gridRow={{ base: "4", md: "2" }}
-              position="relative"
-              overflow="hidden"
-              borderRadius="lg"
-              boxShadow="2xl"
-              minH={{ base: "300px", md: "auto" }}
             >
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              >
-                <source src="/images/brandstoryhome/right2.mp4" type="video/mp4" />
-              </video>
+              <AspectRatio ratio={1}>
+                <Box
+                  position="relative"
+                  overflow="hidden"
+                  borderRadius="lg"
+                  boxShadow="2xl"
+                >
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                  >
+                    <source src="/images/brandstoryhome/right2.mp4" type="video/mp4" />
+                  </video>
+                </Box>
+              </AspectRatio>
             </Box>
           </Box>
         </Container>
@@ -511,13 +521,14 @@ export default function HomePage() {
       </Box>
 
       {/* Come Say Hi Section */}
-      <Box minH="50vh" bg="transparent" display="flex" alignItems="center" py={{ base: 8, md: 12 }}>
+      <Box minH={{ base: 'auto', md: '50vh' }} bg="transparent" display="flex" alignItems="center" py={{ base: 8, md: 12 }}>
         <Container maxW="7xl" px={{ base: 4, md: 8 }}>
           <Flex
             direction={{ base: 'column', md: 'row' }}
             align="center"
             justify="center"
             gap={{ base: 6, md: 8 }}
+            w="100%"
           >
             {/* Left Rectangle - Text with Video Background */}
             <Box
@@ -629,41 +640,23 @@ export default function HomePage() {
               borderRadius="md"
               overflow="hidden"
               h={{ base: '280px', sm: '350px', md: '400px', lg: '450px' }}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              bg="gray.300"
+              bg="gray.800"
             >
               {/* Background Image */}
-              <Box
-                position="absolute"
-                top="0"
-                left="0"
-                width="100%"
-                height="100%"
-                zIndex={0}
-                overflow="hidden"
-              >
-                <Box
-                  as="img"
-                  src="/images/directionsHome/misfit_boat_1920x794_crop_center.webp"
-                  alt="Store Location"
-                  width="100%"
-                  height="100%"
-                  objectFit="cover"
-                  objectPosition="center"
-                  loading="eager"
-                  onError={(e: any) => {
-                    console.error('Image failed to load:', e.target.src);
-                    e.target.style.backgroundColor = '#4A5568';
-                  }}
-                  style={{
-                    display: 'block',
-                    minHeight: '100%',
-                    minWidth: '100%'
-                  }}
-                />
-              </Box>
+              <img
+                src="http://172.20.10.2:3001/images/brandstoryhome/br2.jpg"
+                alt="Store Location"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  zIndex: 0,
+                }}
+              />
 
               {/* Light overlay for better text contrast - reduced opacity on mobile */}
               <Box
@@ -672,7 +665,7 @@ export default function HomePage() {
                 left="0"
                 width="100%"
                 height="100%"
-                bg={{ base: "whiteAlpha.100", md: "whiteAlpha.200" }}
+                bg={{ base: "transparent", md: "whiteAlpha.200" }}
                 zIndex={1}
               />
 

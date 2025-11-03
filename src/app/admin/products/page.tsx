@@ -67,7 +67,7 @@ import {
   FaBox,
 } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Header from '@/components/layout/Header'
 
 interface Product {
@@ -109,6 +109,7 @@ interface Collection {
 export default function AdminProductsPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
@@ -209,6 +210,37 @@ export default function AdminProductsPage() {
       fetchData()
     }
   }, [session, toast])
+
+  // Check for create parameter in URL
+  useEffect(() => {
+    if (!loading && searchParams.get('create') === 'true') {
+      // Open create product modal
+      setEditingProduct(null)
+      setFormData({
+        name: '',
+        description: '',
+        carat: '',
+        weight: '',
+        price: '',
+        image: '',
+        stock: '0',
+        isActive: true,
+        isFeatured: false,
+        sku: '',
+        tags: '',
+        categoryId: '',
+        collectionId: '',
+      })
+      setErrors({})
+      onOpen()
+
+      // Remove the parameter from URL without page reload
+      const url = new URL(window.location.href)
+      url.searchParams.delete('create')
+      window.history.replaceState({}, '', url.pathname + url.search)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, searchParams])
 
   const resetForm = () => {
     setFormData({
@@ -530,8 +562,8 @@ export default function AdminProductsPage() {
                   )}
                 </Box>
               ) : (
-                <TableContainer overflowX={{ base: "auto", md: "visible" }}>
-                  <Table variant="simple">
+                <TableContainer overflowX="auto" overflowY="visible">
+                  <Table variant="simple" minW="800px">
                     <Thead>
                       <Tr>
                         <Th>Product</Th>

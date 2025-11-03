@@ -10,7 +10,7 @@ const CART_STORAGE_KEY = 'guest_cart'
 
 // Zod validation schemas
 const cartItemSchema = z.object({
-  productId: z.string().uuid(),
+  productId: z.string().cuid().or(z.string().uuid()).or(z.string().min(1)), // Accept CUID, UUID, or any string ID
   quantity: z.number().int().min(1).max(99)
 })
 

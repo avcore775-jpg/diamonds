@@ -184,7 +184,7 @@ export default function AdminDashboard() {
     return (
       <Box minH="100vh" bg="transparent">
         <Header />
-        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
+        <Container maxW="7xl" pt={{ base: 32, md: 28 }} pb={8}>
           <VStack spacing={4}>
             <Spinner size="xl" color="gold.500" />
             <Text color="white">Loading admin dashboard...</Text>
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
     <Box minH="100vh" bg="transparent">
       <Header />
 
-      <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={8}>
+      <Container maxW="7xl" pt={{ base: 32, md: 28 }} pb={8}>
         <VStack spacing={1} align="stretch">
           {/* Header Row: Title, Logo, Buttons - Responsive */}
           <VStack spacing={4} align="stretch" mb={6}>
@@ -386,7 +386,7 @@ export default function AdminDashboard() {
                   <SimpleGrid columns={{ base: 1, md: 3, lg: 5 }} spacing={4}>
                     <Button
                       as={Link}
-                      href="/admin/products"
+                      href="/admin/products?create=true"
                       leftIcon={<FaPlus />}
                       variant="outline"
                       height={{ base: "56px", md: "80px" }}

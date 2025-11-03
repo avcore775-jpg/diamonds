@@ -277,7 +277,7 @@ export default function Header() {
               variant="outline"
               colorScheme="red"
               size="sm"
-              display={{ base: 'none', md: 'flex' }}
+              display="flex"
             >
               Admin Panel
             </Button>

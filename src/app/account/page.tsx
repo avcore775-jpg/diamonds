@@ -205,7 +205,7 @@ export default function AccountPage() {
       <Box minH="100vh" bg="transparent">
         <Header />
 
-        <Container maxW="7xl" pt={{ base: 24, md: 28 }} pb={20}>
+        <Container maxW="7xl" pt={{ base: 32, md: 28 }} pb={20}>
           <VStack spacing={8}>
             {/* User Profile Header */}
             <HStack spacing={4} w="full" justify="center">

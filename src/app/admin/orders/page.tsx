@@ -480,8 +480,8 @@ export default function AdminOrdersPage() {
                   </Text>
                 </Box>
               ) : (
-                <TableContainer overflowX={{ base: "auto", md: "visible" }}>
-                  <Table variant="simple">
+                <TableContainer overflowX="auto" overflowY="visible">
+                  <Table variant="simple" minW="800px">
                     <Thead>
                       <Tr>
                         <Th>Order</Th>

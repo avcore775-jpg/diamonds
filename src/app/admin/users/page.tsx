@@ -346,8 +346,8 @@ export default function AdminUsersPage() {
                   <Text>No users found</Text>
                 </Box>
               ) : (
-                <TableContainer>
-                  <Table variant="simple">
+                <TableContainer overflowX="auto" overflowY="visible">
+                  <Table variant="simple" minW="800px">
                     <Thead>
                       <Tr>
                         <Th>User</Th>
