@@ -288,7 +288,7 @@ export default function HomePage() {
         </Box>
 
         {/* Diagonal Grid Container */}
-        <Container maxW="7xl" flex="1">
+        <Container maxW="7xl" flex="1" mb={{ base: 8, md: 20 }}>
           <Box
             display="grid"
             gridTemplateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
