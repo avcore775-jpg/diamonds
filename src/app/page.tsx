@@ -233,7 +233,8 @@ export default function HomePage() {
         mr="-50vw"
         minH="100vh"
         bg="black"
-        py={16}
+        pt={16}
+        pb={{ base: 16, md: 24 }}
         display="flex"
         flexDirection="column"
       >
