@@ -335,96 +335,76 @@ export default function HomePage() {
             <Box
               gridColumn={{ base: "1", md: "1" }}
               gridRow={{ base: "1", md: "1" }}
+              position="relative"
+              overflow="hidden"
+              borderRadius="lg"
+              boxShadow="2xl"
             >
-              <AspectRatio ratio={1}>
-                <Box
-                  position="relative"
-                  overflow="hidden"
-                  borderRadius="lg"
-                  boxShadow="2xl"
-                >
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'center',
-                    }}
-                  >
-                    <source src="/images/brandstoryhome/left1.mp4" type="video/mp4" />
-                  </video>
-                </Box>
-              </AspectRatio>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              >
+                <source src="/images/brandstoryhome/left1.mp4" type="video/mp4" />
+              </video>
             </Box>
 
             {/* Bottom Left - PhotoLev2 Image (left2.jpg) */}
             <Box
               gridColumn={{ base: "1", md: "1" }}
               gridRow={{ base: "2", md: "2" }}
-            >
-              <AspectRatio ratio={1}>
-                <Box
-                  as="img"
-                  src="/images/brandstoryhome/left2.jpg"
-                  alt="Brand Story"
-                  objectFit="cover"
-                  objectPosition="center"
-                  borderRadius="lg"
-                  boxShadow="2xl"
-                />
-              </AspectRatio>
-            </Box>
+              as="img"
+              src="/images/brandstoryhome/left2.jpg"
+              alt="Brand Story"
+              objectFit="cover"
+              objectPosition="center"
+              borderRadius="lg"
+              boxShadow="2xl"
+            />
 
             {/* Top Right - Right1 Image */}
             <Box
               gridColumn={{ base: "1", md: "2" }}
               gridRow={{ base: "3", md: "1" }}
-            >
-              <AspectRatio ratio={1}>
-                <Box
-                  as="img"
-                  src="/images/brandstoryhome/right1.jpg"
-                  alt="Craftsmanship"
-                  objectFit="cover"
-                  objectPosition="center"
-                  borderRadius="lg"
-                  boxShadow="2xl"
-                />
-              </AspectRatio>
-            </Box>
+              as="img"
+              src="/images/brandstoryhome/right1.jpg"
+              alt="Craftsmanship"
+              objectFit="cover"
+              objectPosition="center"
+              borderRadius="lg"
+              boxShadow="2xl"
+            />
 
             {/* Bottom Right - Right2 Video */}
             <Box
               gridColumn={{ base: "1", md: "2" }}
               gridRow={{ base: "4", md: "2" }}
+              position="relative"
+              overflow="hidden"
+              borderRadius="lg"
+              boxShadow="2xl"
             >
-              <AspectRatio ratio={1}>
-                <Box
-                  position="relative"
-                  overflow="hidden"
-                  borderRadius="lg"
-                  boxShadow="2xl"
-                >
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'center',
-                    }}
-                  >
-                    <source src="/images/brandstoryhome/right2.mp4" type="video/mp4" />
-                  </video>
-                </Box>
-              </AspectRatio>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              >
+                <source src="/images/brandstoryhome/right2.mp4" type="video/mp4" />
+              </video>
             </Box>
           </Box>
         </Container>
