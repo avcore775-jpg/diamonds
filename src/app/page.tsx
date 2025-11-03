@@ -289,7 +289,7 @@ export default function HomePage() {
             h={{ base: "auto", md: "80vh" }}
             position="relative"
           >
-            {/* BrandStory Button - Center between four elements */}
+            {/* BrandStory Button - Commented out */}
             {/* <Box
               position="absolute"
               top="50%"
@@ -301,17 +301,17 @@ export default function HomePage() {
               <Button
                 as={NextLink}
                 href="/about"
-                size={{ base: "sm", md: "xs" }}
+                size="xs"
                 bg="white"
                 color="black"
-                px={{ base: 3, md: 3 }}
-                py={{ base: 2, md: 1.5 }}
-                fontSize={{ base: 'sm', md: 'xs' }}
+                px={3}
+                py={1.5}
+                fontSize="xs"
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wide"
-                minH="44px"
-                h={{ base: '44px', md: '36px' }}
+                minH="36px"
+                h="36px"
                 _hover={{
                   bg: 'gold.500',
                   color: 'white',
@@ -642,6 +642,7 @@ export default function HomePage() {
                 width="100%"
                 height="100%"
                 zIndex={0}
+                overflow="hidden"
               >
                 <Box
                   as="img"
@@ -652,7 +653,15 @@ export default function HomePage() {
                   objectFit="cover"
                   objectPosition="center"
                   loading="eager"
-                  style={{ display: 'block', minHeight: '100%' }}
+                  onError={(e: any) => {
+                    console.error('Image failed to load:', e.target.src);
+                    e.target.style.backgroundColor = '#4A5568';
+                  }}
+                  style={{
+                    display: 'block',
+                    minHeight: '100%',
+                    minWidth: '100%'
+                  }}
                 />
               </Box>
 

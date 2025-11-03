@@ -23,6 +23,7 @@ interface ProductCarouselProps {
 export default function ProductCarousel({ products, isLoading }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
+  const [isTouching, setIsTouching] = useState(false)
 
   const formatPrice = (cents: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -37,7 +38,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
   // Infinite loop auto-scroll functionality
   useEffect(() => {
     const scrollContainer = scrollRef.current
-    if (!scrollContainer || isHovered || !products || products.length === 0) return
+    if (!scrollContainer || isHovered || isTouching || !products || products.length === 0) return
 
     const scrollSpeed = 0.5 // pixels per frame (slow, smooth speed)
     let animationFrameId: number
@@ -71,7 +72,7 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
         cancelAnimationFrame(animationFrameId)
       }
     }
-  }, [isHovered, products])
+  }, [isHovered, isTouching, products])
 
   if (isLoading) {
     return (
@@ -98,6 +99,8 @@ export default function ProductCarousel({ products, isLoading }: ProductCarousel
       overflowY="hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsTouching(true)}
+      onTouchEnd={() => setIsTouching(false)}
       sx={{
         scrollBehavior: 'auto',
         scrollSnapType: 'none',

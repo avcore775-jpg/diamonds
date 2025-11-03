@@ -289,6 +289,8 @@ export default function Header() {
               as={NextLink}
               href="/account"
               _hover={{ textDecoration: 'none' }}
+              display="flex"
+              alignItems="center"
             >
               <Avatar
                 size={'sm'}
@@ -298,6 +300,9 @@ export default function Header() {
                   transform: 'scale(1.1)',
                   transition: 'all 0.2s',
                   boxShadow: '0 0 10px rgba(212, 175, 55, 0.5)'
+                }}
+                _active={{
+                  transform: 'scale(0.95)',
                 }}
               />
             </Link>
@@ -309,6 +314,8 @@ export default function Header() {
               icon={<FaUser />}
               variant="ghost"
               rounded="full"
+              minW="40px"
+              minH="40px"
             />
           )}
         </Stack>
